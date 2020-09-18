@@ -1,0 +1,9 @@
+.rendered {
+   display: block;
+   color: red;
+}
+
+.transitions {
+   transition: opacity
+}
+
