@@ -12,22 +12,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Spring} from 'react-spring/renderprops'
 import UploadButtons from './upload-button';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(8,4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -38,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -47,23 +34,21 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
-
   return (
     <Spring
     from = {{opacity: 0, marginTop:-500}}
     to = {{opacity: 1, marginTop: 0}}
     config= {{delay:750}}
   >
-  { props => (
+  { Props => (
 
-    <Grid item style={props} component="main" maxWidth="xs">
+    <Grid style={Props} component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>   
+      <Box  m={4} pt={3}>   
        <Typography component="p"  >
           Well we see you have found your way "Oh My Dawg!" (this is paw-some news). You are currently 1 bark away from signing yourself up and voting! (If you already have an account please double check your email)
         </Typography>
         <form className={classes.form} noValidate>
-    
             <Grid container spacing={2}>
               <Grid item xs={12} >
                 <UploadButtons />
@@ -156,9 +141,6 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
       </Box>
     </Grid>
   )}

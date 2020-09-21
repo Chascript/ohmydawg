@@ -9,7 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Spring } from 'react-spring/renderprops'
-
+import Paper from '@material-ui/core/Paper'
+import Box from '@material-ui/core/Box'
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(4),
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
-  const details = props
+const details = props
 
   return (
     <Spring 
@@ -38,9 +39,10 @@ export default function SignIn(props) {
       config= {{delay:250}}
     >
       { props => (
+
         <Grid item style={props}  component='main' maxWidth="xs">
           <CssBaseline />
-          <div className={classes.paper}>
+          <Box  m={4} pt={3}>   
             <form className={classes.form} noValidate>
               <Typography component="p"  >
                 Welcome Back {details.name}! (If this isn't you please double check your email).
@@ -82,7 +84,7 @@ export default function SignIn(props) {
                 </Grid>
               </Grid>
             </form>
-          </div>
+          </Box>
         </Grid>
       )} 
     </Spring> 

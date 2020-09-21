@@ -9,13 +9,13 @@ import { Message } from './default-message'
 import {useState} from 'react'
 import SignUp from '../component/signup';
 import SignIn from '../component/sign-in-component';
+import {Spring} from 'react-spring/renderprops'
 
 const accounts = {
   name: 'Manson',
   breed: 'Poodle',
   email: 'manson@gmail.com'
 };
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,8 +53,12 @@ export default function SignInSide() {
   const [emailValue, setEmailValue] = useState('')
 
   return (
-
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+    <Spring
+    from = {{opacity: 0, marginTop:-500}}
+    to = {{opacaity:1, marginTop:0}}
+    >
+      {Props => (
+    <Grid item component="main" maxWidth="xs">
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             
@@ -88,6 +92,7 @@ export default function SignInSide() {
           </form>
         </div>
       </Grid>
-  
+      )}
+    </Spring>
   );
 }
