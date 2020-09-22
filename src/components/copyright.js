@@ -16,6 +16,4 @@ function Copyright() {
   );
 }
 
-export default function EnterEmail() {
-  return <Copyright />
-  }
+export default function EnterEmail() { return <Copyright /> }

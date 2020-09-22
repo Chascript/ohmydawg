@@ -5,29 +5,25 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   image: {
-    backgroundImage: 'url(https://source.unsplash.com/random)',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor:
-    theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+    boxShadow: '0 1px 10px #404040',
+    objectFit: 'fill',  
+    overflow: 'hidden',
   },
 }))
 
-export default function Image() {
+export default function Image(props) {
   const classes = useStyles();
-
-
   return (
-      
     <Spring
     from = {{ opacity: 0, marginTop: -500 }}
     to = {{ opacity: 1, marginTop: 0 }}
+    config = {{duration:2000}}
     >
       {props => ( 
-      <Grid item style={props} xs={false} sm={4} md={7} className={classes.image} />
+        <Grid item style={props} xs={false} sm={4} md={7} className={classes.image} >
+          <img src={require('./ohmydawglogo.jpg')} alt={'ohmydawglogo'} />
+        </Grid>
       )}
     </Spring>
-    
   )
 }

@@ -9,16 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Spring } from 'react-spring/renderprops'
-import Paper from '@material-ui/core/Paper'
 import Box from '@material-ui/core/Box'
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(4),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
@@ -30,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn(props) {
   const classes = useStyles();
-const details = props
+  const details = props
 
   return (
     <Spring 
@@ -39,7 +31,6 @@ const details = props
       config= {{delay:250}}
     >
       { props => (
-
         <Grid item style={props}  component='main' maxWidth="xs">
           <CssBaseline />
           <Box  m={4} pt={3}>   
