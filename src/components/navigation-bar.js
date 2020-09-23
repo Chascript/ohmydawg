@@ -4,8 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import {Spring} from 'react-spring/renderprops'
+import {Spring} from 'react-spring/renderprops';
+import LongMenu from './menu'
+import {Switch} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DenseAppBar() {
+export default function DenseAppBar(props) {
   const classes = useStyles();
 
   return (
@@ -30,11 +31,12 @@ export default function DenseAppBar() {
           <AppBar position="static">
             <Toolbar variant="dense">
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <MenuIcon />
+                <LongMenu />
               </IconButton>
               <Typography variant="h6" color="inherit">
                 Oh My Dawg
               </Typography>
+              <Switch onChange={props.onChange} />
             </Toolbar>
           </AppBar>
         </div>
