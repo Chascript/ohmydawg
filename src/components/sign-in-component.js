@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { Spring } from 'react-spring/renderprops'
 import Box from '@material-ui/core/Box'
+
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -66,11 +67,6 @@ export default function SignIn(props) {
                 <Grid item xs>
                   <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
-                </Grid>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>
               </Grid>

@@ -30,37 +30,36 @@ export default function Email(props) {
     <Spring
     from = {{opacity: 0}}
     to = {{opacity: 1}}
-    config= {{delay:2000}}>
-     { transitions => (
-
-    <Grid style={transitions} item component="main" maxWidth="xs">
-
-     <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-            
-        </Avatar>
-          <Typography component="h1" variant="h5">
-            Dog Creation
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField   
-           onKeyUp={props.emailValue}
-            variant="outlined"
-            required
-            fullWidth
-            id="email"
-            label="Your humans email address"
-            name="email"
-          />
-        </form>
-        {props.currentValue < 1 ? (
-          <Message />
-          ) : (
-          <div></div>
-        )}
-      </div>
-    </Grid>
-     )}
-     </Spring>
+    config= {{delay:2000}}
+    >
+      { transitions => (
+        <Grid style={transitions} item component="main" maxWidth="xs">
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+                
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              Dog Creation
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField   
+                onKeyUp={props.emailValue}
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                label="Your humans email address"
+                name="email"
+              />
+            </form>
+            {props.emailCurrentValue < 1 ? (
+              <Message />
+              ) : (
+              <div></div>
+            )}
+          </div>
+        </Grid>
+      )}
+    </Spring>
   );
 }

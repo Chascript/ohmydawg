@@ -4,7 +4,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -35,7 +34,8 @@ export default function SignUp() {
           <CssBaseline />
           <Box  m={4} pt={3}>   
             <Typography component="p"  >
-              Well we see you have found your way "Oh My Dawg!" (this is paw-some news). You are currently 1 bark away from signing yourself up and voting! (If you already have an account please double check your email)
+              Welcome, to begin creating your account please fill in your details below
+              (If you already have an account please provide email associated with your account)
             </Typography>
             <form className={classes.form} noValidate>
               <Grid container spacing={2}>
@@ -122,13 +122,6 @@ export default function SignUp() {
                 >
                   Create Dog!
                 </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    Already have an account? Sign in
-                  </Link>
-                </Grid>
-              </Grid>
             </form>
           </Box>
         </Grid>
