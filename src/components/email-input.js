@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Message} from './default-message'
 import {Spring} from 'react-spring/renderprops'
+import { CssBaseline } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -34,6 +35,7 @@ export default function Email(props) {
     >
       { transitions => (
         <Grid style={transitions} item component="main" maxWidth="xs">
+          <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
                 

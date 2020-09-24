@@ -4,9 +4,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import {Spring} from 'react-spring/renderprops';
 import LongMenu from './menu'
 import {Switch} from '@material-ui/core'
+import {FormControlLabel} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,32 +15,33 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
+  switch:{
+    justifySelf: "flex-end" // not working ??
+  }
 }));
 
 export default function DenseAppBar(props) {
   const classes = useStyles();
 
   return (
-    <Spring
-      from={{opacity:0, marginTop:-500}}
-      to={{opacity:1, marginTop:0}}
-      config={{duration:2000}}
-    >
-      { transitions => ( 
-        <div style={transitions} className={classes.root}>
+ 
+        <div  className={classes.root}>
           <AppBar position="static">
             <Toolbar variant="dense">
               <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                 <LongMenu />
-              </IconButton>
+                </IconButton>
               <Typography variant="h6" color="inherit">
                 Oh My Dawg
               </Typography>
-              <Switch onChange={props.onChange} />
+              <FormControlLabel
+                className={classes.switch}
+                control={<Switch onChange={props.onChange} />}
+                label="Dark-Mode?"
+                labelPlacement="Bottom"
+              />
             </Toolbar>
           </AppBar>
         </div>
-      )}
-    </Spring>
   );
 }

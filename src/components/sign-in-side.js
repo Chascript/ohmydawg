@@ -19,7 +19,6 @@ const accounts = {
 
 const useStyles = makeStyles((theme) => ({
   container:{
-    maxwidth: 'xl'
   }
 
 }))

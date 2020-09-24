@@ -1,27 +1,65 @@
 import React, { useState } from 'react';
 import './App.css';
-import SignInSide from './components/sign-in-side';
 import Container from '@material-ui/core/Container';
 import DenseAppBar from './components/navigation-bar';
-import { ThemeProvider } from '@material-ui/core/styles';
-import {darkTheme, lightTheme} from './themes'
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider,  } from '@material-ui/core/styles';
+import { blueGrey, grey,} from '@material-ui/core/colors';
+import {Section} from '../src/components/section';
+import {BrowserRouter as Router} from 'react-router-dom'
+const font = ['Mali']
+
 
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
-
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: "dark",
+      primary: {
+        light: '#9e9e9e',
+        main: '#000000', // background nav bar
+        dark: '#797a7a',
+        contrastText: '#fff', //text
+      },
+      secondary: {
+        light: '#cfcfcf', //
+        main: '#797a7a', //switch button
+        dark: '#ba000d',
+        contrastText: '#000',
+      },
+    },
+      typography:{
+        fontFamily: font,
+    }
+  });
+  const lightTheme = createMuiTheme({
+    palette: {
+      primary: grey,
+      secondary:blueGrey,
+    },
+    typography:{
+        fontFamily: font,
+    }
+  });
     
   return (
+    <Router>
     <ThemeProvider theme = {darkMode ? darkTheme : lightTheme} >
-      <Container>
+      <Container >
         <Container>
+          
           <DenseAppBar checked={darkMode} onChange={()=> setDarkMode(!darkMode)} />
         </Container>
         <Container>
-          <SignInSide />
+          <Section/>
+    
+
         </Container>
       </Container>
     </ThemeProvider>
-  );
+    
+    </Router>
+      );
 }
 export default App;
