@@ -14,7 +14,7 @@ import Box from '@material-ui/core/Box'
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(0.5),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -29,16 +29,19 @@ export default function SignIn(props) {
     <Spring 
       from = {{opacity: 0, marginTop:-250 }}
       to = {{opacity: 1, marginTop: 0 }}
-      config= {{delay:250}}
+      config= {{delay:500}}
     >
       { props => (
         <Grid item style={props}  component='main' maxWidth="xs">
           <CssBaseline />
+          <Typography style={{display: 'flex', justifyContent: 'center'}}  component="h2" variant="h5">
+            Welcome Back {details.name}! 
+          </Typography>
+          <Typography style={{display: 'flex', justifyContent: 'center'}} component="p"  >
+                (If this isn't you please double check your email).
+          </Typography>
           <Box  m={4} pt={3}>   
             <form className={classes.form} noValidate>
-              <Typography component="p"  >
-                Welcome Back {details.name}! (If this isn't you please double check your email).
-              </Typography>
               <TextField
                 variant="outlined"
                 margin="normal"

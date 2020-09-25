@@ -1,5 +1,5 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import {Pets} from '@material-ui/icons';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    fontSize: 'fontSizeLarge'
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -31,17 +31,15 @@ export default function Email(props) {
     <Spring
     from = {{opacity: 0}}
     to = {{opacity: 1}}
-    config= {{delay:2000}}
+    config= {{delay:1000}}
     >
       { transitions => (
         <Grid style={transitions} item component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
-                
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Dog Creation
+            <Pets className={classes.avatar}/>
+            <Typography component="h1" variant="h4">
+              Log-in / Sign-up
             </Typography>
             <form className={classes.form} noValidate>
               <TextField   

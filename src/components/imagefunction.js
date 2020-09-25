@@ -23,7 +23,7 @@ export default function RandomImage() {
   const classes = useStyles()
   return (
     <Spring
-    from={{ opacity: 0, marginTop: -500 }}
+    from={{ opacity: 0, marginTop: -16 }}
     to={{ opacity:1, marginTop:0 }}
     config={{duration:2000}}
     >

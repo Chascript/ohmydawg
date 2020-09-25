@@ -1,5 +1,11 @@
 import React from 'react'
+import { Grid, CssBaseline } from '@material-ui/core'
 
 export function Home() {
-  return <div>HOME</div>
+  return  (
+    <Grid>    
+      <CssBaseline/> 
+      Home
+    </Grid>
+  )
 }

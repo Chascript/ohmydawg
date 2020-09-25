@@ -21,9 +21,9 @@ export default function UsersImage() {
 
   return (
     <Spring
-    from={{ opacity: 0, marginTop: -500 }}
+    from={{ opacity: 0, marginTop: -16 }}
     to={{ opacity:1, marginTop:0 }}
-    config={{duration:2000}}
+    config={{duration:3000}}
     >
       {transition=> (
         <Grid style={transition} item xs={false}  md={12} className={classes.div}>

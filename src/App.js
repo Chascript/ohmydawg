@@ -26,40 +26,36 @@ function App() {
         light: '#cfcfcf', //
         main: '#797a7a', //switch button
         dark: '#ba000d',
-        contrastText: '#000',
+        contrastText: '#fff',
       },
     },
-      typography:{
-        fontFamily: font,
+    typography: {
+      fontFamily: font,
     }
   });
   const lightTheme = createMuiTheme({
     palette: {
       primary: grey,
-      secondary:blueGrey,
+      secondary: blueGrey,
     },
     typography:{
-        fontFamily: font,
+      fontFamily: font,
     }
   });
     
   return (
     <Router>
-    <ThemeProvider theme = {darkMode ? darkTheme : lightTheme} >
-      <Container >
-        <Container>
-          
-          <DenseAppBar checked={darkMode} onChange={()=> setDarkMode(!darkMode)} />
+      <ThemeProvider theme = {darkMode ? darkTheme : lightTheme} >
+        <Container >
+          <Container>   
+            <DenseAppBar checked={darkMode} onChange={()=> setDarkMode(!darkMode)} />
+          </Container>
+          <Container>
+            <Section/>        
+          </Container>
         </Container>
-        <Container>
-          <Section/>
-    
-
-        </Container>
-      </Container>
-    </ThemeProvider>
-    
+      </ThemeProvider>  
     </Router>
-      );
+  );
 }
 export default App;

@@ -20,8 +20,8 @@ export default function Logo() {
   const classes = useStyles();
   return (
     <Spring
-      from={{ opacity: 0, marginTop: -500 }}
-      to={{ opacity:1, marginTop:0 }}
+      from={{ opacity: 0, }}
+      to={{ opacity:1,}}
       config={{duration:2000}}
     >
       {transition=> (

@@ -1,5 +1,11 @@
 import React from 'react'
+import { Grid, CssBaseline } from '@material-ui/core'
 
 export function Gallery() {
-  return <div>Gallery</div>
+  return  (
+    <Grid>    
+      <CssBaseline/> 
+      Gallery
+    </Grid>
+  )
 }

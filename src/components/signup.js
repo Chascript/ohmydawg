@@ -27,11 +27,14 @@ export default function SignUp() {
     <Spring
     from = {{opacity: 0, marginTop:-500}}
     to = {{opacity: 1, marginTop: 0}}
-    config= {{delay:750}}
+    config= {{delay:500}}
     >
       { Props => (
         <Grid style={Props} component="main" maxWidth="xs">
           <CssBaseline />
+          <Typography style={{display: 'flex', justifyContent: 'center'}}  component="h2" variant="h5">
+              Dog Creation
+          </Typography>
           <Box  m={4} pt={3}>   
             <Typography component="p"  >
               Welcome, to begin creating your account please fill in your details below

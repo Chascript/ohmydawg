@@ -6,8 +6,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-
-
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import { AccountCircle, Email, Home, LibraryBooks, Pets, PhotoSizeSelectActual } from '@material-ui/icons';
 
 export default function LongMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -39,23 +39,51 @@ export default function LongMenu() {
         onClose={handleClose}
         PaperProps={{
           style: {
-            width: '20ch',
+            width: '26ch',
             square: true
           },
         }}
-      >
-        
+      >       
           <MenuItem onClick={handleClose}>
             <List component="nav" aria-label="main mailbox folders">
-              <ListItem ><Link href='/'>Home</Link></ListItem>
-              <ListItem ><Link href='/gallery'>Gallery</Link></ListItem>
-              <ListItem ><Link href='/loginsignup'>Sign-up/log-in</Link></ListItem>
-              <ListItem ><Link href='/profile'>Profile</Link></ListItem>
-              <ListItem ><Link href='/contact'>Contact</Link></ListItem>
-              <ListItem ><Link href='/story'>Story</Link></ListItem>
+              <ListItem >
+                <ListItemIcon>
+                  <Home/>
+                </ListItemIcon>
+                <Link color='textPrimary' href='/'>Home</Link>
+              </ListItem>
+              <ListItem >
+                <ListItemIcon>
+                  <PhotoSizeSelectActual/>
+                </ListItemIcon>
+                  <Link color='textPrimary' href='/gallery'>Gallery</Link>
+              </ListItem>
+              <ListItem >
+                <ListItemIcon>
+                  <Pets/>
+                </ListItemIcon>
+                <Link color='textPrimary' href='/loginsignup'>Log-in / Sign-up</Link>
+              </ListItem>
+              <ListItem >
+                <ListItemIcon>
+                  <AccountCircle/>
+                </ListItemIcon>
+                <Link color='textPrimary' href='/profile'>Profile</Link>
+              </ListItem>
+              <ListItem >
+                <ListItemIcon>
+                  <Email/>
+                </ListItemIcon>
+                <Link color='textPrimary' href='/contact'>Contact</Link>
+              </ListItem>
+              <ListItem >
+                <ListItemIcon>
+                  <LibraryBooks/>
+                </ListItemIcon>
+                <Link color='textPrimary' href='/story'>Story</Link>
+              </ListItem>
             </List>
-          </MenuItem>
-        
+          </MenuItem>  
       </Menu>
     </div>
   );
