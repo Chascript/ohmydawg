@@ -25,10 +25,9 @@ export default function SignInSide() {
   const [hasError, setErrors] = useState(false);
   const [emailValue, setEmailValue] = useState('')
   const [newUser, setNewUser] = useState(false)
-console.log(emailValue)
+
   
-  useEffect((emailValue)  =>  {
-    console.log(emailValue)
+  useEffect(()  =>  {
      try {
       fetch('http://localhost:5000/accounts/details/email', {
       method: 'POST',
@@ -36,7 +35,7 @@ console.log(emailValue)
         'Accept': 'application/json, text/plain, */*',
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({value: 'manson@gmail.com'}),
+      body: JSON.stringify({value: emailValue}),
      })
      .then(res => res.json())
      .then(res=>console.log(res))
@@ -44,7 +43,7 @@ console.log(emailValue)
       catch(error) {
       return error
       }
-  },[emailValue])
+  })
 
 
  

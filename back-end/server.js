@@ -36,9 +36,7 @@ app.post('/accounts/details/email', (req,res) => {
   const emailData = data.map((accountId) => 
     accounts[accountId].email
   )
-  console.log(emailData)
   const exists = emailData.includes(emailInputted)
-  console.log(emailInputted)
   res.json(exists)
 })
 
