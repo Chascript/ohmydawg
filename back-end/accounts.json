@@ -1,0 +1,16 @@
+{"manson@gmail.com":{
+  "name": "Manson",
+  "breed": "Miniature Poodle",
+  "colour": "Black",
+  "votes": 0,
+  "dob": "08/01/2019",
+  "email": "manson@gmail.com"
+},
+"roy@gmail.com":{
+  "name": "Roy",
+  "breed": "Standard Poodle",
+  "colour": "Silver",
+  "votes": 0,
+  "dob": "22/11/2019",
+  "email": "roy@gmail.com"
+}}
