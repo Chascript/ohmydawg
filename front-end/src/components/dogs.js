@@ -12,8 +12,7 @@ class Dogs extends React.Component {
   componentDidMount() {
     fetch('dogs/details')
       .then(res => res.json())
-      .then(accounts => this.setState({accounts}, () => console.log('dogs fetched..',
-      accounts)))
+      .then(accounts => this.setState({accounts}, () => console.log('dogs fetched..',accounts)))
   }
 
   render(){

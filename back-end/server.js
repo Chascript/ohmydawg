@@ -40,6 +40,12 @@ app.post('/accounts/details/email', (req,res) => {
   res.json(exists)
 })
 
+
+
+
+
+
+
 app.get('/', function(req,res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
