@@ -3,7 +3,7 @@ import {Spring} from 'react-spring/renderprops'
 import { makeStyles } from '@material-ui/core/styles'
 import  Grid  from '@material-ui/core/Grid'
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   div:{
     display: 'flex',
     flexWrap: 'wrap'
@@ -16,8 +16,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function UsersImage() {
+export default function UsersImage(props) {
   const classes = useStyles();
+  
 
   return (
     <Spring
@@ -27,7 +28,7 @@ export default function UsersImage() {
     >
       {transition=> (
         <Grid style={transition} item xs={false}  md={12} className={classes.div}>
-          <img src={ require('./manson.jpg')} alt={'users-profile'} className={classes.usersImage}/>
+          <img src= { props.photo} alt={'users-profile'} className={classes.usersImage}/>
         </Grid>
       )}
     </Spring>

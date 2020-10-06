@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
   random:{
     objectFit: 'fill',      
     boxShadow: '0 1px 10px #404040',
-    maxwidth: '100%',
+    maxWidth: '100%',
     overflow: 'hidden',
     marginBottom: '10px'
   },
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-export default function RandomImage() {
+export default function RandomImage(props) {
   const classes = useStyles()
   return (
     <Spring
@@ -29,9 +29,9 @@ export default function RandomImage() {
     >
       {transition=> (
         <Grid style={transition} item xs={false}  md={12} className={classes.div}>
-          <img  src={'https://placedog.net/640/480?random'} alt={'users-profile'} className={classes.random} />
-          <img  src={'https://placedog.net/640/400?random'} alt={'users-profile'} className={classes.random} />
-          <img  src={'https://placedog.net/640/600?random'} alt={'users-profile'} className={classes.random} />
+          <img  src={props.photos[0]} alt={'users-profile'} className={classes.random} />
+          <img  src={props.photos[1]} alt={'users-profile'} className={classes.random} />
+          <img  src={props.photos[2]} alt={'users-profile'} className={classes.random} />
         </Grid>
       )}
     </Spring>

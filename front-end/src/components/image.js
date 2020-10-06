@@ -7,7 +7,7 @@ import Logo from './logo'
 
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   div:{
     display: 'flex',
     flexWrap: 'wrap'

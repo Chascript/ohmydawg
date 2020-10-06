@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const cors = require('cors')
 app.use(cors())
 
-
 // loads json file
 const fs = require('fs');
 const accounts = JSON.parse(fs.readFileSync('accounts.json'));
@@ -32,19 +31,25 @@ app.get('/dogs/details', (req,res) => {
 // get email data
 app.post('/accounts/details/email', (req,res) => {
   const emailInputted = req.body.value
-  const data = Object.keys(accounts)
-  const emailData = data.map((accountId) => 
-    accounts[accountId].email
-  )
-  const exists = emailData.includes(emailInputted)
-  res.json(exists)
+  if (accounts[emailInputted]) {
+    const data = [accounts[emailInputted].name,accounts[emailInputted].image, false]
+    res.json(data)
+  } else {
+    const datadata = [false,false,true]
+    res.json(datadata)
+  }
 })
 
-
-
-
-
-
+// 3 random dog photos
+app.get('/photos/random', (req, res) => {
+  const data = Object.keys(accounts);
+  const images = data.map((accountId) => accounts[accountId].image)
+  const randomNumber1 = Math.floor(Math.random()*images.length);
+  const randomNumber2 = Math.floor(Math.random()*images.length);
+  const randomNumber3 = Math.floor(Math.random()*images.length);
+  const randomImages = [images[randomNumber1],images[randomNumber2],images[randomNumber3]];
+  res.json(randomImages)
+})
 
 app.get('/', function(req,res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))

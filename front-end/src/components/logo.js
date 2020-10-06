@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   image: {
     boxShadow: '0 1px 10px #404040',
     objectFit: 'fill',      
