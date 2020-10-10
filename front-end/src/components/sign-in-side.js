@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";import Grid from '@material-ui/core/Grid'
+import React, { useState, useEffect } from "react";
+import Grid from '@material-ui/core/Grid'
 import Email from './email-input'
 import SignUp from './signup';
 import SignIn from './sign-in-component';
@@ -78,7 +79,7 @@ export default function SignInSide() {
           <Message />
           ) : (
           newUser ? (
-            <SignUp />
+            <SignUp emailValue={emailValue}/>
             ) : (
             <SignIn emailValue={emailValue}  name={usersName} />
           )  

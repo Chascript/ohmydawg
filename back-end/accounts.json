@@ -1,45 +1,67 @@
-{"manson@gmail.com":{
-  "name": "Manson",
-  "breed": "Miniature Poodle",
-  "colour": "Black",
-  "votes": 0,
-  "dob": "08/01/2019",
-  "email": "manson@gmail.com",
-  "image": "./photos/manson.jpg"
-},
-"roy@gmail.com":{
-  "name": "Roy",
-  "breed": "Standard Poodle",
-  "colour": "Silver",
-  "votes": 0,
-  "dob": "22/11/2019",
-  "email": "roy@gmail.com",
-  "image": "/photos/roy.jpg"
-},
-"jacob@gmail.com":{
-  "name": "Jacob",
-  "breed": "Toy Poodle",
-  "colour": "Parti Poodle",
-  "votes": 0,
-  "dob": "12/10/2012",
-  "email": "jacob@gmail.com",
-  "image": "/photos/jacob.jpg"
-},
-"indie@gmail.com":{
-  "name": "Indie",
-  "breed": "Miniature Poodle",
-  "colour": "Black",
-  "votes": 0,
-  "dob": "07/07/2011",
-  "email": "indie@gmail.com",
-  "image": "/photos/indie.jpg"
-},
-"dobby@gmail.com":{
-  "name": "Dobby",
-  "breed": "Miniature Poodle",
-  "colour": "Cream",
-  "votes": 0,
-  "dob": "25/01/2018",
-  "email": "dobby@gmail.com",
-  "image": "/photos/dobby.jpg"
-}}
+{
+  "manson@gmail.com": {
+    "name": "Manson",
+    "breed": "Miniature Poodle",
+    "colour": "Black",
+    "votes": 0,
+    "dob": "08/01/2019",
+    "email": "manson@gmail.com",
+    "image": "./photos/manson.jpg"
+  },
+  "roy@gmail.com": {
+    "name": "Roy",
+    "breed": "Standard Poodle",
+    "colour": "Silver",
+    "votes": 0,
+    "dob": "22/11/2019",
+    "email": "roy@gmail.com",
+    "image": "/photos/roy.jpg"
+  },
+  "jacob@gmail.com": {
+    "name": "Jacob",
+    "breed": "Toy Poodle",
+    "colour": "Parti Poodle",
+    "votes": 0,
+    "dob": "12/10/2012",
+    "email": "jacob@gmail.com",
+    "image": "/photos/jacob.jpg"
+  },
+  "indie@gmail.com": {
+    "name": "Indie",
+    "breed": "Miniature Poodle",
+    "colour": "Black",
+    "votes": 0,
+    "dob": "07/07/2011",
+    "email": "indie@gmail.com",
+    "image": "/photos/indie.jpg"
+  },
+  "dobby@gmail.com": {
+    "name": "Dobby",
+    "breed": "Miniature Poodle",
+    "colour": "Cream",
+    "votes": 0,
+    "dob": "25/01/2018",
+    "email": "dobby@gmail.com",
+    "image": "/photos/dobby.jpg"
+  },
+  "merlin@gmail.com": {
+    "email": "merlin@gmail.com",
+    "username": "MerlinPowers",
+    "password": "Merlin123",
+    "name": "Merlin",
+    "breed": "German Shepherd",
+    "dob": "??",
+    "colour": "Golden and Black",
+    "votes": 0
+  },
+  "hector@gmail.com": {
+    "email": "hector@gmail.com",
+    "username": "HectorRules",
+    "password": "Hector",
+    "name": "Hector",
+    "breed": "Labrador",
+    "dob": "??/??/????",
+    "colour": "Black",
+    "votes": 0
+  }
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -21,16 +21,61 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignUp() {
+export default function SignUp(props) {
+  /*   email: props.emailValue,
+            'username': username,
+            'password': password,
+            'name': dogName,
+            'breed': dogBreed,
+            'dob': dateOfBirth,
+            'colour': colour,   */
   const classes = useStyles();
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [dogName, setDogName] = useState('')
+  const [dogBreed, setDogBreed] = useState('')
+  const [dateOfBirth, setDateOfBirth] = useState('')
+  const [colour, setColour] = useState('')
+  const [errors, setErrors] = useState(false)
+
+  const saveDog = () => {
+    setErrors(false)
+    try{
+      fetch('http://localhost:5000/signup/newdog', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: props.emailValue,
+          username: username,
+          password: password,
+          name: dogName,
+          breed: dogBreed,
+          dob: dateOfBirth,
+          colour: colour,
+        })
+      })
+        .then(res => res.json())
+        .then(res => {
+          console.log(res)
+        })
+    } catch(error) {
+      setErrors(true)
+      return error
+    }
+  }
+
+
   return (
     <Spring
     from = {{opacity: 0, marginTop:-500}}
     to = {{opacity: 1, marginTop: 0}}
     config= {{delay:500}}
     >
-      { Props => (
-        <Grid style={Props} component="main" maxwidth="xs">
+      { transition => (
+        <Grid style={transition} component="main" maxwidth="xs">
           <CssBaseline />
           <Typography style={{display: 'flex', justifyContent: 'center'}}  component="h2" variant="h5">
               Dog Creation
@@ -47,13 +92,13 @@ export default function SignUp() {
                 </Grid>
                 <Grid item xs={12} >
                   <TextField
-                    autoComplete="fname"
                     name="userName"
                     variant="outlined"
                     required
                     fullWidth
                     id="userName"
                     label="Account Username"
+                    onKeyUp = {e => setUsername(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -65,7 +110,8 @@ export default function SignUp() {
                     label="Password to get into your account"
                     type="password"
                     id="password"
-                    autoComplete="current-password"
+                    onKeyUp = {e => setPassword(e.target.value)}
+
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -73,10 +119,10 @@ export default function SignUp() {
                     variant="outlined"
                     required
                     fullWidth
-                    id="name"
+                    id="dogName"
                     label="What do your humans call you?"
-                    name="lastName"
-                    autoComplete="lname"
+                    name="dogName"
+                    onKeyUp = {e => setDogName(e.target.value)}
                   />
                 </Grid>            
                 <Grid item xs={12}>
@@ -87,6 +133,7 @@ export default function SignUp() {
                     id="breed"
                     label="What breed are you..?"
                     name="breed"
+                    onKeyUp = {e => setDogBreed(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -97,6 +144,8 @@ export default function SignUp() {
                     id="dateOfBirth"
                     label="What date were you born?"
                     name="dateOfBirth"
+                    onKeyUp = {e => setDateOfBirth(e.target.value)}
+
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -107,6 +156,7 @@ export default function SignUp() {
                     id="colour"
                     label="What colour do you think you are?"
                     name="colour"
+                    onKeyUp = {e => setColour(e.target.value)}
                   />
                 </Grid>
                   <Grid item xs={12}>
@@ -117,11 +167,12 @@ export default function SignUp() {
                   </Grid>
                 </Grid>
                 <Button
-                  type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
                   className={classes.submit}
+                  onClick = {e => saveDog()}
+                  href= '/gallery'
                 >
                   Create Dog!
                 </Button>
