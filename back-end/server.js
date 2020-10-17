@@ -36,8 +36,17 @@ const saveData = (object, filepath) => {
 
 // Send all dog details over to frontend
 app.get('/dogs/details', (req,res) => {
-  const data = Object.values(accounts);
-  res.json(data)
+  const data = Object.keys(accounts);
+  galleryData = data.map((dogId) => [
+    accounts[dogId].name,
+    accounts[dogId].breed,
+    accounts[dogId].votes,
+    accounts[dogId].image,
+    accounts[dogId].username,
+
+  ])
+
+  res.json(galleryData)
 })
 
 // get email data

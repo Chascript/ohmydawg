@@ -63,5 +63,15 @@
     "dob": "??/??/????",
     "colour": "Black",
     "votes": 0
+  },
+  "harry@gmail.com": {
+    "email": "harry@gmail.com",
+    "username": "Harry`",
+    "password": "Harry123",
+    "name": "Harry",
+    "breed": "Cockapoo",
+    "dob": "26/05/2012",
+    "colour": "Black and White",
+    "votes": 0
   }
 }
