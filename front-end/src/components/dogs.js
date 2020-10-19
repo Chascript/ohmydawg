@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import {makeStyles} from '@material-ui/core/styles'
 import { GridListTile, List } from '@material-ui/core'
+import VoteButton from './votebutton'
 
 const useStyles = makeStyles(() => ({
   details:{
@@ -42,17 +43,18 @@ const useStyles = makeStyles(() => ({
 export default function Dogs() {
   const classes = useStyles()
   const [accounts, setAccounts] = useState([])
+  const [buttonClicked, setButtonClicked] = useState(false)
 
-useEffect(() => {
-  const fetchDetails = async () => {
-      await fetch('dogs/details')
-      .then(res => res.json())
-      .then(accounts => setAccounts([...accounts, {accounts}], () => console.log('dogs fetched..',accounts)))
-  }
 
-  fetchDetails()
-}, [])
+  useEffect(() => {
+    const fetchDetails = async () => {
+        await fetch('dogs/details')
+        .then(res => res.json())
+        .then(accounts => setAccounts([...accounts, {accounts}], () => console.log('dogs fetched..',accounts)))
+    }
 
+    fetchDetails()
+  }, [buttonClicked])
 
 
   return(
@@ -60,8 +62,9 @@ useEffect(() => {
       <h2>The Gallery</h2>
       <Grid container sm={5} md={12} component={Paper}  className={classes.voteContainer}>
         {accounts.map(accounts =>
-          <GridListTile cols={4} sm={5} md={4} className={classes.dogContainer}>
+          <GridListTile item cols={4} sm={5} md={4} className={classes.dogContainer}>
             <img className={classes.image} src={accounts[3]}/>
+            <VoteButton name={accounts[0]} username={accounts[4]} onClick={ e => setButtonClicked(!buttonClicked)} />
             <Grid className={classes.details}>
               <List className={classes.name} >{accounts[0]}</List>
               <List  className={classes.breed}>{accounts[1]}</List>

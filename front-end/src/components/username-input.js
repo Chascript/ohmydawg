@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Email(props) {
+export default function Username(props) {
   const classes = useStyles();
   return (
     <Spring
@@ -43,16 +43,16 @@ export default function Email(props) {
             </Typography>
             <form className={classes.form} noValidate>
               <TextField   
-                onKeyUp={props.emailValue}
+                onKeyUp={props.usernameValue}
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Your humans email address"
-                name="email"
+                id="username"
+                label="Your Chosen Username"
+                name="username"
               />
             </form>
-            {props.emailCurrentValue < 1 ? (
+            {props.usernameCurrentValue < 1 ? (
               <Message />
               ) : (
               <div></div>

@@ -38,7 +38,7 @@ export default function SignIn(props) {
             Welcome Back {details.name}! 
           </Typography>
           <Typography style={{display: 'flex', justifyContent: 'center'}} component="p"  >
-                (If this isn't you please double check your email).
+                (If this isn't you please double check your username).
           </Typography>
           <Box  m={4} pt={3}>   
             <form className={classes.form} noValidate>

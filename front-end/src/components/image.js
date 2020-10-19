@@ -18,10 +18,10 @@ export default function Image(props) {
   const classes = useStyles();
   return (
     <Grid item xs={false} sm={4} md={7} className={classes.div}>
-      {props.emailCurrentValue === '' ? (
+      {props.usernameCurrentValue === '' ? (
         <Logo/>            
         ) : (
-        props.emailCurrentValue === props.email ? ( 
+        props.usernameCurrentValue === props.username ? ( 
           <UserImage />          
           ) : ( 
           <RandomImage />

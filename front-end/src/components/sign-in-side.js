@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Grid from '@material-ui/core/Grid'
-import Email from './email-input'
+import Username from './username-input'
 import SignUp from './signup';
 import SignIn from './sign-in-component';
 import Paper from '@material-ui/core/Paper'
@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 export default function SignInSide() {
   const classes= useStyles()
   const [hasError, setErrors] = useState(false);
-  const [emailValue, setEmailValue] = useState('')
+  const [usernameValue, setUsernameValue] = useState('')
   const [newUser, setNewUser] = useState('')
   const [usersName, setUsersName] = useState('')
   const [image, setImage] = useState('')
@@ -32,13 +32,13 @@ export default function SignInSide() {
   useEffect(()  =>  {
     setErrors(false)
     try {
-      fetch('http://localhost:5000/accounts/details/email', {
+      fetch('http://localhost:5000/accounts/details/username', {
         method: 'POST',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({value: emailValue}),
+        body: JSON.stringify({value: usernameValue}),
       })
       .then(res => res.json())
       .then(data => {
@@ -55,7 +55,7 @@ export default function SignInSide() {
       setErrors(true)
       return error
     }
-  },[emailValue])
+  },[usernameValue])
 
   useEffect(() => {
     setErrors(false)
@@ -74,20 +74,20 @@ export default function SignInSide() {
   return ( 
     <Grid container component='main'  className={classes.container} >
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Email emailValue = {e => setEmailValue(e.target.value)} emailCurrentValue={emailValue}  /> 
-        {emailValue === '' ?(
+        <Username usernameValue = {e => setUsernameValue(e.target.value)} usernameCurrentValue={usernameValue}  /> 
+        {usernameValue === '' ?(
           <Message />
           ) : (
           newUser ? (
-            <SignUp emailValue={emailValue}/>
+            <SignUp usernameValue={usernameValue}/>
             ) : (
-            <SignIn emailValue={emailValue}  name={usersName} />
+            <SignIn usernameValue={usernameValue}  name={usersName} />
           )  
         )}  
       </Grid>
       <Grid item xs={false} sm={4} md={7} className={classes.div}>
 
-      {emailValue === '' ?(
+      {usernameValue === '' ?(
         <Logo />
           ) : (
           newUser ? (

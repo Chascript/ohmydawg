@@ -22,15 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignUp(props) {
-  /*   email: props.emailValue,
-            'username': username,
-            'password': password,
-            'name': dogName,
-            'breed': dogBreed,
-            'dob': dateOfBirth,
-            'colour': colour,   */
   const classes = useStyles();
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [dogName, setDogName] = useState('')
   const [dogBreed, setDogBreed] = useState('')
@@ -48,8 +41,8 @@ export default function SignUp(props) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          email: props.emailValue,
-          username: username,
+          username: props.usernameValue,
+          email: email,
           password: password,
           name: dogName,
           breed: dogBreed,
@@ -83,7 +76,7 @@ export default function SignUp(props) {
           <Box  m={4} pt={3}>   
             <Typography component="p"  >
               Welcome, to begin creating your account please fill in your details below
-              (If you already have an account please provide email associated with your account)
+              (If you already have an account please provide the username associated with your account)
             </Typography>
             <form className={classes.form} noValidate>
               <Grid container spacing={2}>
@@ -92,13 +85,13 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12} >
                   <TextField
-                    name="userName"
+                    name="email"
                     variant="outlined"
                     required
                     fullWidth
-                    id="userName"
-                    label="Account Username"
-                    onKeyUp = {e => setUsername(e.target.value)}
+                    id="email"
+                    label="Your Humans Email Address"
+                    onKeyUp = {e => setEmail(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12}>

@@ -1,77 +1,52 @@
 {
-  "manson@gmail.com": {
+  "MansonPoodle": {
     "name": "Manson",
+    "username": "MansonPoodle",
     "breed": "Miniature Poodle",
     "colour": "Black",
-    "votes": 0,
+    "votes": 10,
     "dob": "08/01/2019",
     "email": "manson@gmail.com",
     "image": "./photos/manson.jpg"
   },
-  "roy@gmail.com": {
+  "RoyPoodle": {
     "name": "Roy",
+    "username": "RoyPoodle",
     "breed": "Standard Poodle",
     "colour": "Silver",
-    "votes": 0,
+    "votes": 8,
     "dob": "22/11/2019",
     "email": "roy@gmail.com",
     "image": "/photos/roy.jpg"
   },
-  "jacob@gmail.com": {
+  "JacobPoodle": {
     "name": "Jacob",
+    "username": "JacobPoodle",
     "breed": "Toy Poodle",
     "colour": "Parti Poodle",
-    "votes": 0,
+    "votes": 3,
     "dob": "12/10/2012",
     "email": "jacob@gmail.com",
     "image": "/photos/jacob.jpg"
   },
-  "indie@gmail.com": {
+  "IndiePoodle": {
     "name": "Indie",
+    "username": "IndiePoodle",
     "breed": "Miniature Poodle",
     "colour": "Black",
-    "votes": 0,
+    "votes": 6,
     "dob": "07/07/2011",
     "email": "indie@gmail.com",
     "image": "/photos/indie.jpg"
   },
-  "dobby@gmail.com": {
+  "DobbyPoodle": {
     "name": "Dobby",
+    "username": "DobbyPoodle",
     "breed": "Miniature Poodle",
     "colour": "Cream",
     "votes": 0,
     "dob": "25/01/2018",
     "email": "dobby@gmail.com",
     "image": "/photos/dobby.jpg"
-  },
-  "merlin@gmail.com": {
-    "email": "merlin@gmail.com",
-    "username": "MerlinPowers",
-    "password": "Merlin123",
-    "name": "Merlin",
-    "breed": "German Shepherd",
-    "dob": "??",
-    "colour": "Golden and Black",
-    "votes": 0
-  },
-  "hector@gmail.com": {
-    "email": "hector@gmail.com",
-    "username": "HectorRules",
-    "password": "Hector",
-    "name": "Hector",
-    "breed": "Labrador",
-    "dob": "??/??/????",
-    "colour": "Black",
-    "votes": 0
-  },
-  "harry@gmail.com": {
-    "email": "harry@gmail.com",
-    "username": "Harry`",
-    "password": "Harry123",
-    "name": "Harry",
-    "breed": "Cockapoo",
-    "dob": "26/05/2012",
-    "colour": "Black and White",
-    "votes": 0
   }
 }

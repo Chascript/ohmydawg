@@ -49,11 +49,11 @@ app.get('/dogs/details', (req,res) => {
   res.json(galleryData)
 })
 
-// get email data
-app.post('/accounts/details/email', (req,res) => {
-  const emailInputted = req.body.value
-  if (accounts[emailInputted]) {
-    const data = [accounts[emailInputted].name,accounts[emailInputted].image, false]
+// get username data
+app.post('/accounts/details/username', (req,res) => {
+  const usernameInputted = req.body.value
+  if (accounts[usernameInputted]) {
+    const data = [accounts[usernameInputted].name,accounts[usernameInputted].image, false]
     res.json(data)
   } else {
     const datadata = [false,false,true]
@@ -84,12 +84,26 @@ app.post('/signup/newdog', (req,res) => {
     colour: req.body.colour,
     votes: 0,
   }
-  accounts[newDog.email] = newDog; // sets email as index
+  accounts[newDog.username] = newDog; // sets email as index
 
   saveData(accounts, 'accounts.json')
 
   res.json(`Your first dog and account details are saved`)
 })
+
+app.post('/dog/username/name/vote', (req,res) => {
+  const { name } = req.body
+  const { username } = req.body
+  console.log(req.body)
+  if(accounts[username].name) {
+    
+    accounts[username].votes += 1;
+    res.json({ votes: accounts[username].votes });
+    saveData(accounts, 'accounts.json')
+  } else {
+    res.json( `${name} doesn't exist under ${username}`);
+  }
+});
 
 app.get('/', function(req,res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
