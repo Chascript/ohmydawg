@@ -43,7 +43,6 @@ app.get('/dogs/details', (req,res) => {
     accounts[dogId].votes,
     accounts[dogId].image,
     accounts[dogId].username,
-
   ])
 
   res.json(galleryData)
@@ -91,15 +90,17 @@ app.post('/signup/newdog', (req,res) => {
   res.json(`Your first dog and account details are saved`)
 })
 
-app.post('/dog/username/name/vote', (req,res) => {
+app.post('/dog/username/name/vote', (req,res) => { 
   const { name } = req.body
   const { username } = req.body
-  console.log(req.body)
   if(accounts[username].name) {
     
     accounts[username].votes += 1;
-    res.json({ votes: accounts[username].votes });
     saveData(accounts, 'accounts.json')
+    console.log(username)
+    const votes = accounts[username].votes
+
+    res.json(`${votes} for ${username} ${name}`);
   } else {
     res.json( `${name} doesn't exist under ${username}`);
   }
