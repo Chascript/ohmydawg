@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -37,8 +37,8 @@ export default function SignUp(props) {
       fetch('http://localhost:5000/signup/newdog', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json, text/plain',
-          'Content-Type': 'application/json'
+          'Accept' : 'application/json',
+          'Content-Type' : 'application/json, text/plain'
         },
         body: JSON.stringify({
           username: props.usernameValue,
