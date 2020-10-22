@@ -22,7 +22,6 @@ const useStyles = makeStyles(() => ({
 }))
 export default function SignInSide() {
   const classes= useStyles()
-  const [hasError, setErrors] = useState(false);
   const [usernameValue, setUsernameValue] = useState('')
   const [newUser, setNewUser] = useState('')
   const [usersName, setUsersName] = useState('')
@@ -30,8 +29,6 @@ export default function SignInSide() {
   const [randomDogImage, setRandomDogImage] = useState([''])
   
   useEffect(()  =>  {
-    setErrors(false)
-    try {
       fetch('http://localhost:5000/accounts/details/username', {
         method: 'POST',
         headers: {
@@ -50,25 +47,17 @@ export default function SignInSide() {
           setNewUser(data[2])
         }
       })
-    }
-    catch(error) {
-      setErrors(true)
-      return error
-    }
+    .catch(error => console.log(error))
+    
   },[usernameValue])
 
   useEffect(() => {
-    setErrors(false)
-    try {
     fetch('http://localhost:5000/photos/random')
     .then(res => res.json())
     .then(dogPhoto => {
       setRandomDogImage([dogPhoto[0], dogPhoto[1], dogPhoto[2]])
     })   
-  } catch(error) {
-    setErrors(true)
-    return error
-  }
+  .catch(error => console.log(error))
   },[newUser])
 
   return ( 

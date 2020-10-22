@@ -4,7 +4,7 @@
     "username": "MansonPoodle",
     "breed": "Miniature Poodle",
     "colour": "Black",
-    "votes": 67,
+    "votes": 111,
     "dob": "08/01/2019",
     "email": "manson@gmail.com",
     "image": "./photos/manson.jpg"
@@ -14,7 +14,7 @@
     "username": "RoyPoodle",
     "breed": "Standard Poodle",
     "colour": "Silver",
-    "votes": 44,
+    "votes": 62,
     "dob": "22/11/2019",
     "email": "roy@gmail.com",
     "image": "/photos/roy.jpg"
@@ -24,7 +24,7 @@
     "username": "JacobPoodle",
     "breed": "Toy Poodle",
     "colour": "Parti Poodle",
-    "votes": 13,
+    "votes": 48,
     "dob": "12/10/2012",
     "email": "jacob@gmail.com",
     "image": "/photos/jacob.jpg"
@@ -34,7 +34,7 @@
     "username": "IndiePoodle",
     "breed": "Miniature Poodle",
     "colour": "Black",
-    "votes": 8,
+    "votes": 40,
     "dob": "07/07/2011",
     "email": "indie@gmail.com",
     "image": "/photos/indie.jpg"
@@ -44,7 +44,7 @@
     "username": "DobbyPoodle",
     "breed": "Miniature Poodle",
     "colour": "Cream",
-    "votes": 1,
+    "votes": 41,
     "dob": "25/01/2018",
     "email": "dobby@gmail.com",
     "image": "/photos/dobby.jpg"
