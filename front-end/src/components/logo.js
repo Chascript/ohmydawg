@@ -26,7 +26,7 @@ export default function Logo() {
     >
       {transition=> (
         <Grid style={transition} item xs={false}  md={12} className={classes.div}>
-          <img className={classes.image} src={require('./ohmydawglogo.jpg')} alt={'ohmydawglogo'} />
+          <img className={classes.image} src={'http://localhost:5000/photos/ohmydawglogo.jpg'} alt={'ohmydawglogo'} />
         </Grid>
       )}
     </Spring>

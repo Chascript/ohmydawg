@@ -7,7 +7,7 @@
     "votes": 111,
     "dob": "08/01/2019",
     "email": "manson@gmail.com",
-    "image": "./photos/manson.jpg"
+    "image": "http://localhost:5000/photos/manson.jpg"
   },
   "RoyPoodle": {
     "name": "Roy",
@@ -17,7 +17,7 @@
     "votes": 62,
     "dob": "22/11/2019",
     "email": "roy@gmail.com",
-    "image": "/photos/roy.jpg"
+    "image": "http://localhost:5000/photos/roy.jpg"
   },
   "JacobPoodle": {
     "name": "Jacob",
@@ -27,7 +27,7 @@
     "votes": 48,
     "dob": "12/10/2012",
     "email": "jacob@gmail.com",
-    "image": "/photos/jacob.jpg"
+    "image": "http://localhost:5000/photos/jacob.jpg"
   },
   "IndiePoodle": {
     "name": "Indie",
@@ -37,7 +37,7 @@
     "votes": 40,
     "dob": "07/07/2011",
     "email": "indie@gmail.com",
-    "image": "/photos/indie.jpg"
+    "image": "http://localhost:5000/photos/indie.jpg"
   },
   "DobbyPoodle": {
     "name": "Dobby",
@@ -47,6 +47,6 @@
     "votes": 41,
     "dob": "25/01/2018",
     "email": "dobby@gmail.com",
-    "image": "/photos/dobby.jpg"
+    "image": "http://localhost:5000/photos/dobby.jpg"
   }
 }
