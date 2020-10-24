@@ -39,13 +39,15 @@ const saveData = (object, filepath) => {
 // Send all dog details over to frontend
 app.get('/dogs/details', (req,res) => {
   const data = Object.keys(accounts);
-  galleryData = data.map((dogId) => [
-    accounts[dogId].name,
-    accounts[dogId].breed,
-    accounts[dogId].votes,
-    accounts[dogId].image,
-    accounts[dogId].username,
-  ])
+
+  galleryData = data.map((dogId) => ({
+  name: accounts[dogId].name,
+  breed: accounts[dogId].breed,
+  votes: accounts[dogId].votes,
+  image: accounts[dogId].image,
+  username: accounts[dogId].username,
+  })
+)
 
   res.json(galleryData)
 })

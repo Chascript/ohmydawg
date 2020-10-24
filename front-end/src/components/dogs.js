@@ -82,12 +82,12 @@ const voteForDog = async (username, name) => {
       <Grid container component={Paper}  className={classes.voteContainer}>
         {dogDetails.map(dogDetails =>
           <GridListTile item="true" cols={4} sm={5} md={4} className={classes.dogContainer}>
-            <img className={classes.image} src={dogDetails[3]} alt={`${dogDetails[4]} ${dogDetails[0]}`}/>
-            <VoteButton username={dogDetails[4]} voteForDog = {e => voteForDog(dogDetails[4], dogDetails[0])} />
+            <img className={classes.image} src={dogDetails.image} alt={`${dogDetails.username} ${dogDetails.name}`}/>
+            <VoteButton username={dogDetails.username} voteForDog = {e => voteForDog(dogDetails.username, dogDetails.name)} />
             <Grid className={classes.details}>
-              <List className={classes.name} >{dogDetails[0]}</List>
-              <List className={classes.breed}>{dogDetails[1]}</List>
-              <VoteNumber className={classes.votes}  voteNumber = {dogDetails[2]} />
+              <List className={classes.name} >{dogDetails.name}</List>
+              <List className={classes.breed}>{dogDetails.breed}</List>
+              <VoteNumber className={classes.votes}  voteNumber = {dogDetails.votes} />
             </Grid>
           </GridListTile>
           )}

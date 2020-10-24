@@ -4,7 +4,7 @@
     "username": "MansonPoodle",
     "breed": "Miniature Poodle",
     "colour": "Black",
-    "votes": 111,
+    "votes": 115,
     "dob": "08/01/2019",
     "email": "manson@gmail.com",
     "image": "http://localhost:5000/photos/manson.jpg"
@@ -44,7 +44,7 @@
     "username": "DobbyPoodle",
     "breed": "Miniature Poodle",
     "colour": "Cream",
-    "votes": 41,
+    "votes": 44,
     "dob": "25/01/2018",
     "email": "dobby@gmail.com",
     "image": "http://localhost:5000/photos/dobby.jpg"
