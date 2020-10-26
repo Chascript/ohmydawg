@@ -40,7 +40,7 @@ export default function SignIn(props) {
           <Typography style={{display: 'flex', justifyContent: 'center'}} component="p"  >
                 (If this isn't you please double check your username).
           </Typography>
-          <Box  m={4} pt={3}>   
+          <Box  m={4} >   
             <form className={classes.form} noValidate>
               <TextField
                 variant="outlined"
@@ -52,6 +52,7 @@ export default function SignIn(props) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                placeholder="******"
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}

@@ -50,6 +50,7 @@ export default function Username(props) {
                 id="username"
                 label="Your Chosen Username"
                 name="username"
+                placeholder="Username Will Identify Account"
               />
             </form>
             {props.usernameCurrentValue < 1 ? (

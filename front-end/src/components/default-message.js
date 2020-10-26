@@ -12,10 +12,10 @@ export class Message extends React.Component {
       >
         { props => (
           <div style={props} >
-            <Typography component='p'>
-              Please enter your email address. If it matches up with an account you will 
+            <Typography style={{marginTop: 10}} component='p'>
+              Please enter your username. If it matches up with an account you will 
               be prompted to enter your password. If it dosen't match an account you will be 
-              prompted to create your dog with the email provided!
+              prompted to create your dog with the username provided!
             </Typography>
           </div>  
         )}
