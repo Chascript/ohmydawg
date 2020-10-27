@@ -7,6 +7,7 @@ import { ThemeProvider,  } from '@material-ui/core/styles';
 import { blueGrey, grey,} from '@material-ui/core/colors';
 import {Section} from '../src/components/section';
 import {BrowserRouter as Router} from 'react-router-dom'
+import Footer from './components/footer';
 const font = ['Mali']
 
 
@@ -52,6 +53,9 @@ function App() {
           </Container>
           <Container>
             <Section/>        
+          </Container>
+          <Container>
+            <Footer />
           </Container>
         </Container>
       </ThemeProvider>  

@@ -3,9 +3,9 @@ import Link from '@material-ui/core/Link';
 import React from 'react'
 
 
-function Copyright() {
+export default function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
+    <Typography variant="body2" align="center">
       {'Copyright © '}
       <Link color="inherit" href="http://www.ohmydawg.co.uk/home.html">
         ohmydawg
@@ -15,5 +15,3 @@ function Copyright() {
     </Typography>
   );
 }
-
-export default function EnterEmail() { return <Copyright /> }
