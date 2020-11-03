@@ -9,8 +9,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Spring} from 'react-spring/renderprops'
-import UploadButtons from './upload-button';
-import { FullscreenExit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -35,39 +33,54 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
   const classes = useStyles();
+  
+  const [file, setFile] = useState(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [dogName, setDogName] = useState('')
   const [dogBreed, setDogBreed] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState(' ')
   const [colour, setColour] = useState('')
+  const [error, setError] = useState(null);
 
-  const saveDog = () => {
-    try{
+ 
+
+  const changeHandler = (e) => { 
+    const types = ['image/png', 'image/jpeg'];
+    let selected = e.target.files[0];
+    if (selected && types.includes(selected.type)) {
+      setFile(selected);
+      setError(null)
+    } else {
+      setFile(null);
+      setError('Please select an image file (png or jpeg)')
+    }
+  }
+
+  const saveDog = (ev) => {   
+    const form = new FormData();
+    form.append('photo', file, file.name);
+
+   // assign key pair image with the file name to photo
+    
+    form.append('username', props.usernameValue)
+    form.set('email', email)
+    form.set('password', password)
+    form.set('name', dogName)
+    form.set('breed', dogBreed)
+    form.set('dob', dateOfBirth)
+    form.set('colour', colour)
       fetch('http://localhost:5000/signup/newdog', {
         method: 'POST',
-        headers: {
-          'Accept' : 'application/json',
-          'Content-Type' : 'application/json, text/plain'
-        },
-        body: JSON.stringify({
-          username: props.usernameValue,
-          email: email,
-          password: password,
-          name: dogName,
-          breed: dogBreed,
-          dob: dateOfBirth,
-          colour: colour,
-        })
+        body: form,
       })
         .then(res => res.json())
         .then(res => {
           console.log(res)
         })
-    } catch(error) {
-      return error
+    .catch(error => console.log(error))
     }
-  }
+  
 
 
   return (
@@ -122,7 +135,23 @@ export default function SignUp(props) {
                   <Typography className={classes.message}>(You can more dogs to your pack once you have created your first dog)</Typography>
                 </Grid>
                 <Grid item xs={12} >
-                  <UploadButtons />
+                  <div className={classes.output}>
+                  { error && <div className={classes.error}> { error } </div> }
+                  { file && <div > { file.name } </div> }
+                  </div>
+                  <input
+                    accept="image/*"
+                    className={classes.input}
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                    onChange={changeHandler}
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Button fullWidth variant="contained" color="primary" component="span">
+                      Upload a photo of yourself
+                    </Button>
+                  </label>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -184,7 +213,7 @@ export default function SignUp(props) {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                  onClick = {e => saveDog()}
+                  onClick={ev => saveDog()}
                   href= '/gallery'
                 >
                   Create Dog!

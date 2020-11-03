@@ -63,7 +63,7 @@ export default function SignInSide() {
   return ( 
     <Grid container component='main'  className={classes.container} >
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <Username usernameValue = {e => setUsernameValue(e.target.value)} usernameCurrentValue={usernameValue}  /> 
+        <Username usernameValue = {e => setUsernameValue(e.target.value)} usernameCurrentValue={usernameValue} /> 
         {usernameValue === '' ?(
           <Message />
           ) : (
