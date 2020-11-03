@@ -8,6 +8,8 @@ app.listen(port, () => console.log(`CORS-enabled server started on port ${port}`
 
 // Middleware
 const bodyParser = require('body-parser');
+const multer = require('multer');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -36,8 +38,21 @@ const saveData = (object, filepath) => {
   fs.writeFile(filepath, jsonData, finished);
 };
 
+// Storage for multer to know where to save images (Gallary)
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, 'static/photos');
+  },
+  filename(req, file, cb) {
+    cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
+  },
+});
+//assign upload to storage
+const upload = multer({ storage });
+
 // Send all dog details over to frontend
 app.get('/dogs/details', (req,res) => {
+  
   const data = Object.keys(accounts);
 
   galleryData = data.map((dogId) => ({
@@ -76,7 +91,7 @@ app.get('/photos/random', (req, res) => {
 })
 
 //save new dog
-app.post('/signup/newdog', (req,res) => {
+app.post('/signup/newdog', upload.single('photo'), (req,res) => {
   const newDog = {
     email: req.body.email,
     username: req.body.username,
@@ -86,12 +101,13 @@ app.post('/signup/newdog', (req,res) => {
     dob: req.body.dob,
     colour: req.body.colour,
     votes: 0,
-  }
+    image: `http://localhost:5000/photos/${req.file.filename}`
+  };
   accounts[newDog.username] = newDog; // sets email as index
 
   saveData(accounts, 'accounts.json')
 
-  res.json(`Your first dog and account details are saved`)
+  res.json('Your first dog and account details are saved')
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 

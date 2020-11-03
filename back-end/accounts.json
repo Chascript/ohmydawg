@@ -14,7 +14,7 @@
     "username": "RoyPoodle",
     "breed": "Standard Poodle",
     "colour": "Silver",
-    "votes": 62,
+    "votes": 63,
     "dob": "22/11/2019",
     "email": "roy@gmail.com",
     "image": "http://localhost:5000/photos/roy.jpg"
@@ -44,9 +44,20 @@
     "username": "DobbyPoodle",
     "breed": "Miniature Poodle",
     "colour": "Cream",
-    "votes": 44,
+    "votes": 45,
     "dob": "25/01/2018",
     "email": "dobby@gmail.com",
     "image": "http://localhost:5000/photos/dobby.jpg"
+  },
+  "tester": {
+    "email": "tester",
+    "username": "tester",
+    "password": "tesrter",
+    "name": "tesert",
+    "breed": "tesr=ter",
+    "dob": "test",
+    "colour": "e",
+    "votes": 0,
+    "image": "http://localhost:5000/photos/photo-1604437981943.jpg"
   }
 }

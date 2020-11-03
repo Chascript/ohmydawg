@@ -47,9 +47,10 @@ export default function Dogs() {
   const [dogDetails, setDogDetails] = useState([])
   
     const fetchDetails = async () => {
-        await fetch('/dogs/details')
+        await fetch(`http://localhost:5000/dogs/details`)
         .then(res => res.json())
         .then(galleryData => setDogDetails([...galleryData]))
+        .catch(error => console.error(error))
     }
 
   useEffect(() => {
