@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Spring} from 'react-spring/renderprops'
 import UploadButtons from './upload-button';
+import { FullscreenExit } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -19,6 +20,17 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  subHeaders: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 5
+  },
+  message:{
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 5,
+    fontSize: 15
+  }
 }));
 
 export default function SignUp(props) {
@@ -27,7 +39,7 @@ export default function SignUp(props) {
   const [password, setPassword] = useState('')
   const [dogName, setDogName] = useState('')
   const [dogBreed, setDogBreed] = useState('')
-  const [dateOfBirth, setDateOfBirth] = useState('')
+  const [dateOfBirth, setDateOfBirth] = useState(' ')
   const [colour, setColour] = useState('')
 
   const saveDog = () => {
@@ -67,18 +79,18 @@ export default function SignUp(props) {
       { transition => (
         <Grid style={transition} component="main" maxwidth="xs">
           <CssBaseline />
-          <Typography style={{display: 'flex', justifyContent: 'center'}}  component="h2" variant="h5">
-              Dog Creation
-          </Typography>
-          <Box  m={4} pt={3}>   
-            <Typography component="p"  >
+          <Box  m={4}>
+            <Typography className={classes.subHeaders} component="h2" variant="h4">
+                Dog Creation
+            </Typography>
+            <Typography className={classes.message} component="p"  >
               Welcome, to begin creating your account please fill in your details below
               (If you already have an account please provide the username associated with your account)
             </Typography>
             <form className={classes.form} noValidate>
               <Grid container spacing={2}>
                 <Grid item xs={12} >
-                  <UploadButtons />
+                  <Typography className={classes.subHeaders}  component="h2" variant="h5">Account Details</Typography>
                 </Grid>
                 <Grid item xs={12} >
                   <TextField
@@ -88,6 +100,7 @@ export default function SignUp(props) {
                     fullWidth
                     id="email"
                     label="Your Humans Email Address"
+                    placeholder="example@domain.com"
                     onKeyUp = {e => setEmail(e.target.value)}
                   />
                 </Grid>
@@ -100,9 +113,16 @@ export default function SignUp(props) {
                     label="Password to get into your account"
                     type="password"
                     id="password"
+                    placeholder="******"
                     onKeyUp = {e => setPassword(e.target.value)}
-
                   />
+                </Grid>
+                <Grid item xs={12} >
+                  <Typography className={classes.subHeaders} component="h2" variant="h5" >Dog Details</Typography>
+                  <Typography className={classes.message}>(You can more dogs to your pack once you have created your first dog)</Typography>
+                </Grid>
+                <Grid item xs={12} >
+                  <UploadButtons />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -112,6 +132,7 @@ export default function SignUp(props) {
                     id="dogName"
                     label="What do your humans call you?"
                     name="dogName"
+                    placeholder="Dogs Name"
                     onKeyUp = {e => setDogName(e.target.value)}
                   />
                 </Grid>            
@@ -123,6 +144,7 @@ export default function SignUp(props) {
                     id="breed"
                     label="What breed are you..?"
                     name="breed"
+                    placeholder="Dogs Breed"
                     onKeyUp = {e => setDogBreed(e.target.value)}
                   />
                 </Grid>
@@ -134,8 +156,8 @@ export default function SignUp(props) {
                     id="dateOfBirth"
                     label="What date were you born?"
                     name="dateOfBirth"
+                    placeholder= "dd/mm/yyyy"
                     onKeyUp = {e => setDateOfBirth(e.target.value)}
-
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -146,6 +168,7 @@ export default function SignUp(props) {
                     id="colour"
                     label="What colour do you think you are?"
                     name="colour"
+                    placeholder="Dogs Fur Colour"
                     onKeyUp = {e => setColour(e.target.value)}
                   />
                 </Grid>
