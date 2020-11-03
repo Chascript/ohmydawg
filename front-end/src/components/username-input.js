@@ -39,7 +39,7 @@ export default function Username(props) {
           <div className={classes.paper}>
             <Pets className={classes.avatar}/>
             <Typography component="h1" variant="h4">
-              Log-in / Sign-up
+              Log-in / Sign-up 
             </Typography>
             <form className={classes.form} noValidate>
               <TextField   
