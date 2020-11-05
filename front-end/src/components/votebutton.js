@@ -1,8 +1,8 @@
 import React from 'react'
-import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt'
+import { Pets } from '@material-ui/icons'
 
 export default function VoteButton(props) {
   return(
-    <ThumbUpAltIcon onClick={props.voteForDog} />
+    <Pets onClick={props.voteForDog} />
   )
 }

@@ -13,7 +13,7 @@ const classes = useStyles()
 const details = props
   return (
     <Grid>    
-      <img src='https://placedog.net/640/400?random' style={{opacity: details.opacity}} className={classes.dogImage} />    
+      <img src='https://placedog.net/640/400?random' style={{opacity: details.opacity}} className={classes.dogImage} alt="random-dog" />    
     </Grid>
   )
 }

@@ -1,14 +1,4 @@
 {
-  "MansonPoodle": {
-    "name": "Manson",
-    "username": "MansonPoodle",
-    "breed": "Miniature Poodle",
-    "colour": "Black",
-    "votes": 115,
-    "dob": "08/01/2019",
-    "email": "manson@gmail.com",
-    "image": "http://localhost:5000/photos/manson.jpg"
-  },
   "RoyPoodle": {
     "name": "Roy",
     "username": "RoyPoodle",
@@ -24,7 +14,7 @@
     "username": "JacobPoodle",
     "breed": "Toy Poodle",
     "colour": "Parti Poodle",
-    "votes": 48,
+    "votes": 51,
     "dob": "12/10/2012",
     "email": "jacob@gmail.com",
     "image": "http://localhost:5000/photos/jacob.jpg"
@@ -44,20 +34,31 @@
     "username": "DobbyPoodle",
     "breed": "Miniature Poodle",
     "colour": "Cream",
-    "votes": 45,
+    "votes": 46,
     "dob": "25/01/2018",
     "email": "dobby@gmail.com",
     "image": "http://localhost:5000/photos/dobby.jpg"
   },
-  "tester": {
-    "email": "tester",
-    "username": "tester",
-    "password": "tesrter",
-    "name": "tesert",
-    "breed": "tesr=ter",
-    "dob": "test",
-    "colour": "e",
-    "votes": 0,
-    "image": "http://localhost:5000/photos/photo-1604437981943.jpg"
+  "HectorLabrador": {
+    "email": "arcticsurgeon@gmail.com",
+    "username": "HectorLabrador",
+    "password": "12345",
+    "name": "Hector",
+    "breed": "Labrador",
+    "dob": "??/??/????",
+    "colour": "Black",
+    "votes": 8,
+    "image": "http://localhost:5000/photos/photo-1604489391343.jpg"
+  },
+  "MansonPoodle": {
+    "email": "manson@gmail.com",
+    "username": "MansonPoodle",
+    "password": "MAnson",
+    "name": "Manson",
+    "breed": "Poodle (Miniature)",
+    "dob": "08/01/2019",
+    "colour": "Black",
+    "votes": 3,
+    "image": "http://localhost:5000/photos/photo-1604517123298.jpg"
   }
 }
