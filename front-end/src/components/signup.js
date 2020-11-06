@@ -46,28 +46,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp(props) {
   const classes = useStyles();
-   const errors = {
-      email: false,
-      password: false,
-      image: false,
-      dogName: false,
-      dogBreed: false,
-      dogDateOfBirth: false,
-      dogColour: false,
-      message: false,
-    }
-
    
-    const errorMessages = {
-      email: '',
-      password: '',
-      image: '',
-      dogName: '',
-      dogBreed: '',
-      dogDateOfBirth: '',
-      dogColour: '',
-      message: '',
-    }
+  const errorMessages = {
+    email: '',
+    password: '',
+    image: '',
+    dogName: '',
+    dogBreed: '',
+    dogDateOfBirth: '',
+    dogColour: '',
+    message: '',
+  }
  
   const [file, setFile] = useState(null)
   const [email, setEmail] = useState(null)
@@ -76,24 +65,27 @@ export default function SignUp(props) {
   const [dogBreed, setDogBreed] = useState(null)
   const [dogDateOfBirth, setDateOfBirth] = useState(null)
   const [dogColour, setColour] = useState(null)
-  const [errorstate, setError] = useState(errors)
-  const [mess, setMess] = useState(errorMessages)
+  const [error, setError] = useState(errorMessages)
   const [allBreeds, setAllBreeds] = useState([]);
+  const [formSubmit, setformSubmit] = useState(false)
   
   const handleChange = (event) => {
     setDogBreed(event.target.value);
   };
 
- const fetchBreeds = async () => {
-  await fetch('http://localhost:5000/dogs/breeds')
-   .then(res => res.json())
-   .then(breeds => setAllBreeds(breeds))
-   .catch(error => console.error(error))
+  const fetchBreeds = async () => {
+    try{
+      const response = await (await fetch('http://localhost:5000/dogs/breeds')).json()
+      setAllBreeds(response)
+      }
+    catch(error){
+      console.error(error)
+    }
   }
 
- useEffect(() => {
-   fetchBreeds()
- }, []);
+  useEffect(() => {
+    fetchBreeds()
+  }, []);
  
 
   const changeHandler = (e) => { 
@@ -101,118 +93,121 @@ export default function SignUp(props) {
     let selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
       setFile(selected);
-      errors.image=false
       errorMessages.image=''
+      setError(errorMessages)
+      setformSubmit(true)
     } else {
       setFile(null);
-      errors.image = true
       errorMessages.image = "*Please select an image file (png or jpeg)"
+      setError(errorMessages)
+      setformSubmit(false)
     }
   }
 
- useEffect(()=>{
-
-    },[errorstate])
-
-
-
-  const saveDog =  (errors, errorMessages) => {  
+  const saveDog =  (errorMessages) => {  
     const form = new FormData();
-    if(!errors.image) {
+
+    if (error.image || file == null) {
+      errorMessages.image = "*Please select an image file (png or jpeg)"
+      setError(errorMessages)
+      setformSubmit(false)
+    } else {
+      errorMessages.image=''
+      setError(errorMessages)      
+      setformSubmit(true)
       form.append('photo', file, file.name)
     }
 
     form.append('username', props.usernameValue)
 
-    if(email === '' || email == null) {
+    if (email === '' || email == null) {
       errorMessages.email= "Please enter your email"
-      errors.email = true
-      setError(errors)
-      setMess(errorMessages)
-      console.log(mess)
-
+      setError(errorMessages)
+      setformSubmit(false)
     } else {    
-      errors.email=false
       errorMessages.email= ""
-      setError(errors)
-      setMess(errorMessages)
-      console.log(mess)
-
+      setError(errorMessages)
       form.set('email', email)
+      setformSubmit(true)
     }
 
-    if(password === '' || password == null) {
-      errors.password = true
+    if (password === '' || password == null) {
       errorMessages.password= "Please enter your password"
+      setError(errorMessages)
+      setformSubmit(false)
     } else {    
-    errors.password = false
-    errorMessages.password = ''
-    form.set('password', password)
+      errorMessages.password = ''
+      setError(errorMessages)
+      form.set('password', password)
+      setformSubmit(true)
     }
 
-    if(dogName === '' || dogName == null) {
-      errors.dogName = true
+    if (dogName === '' || dogName == null) {
       errorMessages.dogName= "Please enter your name"
+      setError(errorMessages)
+      setformSubmit(false)
     } else {    
-    errors.dogName = false
-    errorMessages.dogName = ''
-    form.set('name', dogName)
+      errorMessages.dogName = ''
+      setError(errorMessages)
+      form.set('name', dogName)
+      setformSubmit(true)
     }
 
-    if(dogBreed === '' || dogBreed == null) {
-      errors.dogBreed = true
+    if (dogBreed === '' || dogBreed == null) {
       errorMessages.dogBreed= "Please enter your breed"
+      setError(errorMessages)
+      setformSubmit(false)
     } else {    
-    errors.dogBreed = false
-    errorMessages.dogBreed = ''
-    form.set('breed', dogBreed)
+      errorMessages.dogBreed = ''
+      setError(errorMessages)
+      form.set('breed', dogBreed)
+      setformSubmit(true)
     }
 
-    if(dogDateOfBirth === '' || dogDateOfBirth == null) {
-      errors.dogDateOfBirth = true
+    if (dogDateOfBirth === '' || dogDateOfBirth == null) {
       errorMessages.dogDateOfBirth= "Please enter your DOB"
+      setError(errorMessages)
+      setformSubmit(false)
     } else {    
-    errors.dogDateOfBirth = false
-    errorMessages.dogDateOfBirth = ''
-    form.set('dateOfBirth', dogDateOfBirth)
+      errorMessages.dogDateOfBirth = ''
+      setError(errorMessages)
+      form.set('dateOfBirth', dogDateOfBirth)
+      setformSubmit(true)
     }
 
     if(dogColour === '' || dogColour == null) {
-      errors.dogColour = true
-      errorMessages.dogColour= "Please enter your name"
-    } else {    
-    errors.dogColour = false
-    errorMessages.dogColour = ''
-    form.set('colour', dogColour)
-    }
+        errorMessages.dogColour= "Please enter your fur colour"
+        setError(errorMessages)
+        setformSubmit(false)
 
-    if( errors.dogName || errors.dogBreed || errors.dogColour || errors.dogDateOfBirth || errors.email || errors.image || errors.password ) {
-      errorMessages.message ='Please correct fields below'
-      errors.message = true
-      console.log(errorMessages)
-      console.log(errors)
-      console.log(errorstate)
-      return
-    } else {
-      errorMessages.message =''
-      errors.message = false
+    } else {    
+      errorMessages.dogColour = ''
+      setError(errorMessages)
+      form.set('colour', dogColour)
+      setformSubmit(true)
     }
-    
-    
-/*
+    if( formSubmit) { 
+      errorMessages.message =''
+      setError(errorMessages)
+
       fetch('http://localhost:5000/signup/newdog', {
         method: 'POST',
         body: form,
       })
-        .then(res => res.json())
-        .then(res => {
-          console.log(res)
-        })
-    .catch(error => console.log(error))
-    }
-  */
-  }
+      .then(res => res.json())
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => console.log(error))
 
+    } else {
+      errorMessages.message ='Please correct fields below'
+      setError(errorMessages)
+      console.log('errors')
+      return
+    }
+  }
+  
   return (
     <Spring
     from = {{opacity: 0, marginTop:-500}}
@@ -235,10 +230,11 @@ export default function SignUp(props) {
                 <Grid item xs={12} >
                   <Typography className={classes.subHeaders}  component="h2" variant="h5">Account Details</Typography>
                 </Grid>
-                {errors.message && <FormHelperText error>{mess.message}</FormHelperText>}
+                {error.message && <FormHelperText error>{error.message}</FormHelperText>}
                 <Grid item xs={12} >
                   <TextField
-                    helperText={errorstate.email && `${mess.email}`}
+                    error={error.email}
+                    helperText={error.email && `${error.email}`}
                     name="email"
                     variant="outlined"
                     required
@@ -251,7 +247,8 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    helperText={errors.password && `${errorMessages.password}`}                  
+                    error={error.password}
+                    helperText={error.password && `${error.password}`}                  
                     variant="outlined"
                     required
                     fullWidth
@@ -267,10 +264,11 @@ export default function SignUp(props) {
                   <Typography className={classes.subHeaders} component="h2" variant="h5" >Dog Details</Typography>
                   <Typography className={classes.message}>(You can more dogs to your pack once you have created your first dog)</Typography>
                 </Grid>
+                  {!error.image && <img style={{width:200}} src={file} /> }
                 <Grid item xs={12} >
                   <div className={classes.output}>
                    { file && <FormHelperText > { file.name } </FormHelperText> }
-                   { errors.image && <FormHelperText error className={classes.error}> { errorMessages.image } </FormHelperText> }          
+                   { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }          
                   </div>
                   <input
                     accept="image/*"
@@ -288,7 +286,8 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    helperText={errors.dogName && `${errorMessages.dogName}`}
+                    error={error.dogName}
+                    helperText={error.dogName && `${error.dogName}`}
                     variant="outlined"
                     required
                     fullWidth
@@ -300,8 +299,9 @@ export default function SignUp(props) {
                   />
                 </Grid>  
                 <FormControl required fullWidth variant="outlined" className={classes.formControl}>
-                  <InputLabel htmlFor="dogBreed">What breed are you..?</InputLabel>
+                  <InputLabel error={error.dogBreed} htmlFor="dogBreed">What breed are you..?</InputLabel>
                   <Select  
+                    error={error.dogBreed}
                     native
                     value={allBreeds.breed}
                     onChange={handleChange}
@@ -315,11 +315,12 @@ export default function SignUp(props) {
                       <option value={allBreeds}>{allBreeds}</option>
                     )}
                   </Select>
-                  { errors.dogBreed && <FormHelperText error className={classes.error}> { errors.dogBreed } </FormHelperText> }          
+                  { error.dogBreed && <FormHelperText error={error.dogBreed} className={classes.error}> { error.dogBreed } </FormHelperText> }          
                </FormControl>
                 <Grid item xs={12}>
                   <TextField
-                    helperText={errors.dogDateOfBirth && `${errorMessages.dogDateOfBirth}`}
+                    error={error.dogDateOfBirth}
+                    helperText={error.dogDateOfBirth && `${error.dogDateOfBirth}`}
                     variant="outlined"
                     required
                     fullWidth
@@ -332,8 +333,8 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error = {errors.dogColour}
-                    helperText={errors.dogColour && `${errorMessages.dogColour}`}
+                    error = {error.dogColour}
+                    helperText={error.dogColour && `${error.dogColour}`}
                     variant="outlined"
                     required
                     fullWidth
@@ -356,7 +357,7 @@ export default function SignUp(props) {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                  onClick={ev => saveDog(errors,errorMessages)}
+                  onClick={ev => saveDog(errorMessages)}
                 >
                   Create Dog!
                 </Button>
