@@ -132,6 +132,17 @@ app.get('/dogs/breeds', (req, res) => {
   res.json(data[0]);
 })
 
+app.post('/dogs/email/exist', (req, res) => {
+  const {chosenEmail} = req.body;
+  const data = Object.keys(accounts)
+  const existingEmails = data.map((dogid) => accounts[dogid].email)
+  console.log(existingEmails)
+  const emailexist = existingEmails.includes(chosenEmail)
+  console.log(emailexist)
+  console.log(chosenEmail)
+  res.json(emailexist)
+});
+
 app.get('/', function(req,res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })

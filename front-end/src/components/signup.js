@@ -13,6 +13,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { FormHelperText } from '@material-ui/core';
+import { FlashOnOutlined } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -55,11 +56,11 @@ export default function SignUp(props) {
     dogBreed: '',
     dogDateOfBirth: '',
     dogColour: '',
-    message: '',
   }
  
   const [file, setFile] = useState(null)
   const [email, setEmail] = useState(null)
+  const [emailExists, setemailExist] = useState(false)
   const [password, setPassword] = useState(null)
   const [dogName, setDogName] = useState(null)
   const [dogBreed, setDogBreed] = useState(null)
@@ -67,7 +68,6 @@ export default function SignUp(props) {
   const [dogColour, setColour] = useState(null)
   const [error, setError] = useState(errorMessages)
   const [allBreeds, setAllBreeds] = useState([]);
-  const [formSubmit, setformSubmit] = useState(false)
   
   const handleChange = (event) => {
     setDogBreed(event.target.value);
@@ -87,6 +87,29 @@ export default function SignUp(props) {
     fetchBreeds()
   }, []);
  
+  const emailExistsFunc = async () => {
+    // send the username value
+    try {
+      const emailExistsResult = await (await fetch('http://localhost:5000/dogs/email/exist', {
+        method: 'POST',
+        body: JSON.stringify({ chosenEmail: email}),
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          "Content-Type": "application/json"
+        }  
+      })).json() ;
+      // retrieve the result (true or false)
+      console.log(emailExistsResult)
+      if (emailExistsResult) {
+          setemailExist(true);
+        } else {
+          setemailExist(false);
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  };
 
   const changeHandler = (e) => { 
     const types = ['image/png', 'image/jpeg'];
@@ -95,100 +118,93 @@ export default function SignUp(props) {
       setFile(selected);
       errorMessages.image=''
       setError(errorMessages)
-      setformSubmit(true)
     } else {
       setFile(null);
       errorMessages.image = "*Please select an image file (png or jpeg)"
       setError(errorMessages)
-      setformSubmit(false)
     }
   }
 
-  const saveDog =  (errorMessages) => {  
+  const saveDog = async (errorMessages) => {   
     const form = new FormData();
+    emailExistsFunc()
+
+    console.log(emailExists)
 
     if (error.image || file == null) {
       errorMessages.image = "*Please select an image file (png or jpeg)"
       setError(errorMessages)
-      setformSubmit(false)
     } else {
       errorMessages.image=''
-      setError(errorMessages)      
-      setformSubmit(true)
+      setError(errorMessages)       
       form.append('photo', file, file.name)
     }
 
     form.append('username', props.usernameValue)
 
-    if (email === '' || email == null) {
-      errorMessages.email= "Please enter your email"
+    if(email === '' || email == null) {
+      errorMessages.email = 'Please enter an email'
       setError(errorMessages)
-      setformSubmit(false)
-    } else {    
-      errorMessages.email= ""
+    } else if(emailExists) {
+      errorMessages.email = ''
       setError(errorMessages)
-      form.set('email', email)
-      setformSubmit(true)
-    }
+      form.set ('email',email)
+      console.log('email all good')
+      } else {
+        errorMessages.email = `${email} is already in use, please choose a different one`
+        setError(errorMessages)
+        console.log('email exists')
+      }
+    
 
     if (password === '' || password == null) {
       errorMessages.password= "Please enter your password"
       setError(errorMessages)
-      setformSubmit(false)
     } else {    
       errorMessages.password = ''
       setError(errorMessages)
       form.set('password', password)
-      setformSubmit(true)
     }
 
     if (dogName === '' || dogName == null) {
       errorMessages.dogName= "Please enter your name"
       setError(errorMessages)
-      setformSubmit(false)
     } else {    
       errorMessages.dogName = ''
       setError(errorMessages)
       form.set('name', dogName)
-      setformSubmit(true)
     }
 
     if (dogBreed === '' || dogBreed == null) {
       errorMessages.dogBreed= "Please enter your breed"
       setError(errorMessages)
-      setformSubmit(false)
     } else {    
       errorMessages.dogBreed = ''
       setError(errorMessages)
       form.set('breed', dogBreed)
-      setformSubmit(true)
     }
 
     if (dogDateOfBirth === '' || dogDateOfBirth == null) {
       errorMessages.dogDateOfBirth= "Please enter your DOB"
       setError(errorMessages)
-      setformSubmit(false)
     } else {    
       errorMessages.dogDateOfBirth = ''
       setError(errorMessages)
       form.set('dateOfBirth', dogDateOfBirth)
-      setformSubmit(true)
     }
 
-    if(dogColour === '' || dogColour == null) {
+    if (dogColour === '' || dogColour == null) {
         errorMessages.dogColour= "Please enter your fur colour"
         setError(errorMessages)
-        setformSubmit(false)
 
     } else {    
       errorMessages.dogColour = ''
       setError(errorMessages)
       form.set('colour', dogColour)
-      setformSubmit(true)
     }
-    if( formSubmit) { 
-      errorMessages.message =''
-      setError(errorMessages)
+    console.log(errorMessages)
+    
+    if( errorMessages.dogColour.length === 0 && errorMessages.dogBreed.length === 0 && errorMessages.dogDateOfBirth.length === 0 && errorMessages.dogName.length === 0 && errorMessages.password.length === 0 && errorMessages.email.length === 0 && errorMessages.image.length === 0){ 
 
       fetch('http://localhost:5000/signup/newdog', {
         method: 'POST',
@@ -200,11 +216,9 @@ export default function SignUp(props) {
       })
       .catch(error => console.log(error))
 
-    } else {
-      errorMessages.message ='Please correct fields below'
-      setError(errorMessages)
-      console.log('errors')
-      return
+      return 
+    } else { 
+      console.log('errors form not submitted')
     }
   }
   
@@ -231,10 +245,10 @@ export default function SignUp(props) {
                   <Typography className={classes.subHeaders}  component="h2" variant="h5">Account Details</Typography>
                 </Grid>
                 {error.message && <FormHelperText error>{error.message}</FormHelperText>}
-                <Grid item xs={12} >
+                <Grid item xs={12} >                                  
                   <TextField
                     error={error.email}
-                    helperText={error.email && `${error.email}`}
+                    helperText = {error.email && `${error.email}`}
                     name="email"
                     variant="outlined"
                     required
@@ -242,7 +256,7 @@ export default function SignUp(props) {
                     id="email"
                     label="Your Humans Email Address"
                     placeholder="example@domain.com"
-                    onKeyUp = {e => setEmail(e.target.value)}
+                    onKeyUp={ e => setEmail(e.target.value)}   
                   /> 
                 </Grid>
                 <Grid item xs={12}>
