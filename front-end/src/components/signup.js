@@ -13,7 +13,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { FormHelperText } from '@material-ui/core';
-import { FlashOnOutlined } from '@material-ui/icons';
+import DateFnsUtils from '@date-io/date-fns';
+import {MuiPickersUtilsProvider ,KeyboardDatePicker} from '@material-ui/pickers'
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -58,21 +59,18 @@ export default function SignUp(props) {
     dogColour: '',
   }
  
-  const [file, setFile] = useState(null)
+  const [dogDateOfBirth, setDogDateOfBirth] = React.useState(new Date());
+  const [file, setFile] = useState({selected: null, image:false})
   const [email, setEmail] = useState(null)
   const [emailExists, setemailExist] = useState(false)
   const [password, setPassword] = useState(null)
   const [dogName, setDogName] = useState(null)
   const [dogBreed, setDogBreed] = useState(null)
-  const [dogDateOfBirth, setDateOfBirth] = useState(null)
   const [dogColour, setColour] = useState(null)
   const [error, setError] = useState(errorMessages)
   const [allBreeds, setAllBreeds] = useState([]);
   
-  const handleChange = (event) => {
-    setDogBreed(event.target.value);
-  };
-
+  // fetch dog breeds for select input
   const fetchBreeds = async () => {
     try{
       const response = await (await fetch('http://localhost:5000/dogs/breeds')).json()
@@ -82,11 +80,10 @@ export default function SignUp(props) {
       console.error(error)
     }
   }
-
   useEffect(() => {
     fetchBreeds()
   }, []);
- 
+ // email exist ?
   const emailExistsFunc = async () => {
     // send the username value
     try {
@@ -111,33 +108,39 @@ export default function SignUp(props) {
     }
   };
 
-  const changeHandler = (e) => { 
+  // show file name on change
+  const changeHandlerFileName = (e) => { 
     const types = ['image/png', 'image/jpeg'];
     let selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
-      setFile(selected);
-      errorMessages.image=''
-      setError(errorMessages)
+      setFile({selected, image:true});
     } else {
-      setFile(null);
-      errorMessages.image = "*Please select an image file (png or jpeg)"
-      setError(errorMessages)
+      setFile({selected, image: false});
     }
   }
 
+  //handle date change
+  const handleDateChange = (date) => {
+    setDogDateOfBirth(date)
+    console.log(dogDateOfBirth)
+  }
+  // email exist? 
+    useEffect(()=>{
+      emailExistsFunc()
+    },[email])
+
+// on click of create dog
   const saveDog = async (errorMessages) => {   
     const form = new FormData();
-    emailExistsFunc()
 
-    console.log(emailExists)
-
-    if (error.image || file == null) {
+    //set all error messages
+    if (file.image === false) {
       errorMessages.image = "*Please select an image file (png or jpeg)"
       setError(errorMessages)
     } else {
       errorMessages.image=''
       setError(errorMessages)       
-      form.append('photo', file, file.name)
+      form.append('photo', file.selected, file.selected.name)
     }
 
     form.append('username', props.usernameValue)
@@ -146,14 +149,16 @@ export default function SignUp(props) {
       errorMessages.email = 'Please enter an email'
       setError(errorMessages)
     } else if(emailExists) {
-      errorMessages.email = ''
+       errorMessages.email = `${email} is already in use, please choose a different one`
+        setError(errorMessages)
+        console.log(emailExists)
+        console.log('email exists')
+      } else {
+       errorMessages.email = ''
       setError(errorMessages)
+      console.log(emailExists)
       form.set ('email',email)
       console.log('email all good')
-      } else {
-        errorMessages.email = `${email} is already in use, please choose a different one`
-        setError(errorMessages)
-        console.log('email exists')
       }
     
 
@@ -184,7 +189,7 @@ export default function SignUp(props) {
       form.set('breed', dogBreed)
     }
 
-    if (dogDateOfBirth === '' || dogDateOfBirth == null) {
+    if (dogDateOfBirth === 'Invalid Date' || dogDateOfBirth == null) {
       errorMessages.dogDateOfBirth= "Please enter your DOB"
       setError(errorMessages)
     } else {    
@@ -202,8 +207,8 @@ export default function SignUp(props) {
       setError(errorMessages)
       form.set('colour', dogColour)
     }
-    console.log(errorMessages)
     
+    // if error messages are present, prevent form submitting
     if( errorMessages.dogColour.length === 0 && errorMessages.dogBreed.length === 0 && errorMessages.dogDateOfBirth.length === 0 && errorMessages.dogName.length === 0 && errorMessages.password.length === 0 && errorMessages.email.length === 0 && errorMessages.image.length === 0){ 
 
       fetch('http://localhost:5000/signup/newdog', {
@@ -218,7 +223,7 @@ export default function SignUp(props) {
 
       return 
     } else { 
-      console.log('errors form not submitted')
+      console.log(`${Object.values(errorMessages)} => form not submitted`)
     }
   }
   
@@ -256,7 +261,7 @@ export default function SignUp(props) {
                     id="email"
                     label="Your Humans Email Address"
                     placeholder="example@domain.com"
-                    onKeyUp={ e => setEmail(e.target.value)}   
+                    onChange={ e => setEmail(e.target.value)}   
                   /> 
                 </Grid>
                 <Grid item xs={12}>
@@ -281,7 +286,7 @@ export default function SignUp(props) {
                   {!error.image && <img style={{width:200}} src={file} /> }
                 <Grid item xs={12} >
                   <div className={classes.output}>
-                   { file && <FormHelperText > { file.name } </FormHelperText> }
+                   { file.image && <FormHelperText > { file.selected.name } </FormHelperText> }
                    { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }          
                   </div>
                   <input
@@ -290,7 +295,7 @@ export default function SignUp(props) {
                     id="contained-button-file"
                     multiple
                     type="file"
-                    onChange={changeHandler}
+                    onChange={changeHandlerFileName}
                   />
                   <label htmlFor="contained-button-file">
                     <Button fullWidth variant="contained" color="primary" component="span">
@@ -318,7 +323,7 @@ export default function SignUp(props) {
                     error={error.dogBreed}
                     native
                     value={allBreeds.breed}
-                    onChange={handleChange}
+                    onChange={e => setDogBreed(e.target.value)}
                     label="What breed are you..?"
                     inputProps={{
                       id: 'dogBreed',
@@ -332,18 +337,19 @@ export default function SignUp(props) {
                   { error.dogBreed && <FormHelperText error={error.dogBreed} className={classes.error}> { error.dogBreed } </FormHelperText> }          
                </FormControl>
                 <Grid item xs={12}>
-                  <TextField
-                    error={error.dogDateOfBirth}
-                    helperText={error.dogDateOfBirth && `${error.dogDateOfBirth}`}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="dateOfBirth"
-                    label="What date were you born?"
-                    name="dateOfBirth"
-                    placeholder= "dd/mm/yyyy"
-                    onKeyUp = {e => setDateOfBirth(e.target.value)}
-                  />
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      fullWidth
+                      required
+                      inputVariant = "outlined"
+                      margin="normal"
+                      id="date-picker-dialog"
+                      label="When were you born? (DD/MM/YYYY)"
+                      format="dd/mm/yyyy"
+                      value={dogDateOfBirth}
+                      onChange={handleDateChange}
+                      />
+                  </MuiPickersUtilsProvider>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
