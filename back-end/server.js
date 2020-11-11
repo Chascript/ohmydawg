@@ -19,9 +19,10 @@ app.use(express.static('static'));
 const cors = require('cors')
 app.use(cors())
 
-// loads json file
+// load json files
 const fs = require('fs');
 const accounts = JSON.parse(fs.readFileSync('accounts.json'));
+const breeds = JSON.parse(fs.readFileSync('breeds.json')); // loads breeds file
 
 // read data sent to server at limit of 1mb
 app.use(express.json())
@@ -124,6 +125,22 @@ app.post('/dog/username/name/vote', (req,res) => {
   } else {
     res.json( `${name} doesn't exist under ${username}`);
   }
+});
+
+app.get('/dogs/breeds', (req, res) => {
+  const data = Object.values(breeds);
+  res.json(data[0]);
+})
+
+app.post('/dogs/email/exist', (req, res) => {
+  const {chosenEmail} = req.body;
+  const data = Object.keys(accounts)
+  const existingEmails = data.map((dogid) => accounts[dogid].email)
+  console.log(existingEmails)
+  const emailexist = existingEmails.includes(chosenEmail)
+  console.log(emailexist)
+  console.log(chosenEmail)
+  res.json(emailexist)
 });
 
 app.get('/', function(req,res) {
