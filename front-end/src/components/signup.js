@@ -15,6 +15,7 @@ import Select from '@material-ui/core/Select';
 import { FormHelperText } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import {MuiPickersUtilsProvider ,KeyboardDatePicker} from '@material-ui/pickers'
+import PreviewSelectedImage from './preview-selected-image';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -42,6 +43,19 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  imageContainer:{
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  imageNotChosen:{
+      display: 'flex',
+      justifyContent: 'center',
+      height: 300,
+      width: 200,
+  },
+  input:{
+    display: 'none'
+  }
 }));
 
 
@@ -61,14 +75,16 @@ export default function SignUp(props) {
  
   const [dogDateOfBirth, setDogDateOfBirth] = React.useState(new Date());
   const [file, setFile] = useState({selected: null, image:false})
-  const [email, setEmail] = useState(null)
+  const [email, setEmail] = useState('')
   const [emailExists, setemailExist] = useState(false)
+  const [emailValid, setEmailValid] = useState(false)
   const [password, setPassword] = useState(null)
   const [dogName, setDogName] = useState(null)
   const [dogBreed, setDogBreed] = useState(null)
   const [dogColour, setColour] = useState(null)
   const [error, setError] = useState(errorMessages)
   const [allBreeds, setAllBreeds] = useState([]);
+  const [image, setImage] = useState(null)
   
   // fetch dog breeds for select input
   const fetchBreeds = async () => {
@@ -84,29 +100,42 @@ export default function SignUp(props) {
     fetchBreeds()
   }, []);
  // email exist ?
-  const emailExistsFunc = async () => {
-    // send the username value
-    try {
-      const emailExistsResult = await (await fetch('http://localhost:5000/dogs/email/exist', {
-        method: 'POST',
-        body: JSON.stringify({ chosenEmail: email}),
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          "Content-Type": "application/json"
-        }  
-      })).json() ;
-      // retrieve the result (true or false)
-      console.log(emailExistsResult)
-      if (emailExistsResult) {
+  const emailExistsFunc = async () => {    
+    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+    if (email.match(pattern)) {
+      setEmailValid(true)
+      console.log('email is valid')
+    } else {
+      setEmailValid(false)
+      console.log('email is not valid')
+    }
+    
+    if(emailValid){
+      try {    
+        const emailExistsResult = await (await fetch('http://localhost:5000/dogs/email/exist', {
+          method: 'POST',
+          body: JSON.stringify({ chosenEmail: email}),
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            "Content-Type": "application/json"
+          }  
+        })).json() ;
+        // retrieve the result (true or false)
+        console.log(emailExistsResult) 
+        //validate email
+        if (emailExistsResult) {
           setemailExist(true);
+          console.log('email is valid but already exists')
         } else {
           setemailExist(false);
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }
-  };
+          console.log('email is valid and dosent exist, accepted')
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }     
+    };
+  }
 
   // show file name on change
   const changeHandlerFileName = (e) => { 
@@ -114,8 +143,10 @@ export default function SignUp(props) {
     let selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
       setFile({selected, image:true});
+      setImage(URL.createObjectURL(selected))
     } else {
       setFile({selected, image: false});
+      setImage(null)
     }
   }
 
@@ -128,6 +159,9 @@ export default function SignUp(props) {
     useEffect(()=>{
       emailExistsFunc()
     },[email])
+  
+
+
 
 // on click of create dog
   const saveDog = async (errorMessages) => {   
@@ -145,22 +179,29 @@ export default function SignUp(props) {
 
     form.append('username', props.usernameValue)
 
+
+    
     if(email === '' || email == null) {
       errorMessages.email = 'Please enter an email'
       setError(errorMessages)
+      console.log('error message email field is empty')
+    } else if(!emailValid){
+      errorMessages.email='email not valid'
+      setError(errorMessages)
+      console.log('setting error message to email is not valid')
     } else if(emailExists) {
-       errorMessages.email = `${email} is already in use, please choose a different one`
-        setError(errorMessages)
-        console.log(emailExists)
-        console.log('email exists')
-      } else {
-       errorMessages.email = ''
+      errorMessages.email = `${email} is already in use, please choose a different one`
+      setError(errorMessages)
+      console.log(emailExists)
+      console.log('error message to email already in use')
+    } else {
+      errorMessages.email = ''
       setError(errorMessages)
       console.log(emailExists)
       form.set ('email',email)
-      console.log('email all good')
-      }
-    
+      console.log('email accepted, is valid and dosent exist')
+    }
+    console.log(errorMessages)
 
     if (password === '' || password == null) {
       errorMessages.password= "Please enter your password"
@@ -189,6 +230,7 @@ export default function SignUp(props) {
       form.set('breed', dogBreed)
     }
 
+    // invalid date is incorrect. need to correct
     if (dogDateOfBirth === 'Invalid Date' || dogDateOfBirth == null) {
       errorMessages.dogDateOfBirth= "Please enter your DOB"
       setError(errorMessages)
@@ -283,13 +325,21 @@ export default function SignUp(props) {
                   <Typography className={classes.subHeaders} component="h2" variant="h5" >Dog Details</Typography>
                   <Typography className={classes.message}>(You can more dogs to your pack once you have created your first dog)</Typography>
                 </Grid>
-                  {!error.image && <img style={{width:200}} src={file} /> }
-                <Grid item xs={12} >
+                <Grid className={classes.imageContainer} item xs = {12}>
+                  {image == null ?(
+                    <img className={classes.imageNotChosen} src={require('./dog-not-chosen-default.png')} alt="image-not-chosen"/>
+                    ):(
+                      <PreviewSelectedImage selectedImage={image} />
+                      )}
+                  </Grid>
+                  <Grid item xs={12} >
                   <div className={classes.output}>
                    { file.image && <FormHelperText > { file.selected.name } </FormHelperText> }
-                   { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }          
+                   { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }   
+                         
                   </div>
                   <input
+                    
                     accept="image/*"
                     className={classes.input}
                     id="contained-button-file"
