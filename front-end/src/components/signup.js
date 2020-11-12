@@ -70,7 +70,7 @@ export default function SignUp(props) {
     dogName: '',
     dogBreed: '',
     dogDateOfBirth: '',
-    dogColour: '',
+    dogShortBio: '',
   }
  
   const [dogDateOfBirth, setDogDateOfBirth] = React.useState(new Date());
@@ -78,10 +78,10 @@ export default function SignUp(props) {
   const [email, setEmail] = useState('')
   const [emailExists, setemailExist] = useState(false)
   const [emailValid, setEmailValid] = useState(false)
-  const [password, setPassword] = useState(null)
-  const [dogName, setDogName] = useState(null)
-  const [dogBreed, setDogBreed] = useState(null)
-  const [dogColour, setColour] = useState(null)
+  const [password, setPassword] = useState(false)
+  const [dogName, setDogName] = useState(false)
+  const [dogBreed, setDogBreed] = useState(false)
+  const [dogShortBio, setDogShortBio] = useState(null)
   const [error, setError] = useState(errorMessages)
   const [allBreeds, setAllBreeds] = useState([]);
   const [image, setImage] = useState(null)
@@ -240,14 +240,14 @@ export default function SignUp(props) {
       form.set('dateOfBirth', dogDateOfBirth)
     }
 
-    if (dogColour === '' || dogColour == null) {
-        errorMessages.dogColour= "Please enter your fur colour"
+    if (dogShortBio === '' || dogShortBio == null) {
+        errorMessages.dogShortBio= "Please enter your fur colour"
         setError(errorMessages)
 
     } else {    
-      errorMessages.dogColour = ''
+      errorMessages.dogShortBio = ''
       setError(errorMessages)
-      form.set('colour', dogColour)
+      form.set('shortDogBio', dogShortBio)
     }
 
     const allErrors = Object.values(errorMessages)
@@ -335,11 +335,9 @@ export default function SignUp(props) {
                   <Grid item xs={12} >
                   <div className={classes.output}>
                    { file.image && <FormHelperText > { file.selected.name } </FormHelperText> }
-                   { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }   
-                         
+                   { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }                         
                   </div>
                   <input
-                    
                     accept="image/*"
                     className={classes.input}
                     id="contained-button-file"
@@ -355,8 +353,8 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error={error.dogName}
-                    helperText={error.dogName && `${error.dogName}`}
+                    error={dogName.length === 0}
+                    helperText={dogName.length === 0 && 'name is required'}
                     variant="outlined"
                     required
                     fullWidth
@@ -365,12 +363,13 @@ export default function SignUp(props) {
                     name="dogName"
                     placeholder="Dogs Name"
                     onKeyUp = {e => setDogName(e.target.value)}
+                    
                   />
                 </Grid>  
                 <FormControl required fullWidth variant="outlined" className={classes.formControl}>
-                  <InputLabel error={error.dogBreed} htmlFor="dogBreed">What breed are you..?</InputLabel>
+                  <InputLabel error={dogBreed.length === 0} htmlFor="dogBreed">What breed are you..?</InputLabel>
                   <Select  
-                    error={error.dogBreed}
+                    error={dogBreed.length === 0}
                     native
                     value={allBreeds.breed}
                     onChange={e => setDogBreed(e.target.value)}
@@ -403,16 +402,14 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error = {error.dogColour}
-                    helperText={error.dogColour && `${error.dogColour}`}
+                    id="dog-short-bio"
+                    label="Short Bio About Yourself"
+                    multiline
+                    rows={4}
                     variant="outlined"
-                    required
                     fullWidth
-                    id="colour"
-                    label="What colour do you think you are?"
-                    name="colour"
-                    placeholder="Dogs Fur Colour"
-                    onKeyUp = {e => setColour(e.target.value)}
+                    placeholder="A bit about you!"
+                    onKeyDown= {e => setDogShortBio(e.target.value)}
                   />
                 </Grid>
                   <Grid item xs={12}>

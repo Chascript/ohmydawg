@@ -99,8 +99,8 @@ app.post('/signup/newdog', upload.single('photo'), (req,res) => {
     password: req.body.password,
     name: req.body.name,
     breed: req.body.breed,
-    dob: req.body.dob,
-    colour: req.body.colour,
+    dob: req.body.dateOfBirth,
+    shortBio: req.body.shortDogBio,
     votes: 0,
     image: `http://localhost:5000/photos/${req.file.filename}`
   };
