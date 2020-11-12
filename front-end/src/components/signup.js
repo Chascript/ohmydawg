@@ -249,10 +249,14 @@ export default function SignUp(props) {
       setError(errorMessages)
       form.set('colour', dogColour)
     }
-    
-    // if error messages are present, prevent form submitting
-    if( errorMessages.dogColour.length === 0 && errorMessages.dogBreed.length === 0 && errorMessages.dogDateOfBirth.length === 0 && errorMessages.dogName.length === 0 && errorMessages.password.length === 0 && errorMessages.email.length === 0 && errorMessages.image.length === 0){ 
 
+    const allErrors = Object.values(errorMessages)
+    const hasErrors = allErrors.some((errMessages) => {
+      return errMessages.length > 0
+    })
+    if(hasErrors){
+      console.log(`${Object.values(errorMessages)} => form not submitted`)
+    } else {       
       fetch('http://localhost:5000/signup/newdog', {
         method: 'POST',
         body: form,
@@ -262,10 +266,6 @@ export default function SignUp(props) {
         console.log(res)
       })
       .catch(error => console.log(error))
-
-      return 
-    } else { 
-      console.log(`${Object.values(errorMessages)} => form not submitted`)
     }
   }
   
