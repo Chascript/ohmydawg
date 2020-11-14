@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
@@ -9,13 +8,15 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import {Spring} from 'react-spring/renderprops'
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { FormHelperText } from '@material-ui/core';
-import DateFnsUtils from '@date-io/date-fns';
-import {MuiPickersUtilsProvider ,KeyboardDatePicker} from '@material-ui/pickers'
+
 import PreviewSelectedImage from './preview-selected-image';
+import DogName from './inputs/dognamei';
+import PasswordInput from './inputs/password';
+import BreedsInput from './inputs/breeds';
+import DateOfBirthInput from './inputs/dob';
+import ShortBioInput from './inputs/shortbio';
+import EmailInput from './inputs/email';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -70,16 +71,17 @@ export default function SignUp(props) {
     email: null,
     password: null,
     dogName: null,
-    dogBreed: null,
+    dogBreed: false,
     file: null,
+    dateOfBirth: null
   })
 
   const [userForm, setUserForm] = useState({
     email: false,
     password: false,
-    dogName: '(Dogs Name)',
-    dogBreed: '(Dogs Breed)',
-    shortBio: ``,
+    dogName: false,
+    dogBreed: false,
+    shortBio: false,
     file: false,
   })
   
@@ -95,43 +97,46 @@ export default function SignUp(props) {
   }
   useEffect(() => {
     fetchBreeds()
-  }, []);
+    }, []);
 
+  // handles input change
+  const emailInputChangeHandler = async event =>{
+    const target = event.target
+    const emailValue = target.value
 
-  const checkEmailInput = async (e) => {    
-    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-    const chosenEmail = e.target.value
-    let valid = false
-    if (chosenEmail.match(pattern)) {
-      valid = true
-      try {    
-        const emailExistsResult = await (await fetch('http://localhost:5000/dogs/email/exist', {
-          method: 'POST',
-          body: JSON.stringify({ chosenEmail: chosenEmail}),
-          headers: {
-            'Accept': 'application/json, text/plain, */*',
-            "Content-Type": "application/json"
-          }  
-        })).json() ;
-        // retrieve the result (true or false)
-        console.log(`results exists ${emailExistsResult}`) 
-        
-        if (emailExistsResult) {
-          setErrors({...errors, email: 'exists'});
-        } else {
-          setErrors({...errors, email: false})
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-      }     
+    if( emailValue < 1 ) {
+      setErrors({...errors, email: 'empty'})
     } else {
-      valid = false
-      setErrors({...errors, email: 'invalid'})
+      const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+      if (emailValue.match(pattern)) {
+        try {    
+          const emailExistsResult = await (await fetch('http://localhost:5000/dogs/email/exist', {
+            method: 'POST',
+            body: JSON.stringify({ chosenEmail: emailValue}),
+            headers: {
+              'Accept': 'application/json, text/plain, */*',
+              "Content-Type": "application/json"
+            }  
+          })).json() ;
+          // retrieve the result (true or false)
+          console.log(`results exists ${emailExistsResult}`) 
+          
+          if (emailExistsResult) {
+            setErrors({...errors, email: 'exists'});
+          } else {
+            setErrors({...errors, email: false})
+            setUserForm({...userForm, email: emailValue})
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error);
+        }     
+      } else {
+        setErrors({...errors, email: 'invalid'})
+      }
     }
   }
 
-  
   const fileSelect = (e) => { 
     const types = ['image/png', 'image/jpeg'];
     let selected = e.target.files[0];
@@ -145,6 +150,20 @@ export default function SignUp(props) {
       setUserForm({...userForm, file:selected});
       setPreviewImage(null)
       setErrors({...errors, file: true})
+    }
+  }
+
+  // handles change for non complex inputs
+  const handleChange = event =>{
+    const target = event.target
+    const value = target.value
+    const inputName = target.name
+    setUserForm({...userForm, [inputName]: value})
+
+    if(value < 1 || !value) {
+      setErrors({...errors, [inputName]: true})
+    } else{
+      setErrors({...errors, [inputName]: false})
     }
   }
 
@@ -215,62 +234,9 @@ export default function SignUp(props) {
                   <Typography className={classes.subHeaders}  component="h2" variant="h5">Account Details</Typography>
                 </Grid>
                 {errorEmptyFields && <Typography color='error'>Please fill in required fields*</Typography> } 
-                <Grid item xs={12} >                                  
-                  <TextField
-                    name="email"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Your Humans Email Address"
-                    placeholder="example@domain.com"
-                    helperText = {errors.email === 'empty' ? (
-                      'An email is required'
-                      ) : ( 
-                        errors.email === 'invalid' ? (
-                        'email is not valid'
-                        ) : ( 
-                          errors.email === 'exists' ? (
-                          `${userForm.email} already exists`
-                          ) : ( 
-                            ''
-                          )
-                        )
-                      )     
-                    }
-                    error={errors.email === 'empty' || errors.email === 'invalid' || errors.email === 'exists'}
+                <EmailInput handleEmailInputChange={emailInputChangeHandler} emailErrors={errors.email} emailValue={userForm.email} />
+                <PasswordInput handleChange={e => setUserForm({...userForm, password: e.target.value})} passwordValue={userForm.password} />
 
-                    onKeyUp={ e =>setUserForm({...userForm, email: e.target.value}) } 
-                    onChange={ e => e.target.value < 1 ? (
-                      setErrors({...errors, email: 'empty'})
-                      ) : (
-                        checkEmailInput(e)
-                      )}
-                  /> 
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    name="password"
-                    label="Password to get into your account"
-                    type="password"
-                    id="password"
-                    placeholder="******"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    error={userForm.password.length === 0}
-                    helperText={userForm.password.length === 0 && `Password is required`}                  
-                    onKeyUp = {e =>
-                      e.target.value < 1 ? (
-                        setUserForm({...userForm, password: e.target.value}),
-                        setErrors({...errors, password: true})
-                        ) : (
-                        setUserForm({...userForm, password: e.target.value}),
-                        setErrors({...errors, password: false})
-                       ) 
-                    }                  
-                  />
-                </Grid>
                 <Grid item xs={12} >
                   <Typography className={classes.subHeaders} component="h2" variant="h5" >Dog Details</Typography>
                   <Typography className={classes.message}>(You can more dogs to your pack once you have created your first dog)</Typography>
@@ -301,84 +267,10 @@ export default function SignUp(props) {
                     </Button>
                   </label>
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    error={errors.dogName}
-                    helperText={errors.dogName &&  'name is required'}
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="dogName"
-                    label="What do your humans call you?"
-                    name="dogName"
-                    placeholder="Dogs Name"
-                    onKeyUp = {e =>
-                      e.target.value < 1 ? (
-                        setUserForm({...userForm, dogName:e.target.value}),
-                        setErrors({...errors, dogName:true})
-                      ) : (
-                        setUserForm({...userForm, dogName:e.target.value}),
-                        setErrors({...errors, dogName : false})
-                      ) 
-                    }
-                  />
-                </Grid>  
-                <FormControl required fullWidth variant="outlined" className={classes.formControl}>
-                  <InputLabel error={userForm.dogBreed.length < 1} htmlFor="dogBreed">What breed are you..?</InputLabel>
-                  <Select  
-                    error={userForm.dogBreed.length < 1}
-                    native
-                    value={allBreeds.breed}
-                    onChange={e => 
-                      e.target.value < 1 ? (
-                        setUserForm({...userForm, dogBreed: e.target.value}),
-                        setErrors({...errors, dogBreed: true})
-                      ) : (
-                        setUserForm({...userForm, dogBreed:e.target.value}),
-                        setErrors({...errors, dogBreed : false})
-                      )
-                    }
-                    label="What breed are you..?"
-                    inputProps={{
-                      id: 'dogBreed',
-                    }}
-                  >
-                    <option aria-label="None" value=""></option>
-                    {allBreeds.map(allBreeds => 
-                      <option value={allBreeds}>{allBreeds}</option>
-                    )}
-                  </Select>
-                  { userForm.dogBreed.length < 1 && <FormHelperText error > Dog Breed Is Required </FormHelperText> }          
-               </FormControl>
-                <Grid item xs={12}>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <KeyboardDatePicker
-                    // error={dogDatOfBirth.length === 0}
-                    //  helperText= {dogDateOfBirth.length === 0 && 'Date Of Birth Is Required'}
-                      fullWidth
-                      required
-                      inputVariant = "outlined"
-                      margin="normal"
-                      id="date-picker-dialog"
-                      label="When were you born? (DD/MM/ YYYY)"
-                      format="dd/mm/yyyy"
-                      value={dogDateOfBirth}
-                      onChange={handleDateChange}
-                      />
-                  </MuiPickersUtilsProvider>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    id="dog-short-bio"
-                    label="Short Bio About Yourself"
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    fullWidth
-                    placeholder="A bit about you!"
-                    onKeyDown= {e => setUserForm({...userForm, shortDogBio: e.target.value})}
-                  />
-                </Grid>
+                <DogName handleChange={e => setUserForm({...userForm, dogName: e.target.value})} dogNameValue={userForm.dogName}/>
+                <ShortBioInput handleChange={e => setUserForm({...userForm, shortBio: e.target.value})} shortBioValue={userForm.shortBio} />
+                <BreedsInput handleInputChange={handleChange} dogBreedErrors={errors.dogBreed} options={allBreeds} dogBreedValue={userForm.dogBreed} />
+                <DateOfBirthInput handleInputChange={handleChange} dateOfBirthErrors={errors.dateOfBirth} dobChange={handleDateChange} date={dogDateOfBirth} />
                   <Grid item xs={12}>
                     <FormControlLabel
                       control={<Checkbox value="allowToBeEmailed" color="primary" />}
