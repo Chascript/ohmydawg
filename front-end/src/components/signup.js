@@ -58,33 +58,30 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
-
 export default function SignUp(props) {
   const classes = useStyles();
-   
-  const errorMessages = {
-    email: '',
-    password: '',
-    image: '',
-    dogName: '',
-    dogBreed: '',
-    dogDateOfBirth: '',
-    dogShortBio: '',
-  }
  
   const [dogDateOfBirth, setDogDateOfBirth] = React.useState(new Date());
-  const [file, setFile] = useState({selected: null, image:false})
-  const [email, setEmail] = useState('')
-  const [emailExists, setemailExist] = useState(false)
-  const [emailValid, setEmailValid] = useState(false)
-  const [password, setPassword] = useState(false)
-  const [dogName, setDogName] = useState(false)
-  const [dogBreed, setDogBreed] = useState(false)
-  const [dogShortBio, setDogShortBio] = useState(null)
-  const [error, setError] = useState(errorMessages)
   const [allBreeds, setAllBreeds] = useState([]);
-  const [image, setImage] = useState(null)
+  const [image, setPreviewImage] = useState(null)
+  const [errorEmptyFields, setErrorEmptyFields] = useState(false)
+
+  const [errors, setErrors] = useState({
+    email: null,
+    password: null,
+    dogName: null,
+    dogBreed: null,
+    file: null,
+  })
+
+  const [userForm, setUserForm] = useState({
+    email: false,
+    password: false,
+    dogName: '(Dogs Name)',
+    dogBreed: '(Dogs Breed)',
+    shortBio: ``,
+    file: false,
+  })
   
   // fetch dog breeds for select input
   const fetchBreeds = async () => {
@@ -99,54 +96,55 @@ export default function SignUp(props) {
   useEffect(() => {
     fetchBreeds()
   }, []);
- // email exist ?
-  const emailExistsFunc = async () => {    
+
+
+  const checkEmailInput = async (e) => {    
     const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-    if (email.match(pattern)) {
-      setEmailValid(true)
-      console.log('email is valid')
-    } else {
-      setEmailValid(false)
-      console.log('email is not valid')
-    }
-    
-    if(emailValid){
+    const chosenEmail = e.target.value
+    let valid = false
+    if (chosenEmail.match(pattern)) {
+      valid = true
       try {    
         const emailExistsResult = await (await fetch('http://localhost:5000/dogs/email/exist', {
           method: 'POST',
-          body: JSON.stringify({ chosenEmail: email}),
+          body: JSON.stringify({ chosenEmail: chosenEmail}),
           headers: {
             'Accept': 'application/json, text/plain, */*',
             "Content-Type": "application/json"
           }  
         })).json() ;
         // retrieve the result (true or false)
-        console.log(emailExistsResult) 
-        //validate email
+        console.log(`results exists ${emailExistsResult}`) 
+        
         if (emailExistsResult) {
-          setemailExist(true);
-          console.log('email is valid but already exists')
+          setErrors({...errors, email: 'exists'});
         } else {
-          setemailExist(false);
-          console.log('email is valid and dosent exist, accepted')
+          setErrors({...errors, email: false})
         }
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
       }     
-    };
+    } else {
+      valid = false
+      setErrors({...errors, email: 'invalid'})
+    }
   }
 
-  // show file name on change
-  const changeHandlerFileName = (e) => { 
+  
+  const fileSelect = (e) => { 
     const types = ['image/png', 'image/jpeg'];
     let selected = e.target.files[0];
+    console.log(selected)
+    
     if (selected && types.includes(selected.type)) {
-      setFile({selected, image:true});
-      setImage(URL.createObjectURL(selected))
+      setUserForm({...userForm, file:selected})
+      setPreviewImage(URL.createObjectURL(selected))
+      setErrors({...errors, file: false})
     } else {
-      setFile({selected, image: false});
-      setImage(null)
+      setUserForm({...userForm, file:selected});
+      setPreviewImage(null)
+      setErrors({...errors, file: true})
     }
   }
 
@@ -155,108 +153,33 @@ export default function SignUp(props) {
     setDogDateOfBirth(date)
     console.log(dogDateOfBirth)
   }
-  // email exist? 
-    useEffect(()=>{
-      emailExistsFunc()
-    },[email])
-  
-
-
 
 // on click of create dog
-  const saveDog = async (errorMessages) => {   
+  const saveDog = async () => {   
+    setErrorEmptyFields(false)
     const form = new FormData();
 
-    //set all error messages
-    if (file.image === false) {
-      errorMessages.image = "*Please select an image file (png or jpeg)"
-      setError(errorMessages)
-    } else {
-      errorMessages.image=''
-      setError(errorMessages)       
-      form.append('photo', file.selected, file.selected.name)
-    }
-
-    form.append('username', props.usernameValue)
-
-
-    
-    if(email === '' || email == null) {
-      errorMessages.email = 'Please enter an email'
-      setError(errorMessages)
-      console.log('error message email field is empty')
-    } else if(!emailValid){
-      errorMessages.email='email not valid'
-      setError(errorMessages)
-      console.log('setting error message to email is not valid')
-    } else if(emailExists) {
-      errorMessages.email = `${email} is already in use, please choose a different one`
-      setError(errorMessages)
-      console.log(emailExists)
-      console.log('error message to email already in use')
-    } else {
-      errorMessages.email = ''
-      setError(errorMessages)
-      console.log(emailExists)
-      form.set ('email',email)
-      console.log('email accepted, is valid and dosent exist')
-    }
-    console.log(errorMessages)
-
-    if (password === '' || password == null) {
-      errorMessages.password= "Please enter your password"
-      setError(errorMessages)
-    } else {    
-      errorMessages.password = ''
-      setError(errorMessages)
-      form.set('password', password)
-    }
-
-    if (dogName === '' || dogName == null) {
-      errorMessages.dogName= "Please enter your name"
-      setError(errorMessages)
-    } else {    
-      errorMessages.dogName = ''
-      setError(errorMessages)
-      form.set('name', dogName)
-    }
-
-    if (dogBreed === '' || dogBreed == null) {
-      errorMessages.dogBreed= "Please enter your breed"
-      setError(errorMessages)
-    } else {    
-      errorMessages.dogBreed = ''
-      setError(errorMessages)
-      form.set('breed', dogBreed)
-    }
-
-    // invalid date is incorrect. need to correct
-    if (dogDateOfBirth === 'Invalid Date' || dogDateOfBirth == null) {
-      errorMessages.dogDateOfBirth= "Please enter your DOB"
-      setError(errorMessages)
-    } else {    
-      errorMessages.dogDateOfBirth = ''
-      setError(errorMessages)
-      form.set('dateOfBirth', dogDateOfBirth)
-    }
-
-    if (dogShortBio === '' || dogShortBio == null) {
-        errorMessages.dogShortBio= "Please enter your fur colour"
-        setError(errorMessages)
-
-    } else {    
-      errorMessages.dogShortBio = ''
-      setError(errorMessages)
-      form.set('shortDogBio', dogShortBio)
-    }
-
-    const allErrors = Object.values(errorMessages)
+    const allErrors = Object.values(errors)
     const hasErrors = allErrors.some((errMessages) => {
-      return errMessages.length > 0
+      return errMessages === true
+    })   
+    const nullErrors = allErrors.some((errMessages) => {
+      return errMessages == null
     })
-    if(hasErrors){
-      console.log(`${Object.values(errorMessages)} => form not submitted`)
-    } else {       
+    console.log(errors)
+
+    if (nullErrors || hasErrors) {
+      console.log(`${Object.values(errors)} => form not submitted`)
+      setErrorEmptyFields(true)
+    } else {
+      form.append('username', props.usernameValue)
+      form.append('photo', userForm.file, userForm.file.name)
+      form.set('email', userForm.email)
+      form.set('password', userForm.password)
+      form.set('dogBreed', userForm.dogBreed)
+      form.set('dogDateOfBirth', userForm.dogDateOfBirth)
+      form.set('dogPunchLine', userForm.dogPunchLine)
+
       fetch('http://localhost:5000/signup/newdog', {
         method: 'POST',
         body: form,
@@ -291,11 +214,9 @@ export default function SignUp(props) {
                 <Grid item xs={12} >
                   <Typography className={classes.subHeaders}  component="h2" variant="h5">Account Details</Typography>
                 </Grid>
-                {error.message && <FormHelperText error>{error.message}</FormHelperText>}
+                {errorEmptyFields && <Typography color='error'>Please fill in required fields*</Typography> } 
                 <Grid item xs={12} >                                  
                   <TextField
-                    error={error.email}
-                    helperText = {error.email && `${error.email}`}
                     name="email"
                     variant="outlined"
                     required
@@ -303,22 +224,51 @@ export default function SignUp(props) {
                     id="email"
                     label="Your Humans Email Address"
                     placeholder="example@domain.com"
-                    onChange={ e => setEmail(e.target.value)}   
+                    helperText = {errors.email === 'empty' ? (
+                      'An email is required'
+                      ) : ( 
+                        errors.email === 'invalid' ? (
+                        'email is not valid'
+                        ) : ( 
+                          errors.email === 'exists' ? (
+                          `${userForm.email} already exists`
+                          ) : ( 
+                            ''
+                          )
+                        )
+                      )     
+                    }
+                    error={errors.email === 'empty' || errors.email === 'invalid' || errors.email === 'exists'}
+
+                    onKeyUp={ e =>setUserForm({...userForm, email: e.target.value}) } 
+                    onChange={ e => e.target.value < 1 ? (
+                      setErrors({...errors, email: 'empty'})
+                      ) : (
+                        checkEmailInput(e)
+                      )}
                   /> 
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error={error.password}
-                    helperText={error.password && `${error.password}`}                  
-                    variant="outlined"
-                    required
-                    fullWidth
                     name="password"
                     label="Password to get into your account"
                     type="password"
                     id="password"
                     placeholder="******"
-                    onKeyUp = {e => setPassword(e.target.value)}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    error={userForm.password.length === 0}
+                    helperText={userForm.password.length === 0 && `Password is required`}                  
+                    onKeyUp = {e =>
+                      e.target.value < 1 ? (
+                        setUserForm({...userForm, password: e.target.value}),
+                        setErrors({...errors, password: true})
+                        ) : (
+                        setUserForm({...userForm, password: e.target.value}),
+                        setErrors({...errors, password: false})
+                       ) 
+                    }                  
                   />
                 </Grid>
                 <Grid item xs={12} >
@@ -334,8 +284,8 @@ export default function SignUp(props) {
                   </Grid>
                   <Grid item xs={12} >
                   <div className={classes.output}>
-                   { file.image && <FormHelperText > { file.selected.name } </FormHelperText> }
-                   { error.image && <FormHelperText error className={classes.error}> { error.image } </FormHelperText> }                         
+                   { userForm.file && <FormHelperText > { userForm.file.name } </FormHelperText> }
+                   { errors.file && <FormHelperText error > Please Select a jpeg or png file </FormHelperText> }                       
                   </div>
                   <input
                     accept="image/*"
@@ -343,7 +293,7 @@ export default function SignUp(props) {
                     id="contained-button-file"
                     multiple
                     type="file"
-                    onChange={changeHandlerFileName}
+                    onChange={fileSelect}
                   />
                   <label htmlFor="contained-button-file">
                     <Button fullWidth variant="contained" color="primary" component="span">
@@ -353,8 +303,8 @@ export default function SignUp(props) {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    error={dogName.length === 0}
-                    helperText={dogName.length === 0 && 'name is required'}
+                    error={errors.dogName}
+                    helperText={errors.dogName &&  'name is required'}
                     variant="outlined"
                     required
                     fullWidth
@@ -362,17 +312,32 @@ export default function SignUp(props) {
                     label="What do your humans call you?"
                     name="dogName"
                     placeholder="Dogs Name"
-                    onKeyUp = {e => setDogName(e.target.value)}
-                    
+                    onKeyUp = {e =>
+                      e.target.value < 1 ? (
+                        setUserForm({...userForm, dogName:e.target.value}),
+                        setErrors({...errors, dogName:true})
+                      ) : (
+                        setUserForm({...userForm, dogName:e.target.value}),
+                        setErrors({...errors, dogName : false})
+                      ) 
+                    }
                   />
                 </Grid>  
                 <FormControl required fullWidth variant="outlined" className={classes.formControl}>
-                  <InputLabel error={dogBreed.length === 0} htmlFor="dogBreed">What breed are you..?</InputLabel>
+                  <InputLabel error={userForm.dogBreed.length < 1} htmlFor="dogBreed">What breed are you..?</InputLabel>
                   <Select  
-                    error={dogBreed.length === 0}
+                    error={userForm.dogBreed.length < 1}
                     native
                     value={allBreeds.breed}
-                    onChange={e => setDogBreed(e.target.value)}
+                    onChange={e => 
+                      e.target.value < 1 ? (
+                        setUserForm({...userForm, dogBreed: e.target.value}),
+                        setErrors({...errors, dogBreed: true})
+                      ) : (
+                        setUserForm({...userForm, dogBreed:e.target.value}),
+                        setErrors({...errors, dogBreed : false})
+                      )
+                    }
                     label="What breed are you..?"
                     inputProps={{
                       id: 'dogBreed',
@@ -383,17 +348,19 @@ export default function SignUp(props) {
                       <option value={allBreeds}>{allBreeds}</option>
                     )}
                   </Select>
-                  { error.dogBreed && <FormHelperText error={error.dogBreed} className={classes.error}> { error.dogBreed } </FormHelperText> }          
+                  { userForm.dogBreed.length < 1 && <FormHelperText error > Dog Breed Is Required </FormHelperText> }          
                </FormControl>
                 <Grid item xs={12}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
+                    // error={dogDatOfBirth.length === 0}
+                    //  helperText= {dogDateOfBirth.length === 0 && 'Date Of Birth Is Required'}
                       fullWidth
                       required
                       inputVariant = "outlined"
                       margin="normal"
                       id="date-picker-dialog"
-                      label="When were you born? (DD/MM/YYYY)"
+                      label="When were you born? (DD/MM/ YYYY)"
                       format="dd/mm/yyyy"
                       value={dogDateOfBirth}
                       onChange={handleDateChange}
@@ -409,7 +376,7 @@ export default function SignUp(props) {
                     variant="outlined"
                     fullWidth
                     placeholder="A bit about you!"
-                    onKeyDown= {e => setDogShortBio(e.target.value)}
+                    onKeyDown= {e => setUserForm({...userForm, shortDogBio: e.target.value})}
                   />
                 </Grid>
                   <Grid item xs={12}>
@@ -424,7 +391,7 @@ export default function SignUp(props) {
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                  onClick={ev => saveDog(errorMessages)}
+                  onClick={ev => saveDog()}
                 >
                   Create Dog!
                 </Button>

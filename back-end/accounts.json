@@ -50,15 +50,11 @@
     "votes": 8,
     "image": "http://localhost:5000/photos/photo-1604489391343.jpg"
   },
-  "MansonPoodle": {
+  "PoodlePower": {
     "email": "manson@gmail.com",
-    "username": "MansonPoodle",
-    "password": "MAnson",
-    "name": "Manson",
-    "breed": "Poodle (Miniature)",
-    "dob": "08/01/2019",
-    "colour": "Black",
-    "votes": 3,
-    "image": "http://localhost:5000/photos/photo-1604517123298.jpg"
+    "username": "PoodlePower",
+    "password": "manson",
+    "votes": 0,
+    "image": "http://localhost:5000/photos/photo-1605301597893.jpg"
   }
 }
