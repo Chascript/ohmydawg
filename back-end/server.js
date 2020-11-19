@@ -91,24 +91,44 @@ app.get('/photos/random', (req, res) => {
   res.json(randomImages)
 })
 
+//Save new account
+app.post('/signup/newaccount', (req,res) => {
+console.log(req.body)
+const newAccount={
+  username: req.body.username,
+  email:req.body.email,
+  password: req.body.password,
+  firstName: req.body.firstName,
+  surname: req.body.surname,
+  dateOfBirth: req.body.dateOfBirth,
+  termsandConditionsAgreed: true,
+  dogs:[]
+}
+accounts[newAccount.username] = newAccount
+saveData(accounts, 'accounts.json')
+
+res.json('account saved')
+})
+
 //save new dog
 app.post('/signup/newdog', upload.single('photo'), (req,res) => {
-  const newDog = {
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name,
-    breed: req.body.breed,
-    dob: req.body.dateOfBirth,
-    shortBio: req.body.shortDogBio,
-    votes: 0,
-    image: `http://localhost:5000/photos/${req.file.filename}`
-  };
-  accounts[newDog.username] = newDog; // sets email as index
-
+  const dogNumber =  accounts[req.body.usernameValue].dogs.length+1
+  const dogObject = `Dog ${dogNumber}`
+  const  newDog =  { 
+    [dogObject]:{
+      dogName: req.body.dogName,
+      dogBreed: req.body.dogBreed,
+      dogDateOfBirth: req.body.dogDateOfBirth,
+      dogShortBio: req.body.dogShortBio,
+      dogPersonality: [req.body.dogPersonality],
+      dogPunchLine: req.body.dogPunchLine,
+      votes: 0,
+      image: `http://localhost:5000/photos/${req.file.filename}`
+    }
+  }
+accounts[req.body.usernameValue].dogs.push(newDog)
   saveData(accounts, 'accounts.json')
-
-  res.json('Your first dog and account details are saved')
+  res.json('dog saved')
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 
@@ -136,14 +156,13 @@ app.post('/dogs/email/exist', (req, res) => {
   const {chosenEmail} = req.body;
   const data = Object.keys(accounts)
   const existingEmails = data.map((dogid) => accounts[dogid].email)
-  console.log(existingEmails)
-  const emailexist = existingEmails.includes(chosenEmail)
-  console.log(emailexist)
-  console.log(chosenEmail)
-  res.json(emailexist)
+  if(existingEmails.includes(chosenEmail)){
+    res.json('exists')
+  } else{
+    res.json(chosenEmail)
+  }
 });
 
 app.get('/', function(req,res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
-

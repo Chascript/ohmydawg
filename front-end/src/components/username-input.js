@@ -41,7 +41,6 @@ export default function Username(props) {
             <Typography component="h1" variant="h4">
               Log-in / Sign-up 
             </Typography>
-            <form className={classes.form} noValidate>
               <TextField   
                 onKeyUp={props.usernameValue}
                 variant="outlined"
@@ -52,7 +51,7 @@ export default function Username(props) {
                 name="username"
                 placeholder="Username Will Identify Account"
               />
-            </form>
+     
             {props.usernameCurrentValue < 1 ? (
               <Message />
               ) : (

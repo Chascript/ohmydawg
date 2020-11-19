@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.css';
-import Container from '@material-ui/core/Container';
 import DenseAppBar from './components/navigation-bar';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider,  } from '@material-ui/core/styles';
@@ -8,6 +7,7 @@ import { blueGrey, grey,} from '@material-ui/core/colors';
 import {Section} from '../src/components/section';
 import {BrowserRouter as Router} from 'react-router-dom'
 import Footer from './components/footer';
+import { Grid } from '@material-ui/core';
 const font = ['Mali']
 
 
@@ -45,19 +45,19 @@ function App() {
   });
     
   return (
-    <Router>
+    <Router> 
       <ThemeProvider theme = {darkMode ? darkTheme : lightTheme} >
-        <Container >
-          <Container>   
-            <DenseAppBar checked={darkMode} onChange={()=> setDarkMode(!darkMode)} />
-          </Container>
-          <Container>
+        <Grid container sm={12} flexGrow={1} flex-wrap='wrap' >
+          <Grid item sm={12}>   
+            <DenseAppBar  onChange={()=> setDarkMode(!darkMode)} />
+          </Grid>
+          <Grid item container sm={12} style={{marginTop:'100px', marginBottom:'26px'}} justify='center' align='center' >
             <Section/>        
-          </Container>
-          <Container>
+          </Grid>
+          <Grid  item sm={12}>
             <Footer />
-          </Container>
-        </Container>
+          </Grid>
+        </Grid>
       </ThemeProvider>  
     </Router>
   );

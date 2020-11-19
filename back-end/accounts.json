@@ -1,60 +1,49 @@
 {
-  "RoyPoodle": {
-    "name": "Roy",
-    "username": "RoyPoodle",
-    "breed": "Standard Poodle",
-    "colour": "Silver",
-    "votes": 63,
-    "dob": "22/11/2019",
-    "email": "roy@gmail.com",
-    "image": "http://localhost:5000/photos/roy.jpg"
-  },
-  "JacobPoodle": {
-    "name": "Jacob",
-    "username": "JacobPoodle",
-    "breed": "Toy Poodle",
-    "colour": "Parti Poodle",
-    "votes": 51,
-    "dob": "12/10/2012",
-    "email": "jacob@gmail.com",
-    "image": "http://localhost:5000/photos/jacob.jpg"
-  },
-  "IndiePoodle": {
-    "name": "Indie",
-    "username": "IndiePoodle",
-    "breed": "Miniature Poodle",
-    "colour": "Black",
-    "votes": 40,
-    "dob": "07/07/2011",
-    "email": "indie@gmail.com",
-    "image": "http://localhost:5000/photos/indie.jpg"
-  },
-  "DobbyPoodle": {
-    "name": "Dobby",
-    "username": "DobbyPoodle",
-    "breed": "Miniature Poodle",
-    "colour": "Cream",
-    "votes": 46,
-    "dob": "25/01/2018",
-    "email": "dobby@gmail.com",
-    "image": "http://localhost:5000/photos/dobby.jpg"
-  },
-  "HectorLabrador": {
-    "email": "arcticsurgeon@gmail.com",
-    "username": "HectorLabrador",
-    "password": "12345",
-    "name": "Hector",
-    "breed": "Labrador",
-    "dob": "??/??/????",
-    "colour": "Black",
-    "votes": 8,
-    "image": "http://localhost:5000/photos/photo-1604489391343.jpg"
-  },
   "PoodlePower": {
-    "email": "manson@gmail.com",
     "username": "PoodlePower",
-    "password": "manson",
-    "votes": 0,
-    "image": "http://localhost:5000/photos/photo-1605301597893.jpg"
+    "email": "manson@gmail.com",
+    "password": "hello",
+    "firstName": "Conan",
+    "surname": "Chambers",
+    "dateOfBirth": "1993-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": [
+      {
+        "Dog 1": {
+          "dogName": "Manson",
+          "dogBreed": "Poodle (Miniature)",
+          "dogDateOfBirth": "function toLocaleString() { [native code] }",
+          "dogPersonality": [
+            "true"
+          ],
+          "dogPunchLine": "true",
+          "votes": 0,
+          "image": "http://localhost:5000/photos/photo-1605815205722.jpg"
+        }
+      },
+      {
+        "Dog 2": {
+          "dogName": "Roy",
+          "dogBreed": "Poodle (Standard)",
+          "dogDateOfBirth": "function toLocaleString() { [native code] }",
+          "dogPersonality": [
+            "true"
+          ],
+          "dogPunchLine": "true",
+          "votes": 0,
+          "image": "http://localhost:5000/photos/photo-1605815263545.jpg"
+        }
+      }
+    ]
+  },
+  "w`": {
+    "username": "w`",
+    "email": "we@ee.xo",
+    "password": "eee",
+    "firstName": "eee",
+    "surname": "eee",
+    "dateOfBirth": "1992-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": []
   }
 }

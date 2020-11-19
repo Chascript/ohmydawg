@@ -62,7 +62,7 @@ export default function LongMenu() {
                 <ListItemIcon>
                   <Pets/>
                 </ListItemIcon>
-                <Link color='textPrimary' href='/loginsignup'>Log-in / Sign-up</Link>
+                <Link color='textPrimary' href='/signup'>Sign-up</Link>
               </ListItem>
               <ListItem >
                 <ListItemIcon>
