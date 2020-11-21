@@ -22,8 +22,8 @@ export default function Signup() {
   })
   const initialRender = () =>{
   setRenderedComponents({
-    accountForm: false,
-    dogForm: true
+    accountForm: true,
+    dogForm: false
   })
 }
 

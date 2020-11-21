@@ -79,13 +79,13 @@ export default function DogForm(props) {
   const [imagePreview, setImagePreview] = useState(true)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
-    dogName: false,
-    dogBreed: false,
-    dogDateOfBirth: null,
+    dogName: 'heeeeeeeeelo',
+    dogBreed: true,
+    dogDateOfBirth: true,
     dogShortBio: true,
     dogPunchLine: true,
     dogPersonality: true,
-    file: false,
+    file: true,
   })
 const [date, setDate] = useState(null)
 
@@ -145,8 +145,8 @@ const closeReviewDog=() => {
   setReviewDog(false)
 }
 
-const addAnotherDog = () => {
-  saveDog()
+const addAnotherDog = async () => {
+  await saveDog()
   document.getElementById('form').reset()
   setImagePreview(true)
   setDogDetailsForm({...dogDetailsForm, file: false})

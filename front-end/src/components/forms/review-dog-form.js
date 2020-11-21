@@ -16,76 +16,122 @@ const useStyles = makeStyles ((theme) => ({
 
 export default function ReviewDogForm(props) {
   const classes = useStyles()
-
   return(
-  
-  <Modal visible={props.review} width="600" height="750" effect="fadeInUp" onClickAway={props.handleClose}>
-  <div>
-      <h1>Review {props.dogName}</h1>
-         <Grid container sm={10} component={Paper} justify='center' alignItems='center' spacing={2}>
-      <Grid item sm={12}>
-      <img className={classes.image} src={props.dogPhoto} alt={props.dogPhoto.name} />
-      </Grid>
-      <Grid item sm={12}>
-          Name:
-          {props.dogName}
-      </Grid>
-      <Grid item sm={12}>
-          Breed:
-          {props.dogBreed}
-      </Grid>
-      <Grid item sm={12}>
-          Date Of Birth:
-          {props.dogDateOfBirth}
-      </Grid>
-      <Grid item sm={12}>
-          About Me:
-          {props.dogShortBio}
-      </Grid>
-      <Grid item sm={12}>
-          Punch Line:
-          {props.dogPunchLine}
-      </Grid>
-      <Grid item sm={12}>
-          Personality:
-          {props.dogPersonality}
-      </Grid>
-      <Grid sm={4}>
-      <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={props.handleClose}
-        >
-        Edit Dog
-        </Button>
-      </Grid>
-      <Grid sm={4}>
-      <Button
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={props.handleAddNewDogClick}
-        >
-        Add Another
-        </Button>
-      </Grid>
-        <Grid sm={4}>
-      <Button
-          href='/gallery'
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-          onClick={props.handleSaveDogNoNewDog}
-        >
-        Create Dawg
-        </Button>
-      </Grid>
-    </Grid>
-  </div>
-</Modal>
+    <Modal visible={props.review} width="600" height="750" effect="fadeInUp" onClickAway={props.handleClose}>
+      <div>
+        <h1>Review {props.dogName}</h1>
+        <Grid container sm={10} component={Paper} justify='center' alignItems='center' spacing={2}>
+          <Grid item sm={12}>
+            <img className={classes.image} src={props.dogPhoto} alt={props.dogPhoto.name} />
+          </Grid>
+          <Grid item container justify='center' sm={12}>
+            <Grid item justify='center' sm={2}>
+              <Typography component='h6'>
+                Name:
+              </Typography>
+            </Grid>
+            <Grid item sm={2}>
+              <Typography>
+                {props.dogName}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item sm={12}>
+            <Grid item sm={6}>
+              <Typography component='h6'>
+                Breed:
+              </Typography>
+          </Grid>
+            <Grid item sm={6}>
+              <Typography>
+                {props.dogBreed}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item sm={12}>
+            <Grid item sm={6}>
+              <Typography component='h6'>
+                Date Of Birth:
+              </Typography>
+            </Grid>
+            <Grid item sm={6}>
+              <Typography>
+                {props.dogDateOfBirth}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item sm={12}>
+            <Grid item sm={6}>
+              <Typography component='h6'>
+                About Me:
+              </Typography>
+            </Grid>
+            <Grid item sm={6}>
+              <Typography>
+                {props.dogShortBio}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item sm={12}>
+            <Grid item sm={6}>
+              <Typography component='h6'>
+                Punch Line:
+              </Typography>
+            </Grid>
+            <Grid item sm={6}>
+              <Typography>              
+                {props.dogPunchLine}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid item sm={12}>
+            <Grid item sm={6}>
+              <Typography component='h6'>
+                Personality:
+              </Typography>
+            </Grid>
+            <Grid item sm={6}>
+              <Typography>
+                {props.dogPersonality}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid sm={4}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={props.handleClose}
+            >
+              Edit Dog
+            </Button>
+          </Grid>
+          <Grid sm={4}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={props.handleAddNewDogClick}
+            >
+              Add Another
+            </Button>
+          </Grid>
+          <Grid sm={4}>
+            <Button
+              href='/gallery'
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={props.handleSaveDogNoNewDog}
+            >
+              Create Dawg
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+    </Modal>
   )
 }
