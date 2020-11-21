@@ -23,6 +23,7 @@ app.use(cors())
 const fs = require('fs');
 const accounts = JSON.parse(fs.readFileSync('accounts.json'));
 const breeds = JSON.parse(fs.readFileSync('breeds.json')); // loads breeds file
+const dogsId = JSON.parse(fs.readFileSync('dogsId.json')); // loads breeds file
 
 // read data sent to server at limit of 1mb
 app.use(express.json())
@@ -51,25 +52,31 @@ const storage = multer.diskStorage({
 //assign upload to storage
 const upload = multer({ storage });
 
+//Unique Id 
+const { v4: uuidv4 } = require('uuid');
+
 // Send all dog details over to frontend
 app.get('/dogs/details', (req,res) => {
-  // need to get dog key from json file
-  //map through galleryData and use the key to get 
-  // dogs info to send over.
-  const data = Object.keys(accounts);
-  console.log(data)
+  //retrieves dog data
 
-  galleryData = data.map((dogId) => (accounts[dogId].dogs.dog))
-  dogs = galleryData.map((dog)=>({
-    name : dog.dogName,
-    breed: dog.dogBreed,
-    votes: dog.votes,
-    image: dog.image,
-    username: dog.dogsOwner
-  }))
+  const usernames = Object.keys(accounts)
+  usernames.forEach(username=>{
+    const dogs = accounts[username].dogs
+    //console.log(dogs)
+    const dogid = dogsId
 
-  res.json(dogs)
+    dogid.map(uid => {
+      console.log(dogs[uid])
+    })
+  })
+
+  
+
+  res.json('complete')
 })
+
+
+
 
 // get username data
 app.post('/accounts/details/username', (req,res) => {
@@ -105,23 +112,19 @@ const newAccount={
   surname: req.body.surname,
   dateOfBirth: req.body.dateOfBirth,
   termsandConditionsAgreed: true,
-  dogs:[]
+  dogs:{}
 }
 accounts[newAccount.username] = newAccount
 saveData(accounts, 'accounts.json')
-
 res.json('account saved')
 })
 
 //save new dog
 app.post('/signup/newdog', upload.single('photo'), (req,res) => {
-  const dogNumber =  accounts[req.body.usernameValue].dogs.length+1
-  const dogObject = `Dog ${dogNumber}`
+  const dogId = uuidv4()
 
-  // need a key generator for dogs, each
-  // dog has an unique key this is saved where dogObject is
   const  newDog =  { 
-    [dogObject]:{
+    [dogId]:{
       dogName: req.body.dogName,
       dogBreed: req.body.dogBreed,
       dogDateOfBirth: req.body.dogDateOfBirth,
@@ -129,12 +132,16 @@ app.post('/signup/newdog', upload.single('photo'), (req,res) => {
       dogPersonality: [req.body.dogPersonality],
       dogPunchLine: req.body.dogPunchLine,
       votes: 0,
-      image: `http://localhost:5000/photos/${req.file.filename}`
+      image: `http://localhost:5000/photos/${req.file.filename}`,
+      id: dogId,
     }
   }
-accounts[req.body.usernameValue].dogs.push(newDog)
+  accounts[req.body.usernameValue].dogs = newDog
+  dogsId['dogids'].push(dogId)
+  saveData(dogsId,'dogsId.json')
+
   saveData(accounts, 'accounts.json')
-  res.json('dog saved')
+  res.json('dog saved to account')
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 

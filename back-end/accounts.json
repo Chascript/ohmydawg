@@ -1,27 +1,60 @@
 {
-  "PoodlePower": {
-    "username": "PoodlePower",
-    "email": "conan@email.com",
-    "password": "manson",
-    "firstName": "Conan",
-    "surname": "Chamber",
+  "test": {
+    "username": "test",
+    "email": "test@test.com",
+    "password": "test",
+    "firstName": "test",
+    "surname": "test",
     "dateOfBirth": "1993-01-10T00:10:00.000Z",
     "termsandConditionsAgreed": true,
-    "dogs": [
-      {
-        "dog": {
-          "dogName": "Manson",
-          "dogBreed": "Poodle (Miniature)",
-          "dogDateOfBirth": "Tue Jan 08 2019 00:01:00 GMT+0000 (Greenwich Mean Time)",
-          "dogPersonality": [
-            "true"
-          ],
-          "dogPunchLine": "true",
-          "votes": 0,
-          "image": "http://localhost:5000/photos/photo-1605894584240.jpg",
-          "dogOwner": "PoodlePower"
-        }
+    "dogs": {
+      "4a583c4d-e7b6-4ba1-b759-1deaa8d0a04e": {
+        "dogName": "roy",
+        "dogBreed": "Poodle (Standard)",
+        "dogDateOfBirth": "true",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Off out on an Adventure! It's roy by the way",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1605975598705.jpg",
+        "id": "4a583c4d-e7b6-4ba1-b759-1deaa8d0a04e"
+      },
+      "3ad2b0e5-d250-4573-b69e-63a24b2d8bf3": {
+        "dogName": "manson",
+        "dogBreed": "Poodle (Miniature)",
+        "dogDateOfBirth": "true",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm manson and I love cuddles with my human",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1605975619797.jpg",
+        "id": "3ad2b0e5-d250-4573-b69e-63a24b2d8bf3"
       }
-    ]
+    }
+  },
+  "hello": {
+    "username": "hello",
+    "email": "tseter@fefe.cpm",
+    "password": "hello",
+    "firstName": "hello",
+    "surname": "hello",
+    "dateOfBirth": "2000-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": {
+      "f42e1950-b0cf-430d-84df-d6309ae1989a": {
+        "dogName": "Indie",
+        "dogBreed": "Poodle (Miniature)",
+        "dogDateOfBirth": "true",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "true",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1605977382783.jpg",
+        "id": "f42e1950-b0cf-430d-84df-d6309ae1989a"
+      }
+    }
   }
 }
