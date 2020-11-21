@@ -53,19 +53,22 @@ const upload = multer({ storage });
 
 // Send all dog details over to frontend
 app.get('/dogs/details', (req,res) => {
-  
+  // need to get dog key from json file
+  //map through galleryData and use the key to get 
+  // dogs info to send over.
   const data = Object.keys(accounts);
+  console.log(data)
 
-  galleryData = data.map((dogId) => ({
-  name: accounts[dogId].name,
-  breed: accounts[dogId].breed,
-  votes: accounts[dogId].votes,
-  image: accounts[dogId].image,
-  username: accounts[dogId].username,
-  })
-)
+  galleryData = data.map((dogId) => (accounts[dogId].dogs.dog))
+  dogs = galleryData.map((dog)=>({
+    name : dog.dogName,
+    breed: dog.dogBreed,
+    votes: dog.votes,
+    image: dog.image,
+    username: dog.dogsOwner
+  }))
 
-  res.json(galleryData)
+  res.json(dogs)
 })
 
 // get username data
@@ -114,6 +117,9 @@ res.json('account saved')
 app.post('/signup/newdog', upload.single('photo'), (req,res) => {
   const dogNumber =  accounts[req.body.usernameValue].dogs.length+1
   const dogObject = `Dog ${dogNumber}`
+
+  // need a key generator for dogs, each
+  // dog has an unique key this is saved where dogObject is
   const  newDog =  { 
     [dogObject]:{
       dogName: req.body.dogName,
@@ -132,6 +138,9 @@ accounts[req.body.usernameValue].dogs.push(newDog)
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 
+  //each dogs has its own unique key,
+  // accounts[username].dogs.key.votes
+  //adapt code below so it plus 1 to that dogs vote
   const { name } = req.body
   const { username } = req.body
   if(accounts[username].name) {

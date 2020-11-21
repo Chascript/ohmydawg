@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
-import DenseAppBar from './components/navigation-bar';
+import DenseAppBar from './components/master-page/navigation-bar';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider,  } from '@material-ui/core/styles';
 import { blueGrey, grey,} from '@material-ui/core/colors';
-import {Section} from '../src/components/section';
+import {Section} from '../src/components/master-page/section';
 import {BrowserRouter as Router} from 'react-router-dom'
-import Footer from './components/footer';
+import Footer from './components/master-page/footer';
 import { Grid } from '@material-ui/core';
 const font = ['Mali']
 
@@ -51,7 +51,7 @@ function App() {
           <Grid item sm={12}>   
             <DenseAppBar  onChange={()=> setDarkMode(!darkMode)} />
           </Grid>
-          <Grid item container sm={12} style={{marginTop:'100px', marginBottom:'26px'}} justify='center' align='center' >
+          <Grid item container sm={12} style={{marginTop:'120px', marginBottom:'44px'}} justify='center' align='center' >
             <Section/>        
           </Grid>
           <Grid  item sm={12}>

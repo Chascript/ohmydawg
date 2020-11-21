@@ -2,6 +2,7 @@ import { CssBaseline, Grid, makeStyles, Paper, Typography } from '@material-ui/c
 import React from 'react'
 import ContactIcons from './contact-icons'
 import Copyright from './copyright'
+import paw from './paw-print-footer.png'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +19,7 @@ const classes = useStyles()
     <Grid container className={classes.color} component={Paper}  sm={12} direction="row" justify="space-between" alignItems="center" wrap='wrap' >
        <CssBaseline className={classes.root}/>
       <Grid item sm={4} >
-        <img className={classes.paw} src={require('./paw.png')} alt={'paw-print'} />
+        <img className={classes.paw} src={paw} alt={'paw-print'} />
       </Grid >
         <Grid container justify='space-between' alignItems='center' direction='column' sm={4} >
           <Grid item  >
@@ -32,7 +33,7 @@ const classes = useStyles()
           </Grid>
        </Grid>
       <Grid item sm={4} style={{display:'flex', justifyContent:'flex-end'}}>
-      <img style={{ transform: "scaleX(-1)"}} className={classes.paw} src={require('./paw.png')} alt={'paw-print'} />
+      <img style={{ transform: "scaleX(-1)"}} className={classes.paw} src={paw} alt={'paw-print'} />
       </Grid>
     </Grid>
   )

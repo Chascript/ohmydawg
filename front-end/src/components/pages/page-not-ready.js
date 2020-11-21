@@ -2,7 +2,7 @@ import { Grid, makeStyles, Typography, Paper } from '@material-ui/core'
 import React, {useState} from 'react'
 import Slider from '@material-ui/core/Slider';
 import { Pets } from '@material-ui/icons';
-import RandomDogImage from './random-online-dog';
+import RandomDogImage from '../random-online-dog';
 
 const useStyles = makeStyles({
   root: {
