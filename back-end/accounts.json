@@ -1,59 +1,60 @@
 {
-  "test": {
-    "username": "test",
-    "email": "test@test.com",
-    "password": "test",
-    "firstName": "test",
-    "surname": "test",
-    "dateOfBirth": "1993-01-10T00:10:00.000Z",
+  "697bd472-0d07-41c5-b5e5-2c00936d11af": {
+    "email": "example1@example.com",
+    "password": "example1",
+    "firstName": "example1",
+    "surname": "example1",
+    "dateOfBirth": "1999-01-10T00:10:00.000Z",
     "termsandConditionsAgreed": true,
     "dogs": {
-      "4a583c4d-e7b6-4ba1-b759-1deaa8d0a04e": {
-        "dogName": "roy",
+      "10ead30c-4b39-4758-b0ca-6e5926cbae11": {
+        "dogName": "Roy",
         "dogBreed": "Poodle (Standard)",
-        "dogDateOfBirth": "true",
+        "dogDateOfBirth": "Tue Jan 22 2019 00:11:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "its roy here whats up!",
         "dogPersonality": [
           "true"
         ],
-        "dogPunchLine": "Off out on an Adventure! It's roy by the way",
-        "votes": 0,
-        "image": "http://localhost:5000/photos/photo-1605975598705.jpg",
-        "id": "4a583c4d-e7b6-4ba1-b759-1deaa8d0a04e"
+        "dogPunchLine": "Off out on an Adventure! It's Roy by the way",
+        "votes": 1,
+        "image": "http://localhost:5000/photos/photo-1606042362485.jpg",
+        "id": "10ead30c-4b39-4758-b0ca-6e5926cbae11"
       },
-      "3ad2b0e5-d250-4573-b69e-63a24b2d8bf3": {
-        "dogName": "manson",
-        "dogBreed": "Poodle (Miniature)",
-        "dogDateOfBirth": "true",
+      "91c090e3-411f-4e11-b875-7fd2aed5c404": {
+        "dogName": "Hector",
+        "dogBreed": "Labrador Retriever",
+        "dogDateOfBirth": "Sat Jan 01 2000 00:01:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "its Hector here whats up!",
         "dogPersonality": [
           "true"
         ],
-        "dogPunchLine": "Hey! I'm manson and I love cuddles with my human",
-        "votes": 0,
-        "image": "http://localhost:5000/photos/photo-1605975619797.jpg",
-        "id": "3ad2b0e5-d250-4573-b69e-63a24b2d8bf3"
+        "dogPunchLine": "I'm Hector and I like to sniff dog butts",
+        "votes": 1,
+        "image": "http://localhost:5000/photos/photo-1606042392961.jpg",
+        "id": "91c090e3-411f-4e11-b875-7fd2aed5c404"
       }
     }
   },
-  "hello": {
-    "username": "hello",
-    "email": "tseter@fefe.cpm",
-    "password": "hello",
-    "firstName": "hello",
-    "surname": "hello",
-    "dateOfBirth": "2000-01-10T00:10:00.000Z",
+  "02f1590a-74a9-4e40-8e0c-c06941da2600": {
+    "email": "conanc1993@gmail.com",
+    "password": "manson",
+    "firstName": "Conan",
+    "surname": "Chambers",
+    "dateOfBirth": "1993-01-10T00:10:00.000Z",
     "termsandConditionsAgreed": true,
     "dogs": {
-      "f42e1950-b0cf-430d-84df-d6309ae1989a": {
-        "dogName": "Indie",
+      "cdd9548b-5703-4cbb-b27d-87f2f4991a88": {
+        "dogName": "Manson",
         "dogBreed": "Poodle (Miniature)",
-        "dogDateOfBirth": "true",
+        "dogDateOfBirth": "Tue Jan 08 2019 00:01:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "hello im manson",
         "dogPersonality": [
           "true"
         ],
-        "dogPunchLine": "true",
-        "votes": 0,
-        "image": "http://localhost:5000/photos/photo-1605977382783.jpg",
-        "id": "f42e1950-b0cf-430d-84df-d6309ae1989a"
+        "dogPunchLine": "Off out on an Adventure! It's Manson by the way",
+        "votes": 1,
+        "image": "http://localhost:5000/photos/photo-1606042459114.jpg",
+        "id": "cdd9548b-5703-4cbb-b27d-87f2f4991a88"
       }
     }
   }

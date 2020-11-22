@@ -23,7 +23,6 @@ app.use(cors())
 const fs = require('fs');
 const accounts = JSON.parse(fs.readFileSync('accounts.json'));
 const breeds = JSON.parse(fs.readFileSync('breeds.json')); // loads breeds file
-const dogsId = JSON.parse(fs.readFileSync('dogsId.json')); // loads breeds file
 
 // read data sent to server at limit of 1mb
 app.use(express.json())
@@ -56,23 +55,19 @@ const upload = multer({ storage });
 const { v4: uuidv4 } = require('uuid');
 
 // Send all dog details over to frontend
+// Need to now specify what data!
 app.get('/dogs/details', (req,res) => {
   //retrieves dog data
-
   const usernames = Object.keys(accounts)
+  const dogData = []
   usernames.forEach(username=>{
-    const dogs = accounts[username].dogs
-    //console.log(dogs)
-    const dogid = dogsId
-
-    dogid.map(uid => {
-      console.log(dogs[uid])
-    })
+    const usersDogs = accounts[username].dogs
+    for( let prop in usersDogs){
+      const dogValues = usersDogs[prop]
+      dogData.push(dogValues)
+    }
   })
-
-  
-
-  res.json('complete')
+  res.json(dogData)
 })
 
 
@@ -82,11 +77,8 @@ app.get('/dogs/details', (req,res) => {
 app.post('/accounts/details/username', (req,res) => {
   const usernameInputted = req.body.value
   if (accounts[usernameInputted]) {
-    const data = [accounts[usernameInputted].name,accounts[usernameInputted].image, false]
+    console.log(accounts[username])
     res.json(data)
-  } else {
-    const datadata = [false,false,true]
-    res.json(datadata)
   }
 })
 
@@ -104,8 +96,8 @@ app.get('/photos/random', (req, res) => {
 //Save new account
 app.post('/signup/newaccount', (req,res) => {
 console.log(req.body)
-const newAccount={
-  username: req.body.username,
+accountId = uuidv4()
+const newAccount = {
   email:req.body.email,
   password: req.body.password,
   firstName: req.body.firstName,
@@ -114,17 +106,16 @@ const newAccount={
   termsandConditionsAgreed: true,
   dogs:{}
 }
-accounts[newAccount.username] = newAccount
+accounts[accountId] = newAccount
 saveData(accounts, 'accounts.json')
-res.json('account saved')
+res.json(accountId)
 })
 
 //save new dog
 app.post('/signup/newdog', upload.single('photo'), (req,res) => {
   const dogId = uuidv4()
-
+  console.log(req.body)
   const  newDog =  { 
-    [dogId]:{
       dogName: req.body.dogName,
       dogBreed: req.body.dogBreed,
       dogDateOfBirth: req.body.dogDateOfBirth,
@@ -134,33 +125,28 @@ app.post('/signup/newdog', upload.single('photo'), (req,res) => {
       votes: 0,
       image: `http://localhost:5000/photos/${req.file.filename}`,
       id: dogId,
-    }
   }
-  accounts[req.body.usernameValue].dogs = newDog
-  dogsId['dogids'].push(dogId)
-  saveData(dogsId,'dogsId.json')
 
+  accounts[req.body.usernameValue].dogs[dogId] = newDog
   saveData(accounts, 'accounts.json')
   res.json('dog saved to account')
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 
-  //each dogs has its own unique key,
-  // accounts[username].dogs.key.votes
-  //adapt code below so it plus 1 to that dogs vote
-  const { name } = req.body
-  const { username } = req.body
-  if(accounts[username].name) {
-    
-    accounts[username].votes += 1;
-    saveData(accounts, 'accounts.json')
-    console.log(username)
-    const votes = accounts[username].votes
-
-    res.json(`${votes} for ${username} ${name}`);
-  } else {
-    res.json( `${name} doesn't exist under ${username}`);
-  }
+  const { dogName } = req.body
+  const { id } = req.body
+  const usernames = Object.keys(accounts)
+  usernames.forEach(accountId=>{
+    const dogs = accounts[accountId].dogs
+    if(dogs[id]){
+      dogs[id].votes += 1;
+      saveData(accounts, 'accounts.json')
+      const votes = dogs[id].votes
+      res.json(`${votes} for ${dogName} (${id})`);
+    } else {
+      res.json( `${id} doesn't exist`);
+    }
+  })
 });
 
 app.get('/dogs/breeds', (req, res) => {
