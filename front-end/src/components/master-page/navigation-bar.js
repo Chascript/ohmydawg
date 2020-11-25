@@ -27,22 +27,28 @@ export default function DenseAppBar(props) {
   const classes = useStyles();
 
   return (
-    <Grid container flexGrow={1} >
+    <Grid container >
       <AppBar className={classes.appBar} position='fixed'>
-        <Toolbar variant="dense">      
-          <LongMenu />
-          <Typography variant="h6" color="inherit">
-            Oh My Dawg
-          </Typography>
-          <FormControlLabel
-            className={classes.switch}
-            control={<Switch onChange={props.onChange} />}
-            label="Dark-Mode?"
-            labelPlacement="bottom"
-          />
+        <Toolbar >      
+          <Grid item >
+            <LongMenu />
+          </Grid>     
+          <Grid item >
+            <Typography variant="h6" color="inherit">
+              Oh My Dawg
+            </Typography>
+          </Grid>     
+          <Grid item >
+            <FormControlLabel
+              className={classes.switch}
+              control={<Switch onChange={props.onChange} />}
+              label="Dark-Mode?"
+              labelPlacement="bottom"
+            />
+          </Grid>
         </Toolbar>
         <Grid item className={classes.login} >
-        <Login />
+          <Login />
         </Grid>
       </AppBar>
     </Grid>

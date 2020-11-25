@@ -13,17 +13,20 @@ const useStyles = makeStyles((theme) =>({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  title:{
+    paddingBottom: 20
+  }
 }))
 
 export default function AccountForm(props) {
   const classes = useStyles()
   return(      
     <Grid container sm={12} >
-    <Grid container item sm={12} direction='row' alignItems='flex-start' justify='flex-start'>
+    <Grid container item sm={12} className={classes.title} direction='row' alignItems='flex-start' justify='flex-start'>
       <Grid item >
-      <Typography component="h1" variant="h4">
-        {props.title} 
-      </Typography>
+        <Typography component="h1" variant="h4">
+          {props.title} 
+        </Typography>
       </Grid>
       <Grid item  >
         <Pets className={classes.avatar}/>
@@ -67,8 +70,11 @@ export default function AccountForm(props) {
           required
           fullWidth
           variant='outlined'
-          error={props.accountFormValues.password.length < 1}
-          helperText={props.accountFormValues.password.length < 1 && 'password is required'}
+          error={props.accountFormValues.password.length < 1 || props.passwordsDontMatch}
+          helperText={props.accountFormValues.password.length < 1 ?
+            ('password is required'):(
+              props.passwordsDontMatch && 'Passwords do not match'
+            )}
           type='password'
           onChange={props.handlePasswordChange}        
           />     
@@ -80,9 +86,9 @@ export default function AccountForm(props) {
           placeholder="******"
           variant='outlined'
           fullWidth
-          helperText={!props.accountFormValues.confirmPassword && 'Passwords not match'}
+          helperText={props.passwordsDontMatch && 'Passwords do not match'}
           required
-          error={!props.accountFormValues.confirmPassword}
+          error={props.passwordsDontMatch}
           type='password'
           onChange = {props.handleConfirmPasswordChange}
         />     
@@ -132,8 +138,8 @@ export default function AccountForm(props) {
       </Grid>
       <Typography component='body2'>
         By clicking Create Account, you agree to Oh My Dawgs Terms. 
-        Learn how we collect, use and share your data in our <Link>Data Policy</Link> 
-        and how we use cookies and similar technology in our <Link>Cookie Policy</Link>.
+        Learn how we collect, use and share your data in our <Link>Data Policy </Link> 
+         and how we use cookies and similar technology in our <Link>Cookie Policy</Link>.
         You may recieve emails from Oh My Dawg but this is not frequent at all!
       </Typography>
       <Grid sm={8}> 

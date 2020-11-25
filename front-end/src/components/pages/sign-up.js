@@ -11,13 +11,14 @@ export default function Signup() {
     accountForm: true,
     dogForm: false
   })
+  const [passwordsDontMatch, setPasswordsDontMatch] = useState(null)
   const [accountForm,setAccountForm] = useState({
     email: false,
     password: false,
-    confirmPassword: 'invalid',
+    confirmPassword: false,
     firstName: false,
     surname: false,
-    dateOfBirth: new Date(),
+    dateOfBirth: null,
   })
   const [accountId, setAccountId] = useState()
   const initialRender = () =>{
@@ -62,13 +63,23 @@ if( emailValue < 1 ) {
   }
 }
 }
+const handlePasswordChange = event => {
+  const target = event.target
+  const value = target.value
+  setPasswordsDontMatch(true)
+  setAccountForm({...accountForm, password: value})
+  if(value === accountForm.confirmPassword){
+    setPasswordsDontMatch(false)
+  }
+}
 
 const handleConfirmPassword = event =>{
   const target = event.target
   const confirmPasswordValue = target.value
-  setAccountForm({...accountForm, confirmPassword: false})
+  setPasswordsDontMatch(true)
+  setAccountForm({...accountForm, confirmPassword: confirmPasswordValue})
   if(confirmPasswordValue === accountForm.password){
-    setAccountForm({...accountForm, confirmPassword: true})
+    setPasswordsDontMatch(false)
   }
 }
 const handleDateChange = (date) => {
@@ -129,8 +140,9 @@ const submitAccountForm = () => {
             handleFirstNameChange={e => setAccountForm({...accountForm, firstName: e.target.value})}
             handleSurnameChange={e => setAccountForm({...accountForm, surname: e.target.value})}
             handleDateOfBirthChange={handleDateChange}
-            handlePasswordChange={e => setAccountForm({...accountForm, password: e.target.value})}
+            handlePasswordChange={handlePasswordChange}
             handleConfirmPasswordChange={handleConfirmPassword}
+            passwordsDontMatch={passwordsDontMatch}
             accountFormValues={accountForm}
             title="Sign Up!" 
             />

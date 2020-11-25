@@ -1,8 +1,8 @@
-import { Button, Checkbox, FormControlLabel, FormLabel, Grid, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core'
+import { Button, Checkbox, FormControlLabel, FormLabel, Grid, makeStyles, MenuItem, Paper, TextField, Typography } from '@material-ui/core'
 import {Spring} from 'react-spring/renderprops'
 import { Favorite, FavoriteBorder, Pets } from '@material-ui/icons'
 import MultilineTextBox from './inputs/multiline-text-input';
-import {MuiPickersUtilsProvider ,KeyboardDatePicker} from '@material-ui/pickers'
+import {MuiPickersUtilsProvider, DatePicker} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
 import { FormHelperText, FormControl, } from '@material-ui/core';
 import  dogDefault from './dog-not-chosen-default.png'
@@ -34,26 +34,36 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  container:{
+    paddingTop: 20
+  },
 }))
 
 export default function DogForm(props) {
   const classes = useStyles()
-  const [breed, setBreed] = useState(null)
-  const [ open, setOpen] = useState(false)
+  const [personality, setPersonality] = useState({
+    intelligent: false,
+    social: false,
+    adventurous: false,
+    loving: false,
+    playful: false
+  })
+  const [breed, setBreed] = useState('')
+  const [punchLine, setPunchLine] = useState('')
   const [reviewDog, setReviewDog] = useState(false)
   const [allBreeds, setAllBreeds] = useState([]);
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
     dogName: false,
-    dogBreed: true,
+    dogBreed: false,
     dogDateOfBirth: null,
     dogShortBio: false,
     dogPunchLine: false,
-    dogPersonality: true,
+    dogPersonality: [false],
     file: true,
   })
-const [date, setDate] = useState(null)
+  const [date, setDate] = useState(null)
 
   const handleFileChange = (e) => { 
     const types = ['image/png', 'image/jpeg'];
@@ -69,8 +79,7 @@ const [date, setDate] = useState(null)
 
   const handleDateChange = (date) => {
     setDate( new Date(date).toLocaleString())
-
-    setDogDetailsForm({...dogDetailsForm, dogDateOfBirth: date })
+    setDogDetailsForm({...dogDetailsForm, dogDateOfBirth:  new Date(date) })
   }
 
   const fetchBreeds = async () => {
@@ -78,7 +87,7 @@ const [date, setDate] = useState(null)
       const response = await (await fetch('http://localhost:5000/dogs/breeds')).json()
       setAllBreeds(response)
       }
-    catch(error){
+      catch(error){
       console.error(error)
     }
   }
@@ -112,13 +121,22 @@ const closeReviewDog=() => {
   setReviewDog(false)
 }
 
-const addAnotherDog = async () => {
-  await saveDog()
+useEffect(()=>{
+  console.log(dogDetailsForm)
+},[dogDetailsForm])
+
+const addAnotherDog = () => {
+  saveDog()
   document.getElementById('form').reset()
   setImagePreview(false)
+  setPunchLine(null)
   setBreed(null)
   document.getElementById("button-file").value = ""
-  setDogDetailsForm({...dogDetailsForm, dogDateOfBirth: null })
+  setDogDetailsForm({...dogDetailsForm, 
+    dogDateOfBirth: null,
+    dogBreed: false,
+    dogPunchLine: false
+  })
   closeReviewDog()
 }
 
@@ -129,10 +147,9 @@ const saveDogNoNewDog = () => {
  const openModal = () => {
   setErrorMessage(false)
   const formValues = Object.values(dogDetailsForm)
-  const formError = [formValues.includes(false), formValues.includes(null), formValues.includes('Invalid Date')]
+  const formError = [formValues.includes(false), formValues.includes(null)]
   console.log(formValues)
   console.log(formError)
-  // need to fix error on datepicker
   if(formError[0] || formError[1] || formError[2]){
     setErrorMessage(true)
     console.log('error')
@@ -141,26 +158,15 @@ const saveDogNoNewDog = () => {
   }
 }
 
-const handleChange = (event) => {
-  const target = event.target
-  const value = target.value
-  setBreed(value)
+const handleCheckboxChange = event => {
+  setPersonality({...personality, [event.target.name]: event.target.checked})
+  setDogDetailsForm({...dogDetailsForm, dogPersonality: true})
 }
-
-const handleClose = () => {
-  setOpen(false);
-};
-
-const handleOpen = () => {
-  setOpen(true);
-};
-
   
   return(
-    <Grid container component={Paper} spacing={4} sm={9} justify='center'   alignItems='center' >
-      <Grid container item sm={12}  > 
+    <Grid container component={Paper} className={classes.container} spacing={4} justify='center'   alignItems='center' >
          <form id='form' >
-            <Grid container sm={12} justify='center' alignItems='center'>
+            <Grid container item sm={12} justify='center' alignItems='center'>
               <Grid container item sm={4} >
                 <Grid item justify='center' sm={10}>
                   {imagePreview ?(
@@ -183,7 +189,7 @@ const handleOpen = () => {
                   />
                 </Grid>
               </Grid>
-              <Grid container sm={8} spacing={2}>
+              <Grid container item sm={8} spacing={2}>
                 <Grid container item sm={12} alignItems='center' justify='flex-start'>
                   <Grid item >
                     <Typography component="h1" variant="h4">
@@ -197,7 +203,7 @@ const handleOpen = () => {
                 <Grid item>
                 {errorMessage && <Typography color='error'>All Fields Are Required</Typography>}
                 </Grid>
-                <Grid container sm={12} spacing={2}>
+                <Grid container item sm={12} spacing={2}>
                   <Grid item sm={5}>
                     <TextBox 
                       label='What do your humans call you?'
@@ -210,39 +216,38 @@ const handleOpen = () => {
                       handleChange={e => setDogDetailsForm({...dogDetailsForm, dogName: e.target.value})}
                     />
                   </Grid>
-                  <Grid sm={5}>
-                  <FormControl >
-                    <InputLabel id="breed">What Breed At You...?</InputLabel>
-                    <Select
-                      labelId="breed"
+                  <Grid item sm={5}>
+                    <TextField
+                      fullWidth
                       id="breed"
-                      open={open}
-                      onClose={handleClose}
-                      onOpen={handleOpen}
+                      label="What Breed Are You...?" 
+                      variant='outlined'
                       value={breed}
-                      onChange={handleChange}
-                    >
+                      onChange={e => {
+                        setBreed(e.target.value)
+                        setDogDetailsForm({...dogDetailsForm, dogBreed: e.target.value})
+                      }} 
+                      select
+                      >
                       <MenuItem value="">
                         <em></em>
                       </MenuItem>
                       {allBreeds.map(allBreeds => 
                         <MenuItem value={allBreeds}>{allBreeds}</MenuItem>
                       )}
-                    </Select>
-                  </FormControl>
+                    </TextField>
                   </Grid>
                   <Grid item sm={5}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <KeyboardDatePicker
+                      <DatePicker
                         invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
                         required
                         fullWidth
                         disableFuture={true}
                         value={dogDetailsForm.dogDateOfBirth}
                         inputVariant = "outlined"
-                        id='dogDateOfBirth'
                         label='Date Of Birth'
-                        format="dd/mm/yyyy"
+                        format="dd/MM/yyyy"
                         onChange={handleDateChange}
                       />
                     </MuiPickersUtilsProvider>
@@ -253,8 +258,11 @@ const handleOpen = () => {
                     id="punchline"
                     label="Punchline..." 
                     variant='outlined'
-                    value={dogDetailsForm.dogPunchLine}
-                    onChange={e=> setDogDetailsForm({...dogDetailsForm, dogPunchLine: e.target.value})} 
+                    value={punchLine}
+                    onChange={e=> {
+                      setPunchLine(e.target.value)
+                      setDogDetailsForm({...dogDetailsForm, dogPunchLine: e.target.value})
+                    }} 
                     select>
                     <MenuItem value="">
                       <em></em>
@@ -279,45 +287,86 @@ const handleOpen = () => {
                   </Grid>     
                   <Grid item >
                     <FormControl required >
-                    <FormLabel component="legend">Your Personality! (Can Pick Multiple!)</FormLabel>
+                      <FormLabel component="legend">Your Personality! (Can Pick Multiple!)</FormLabel>
                       <FormControlLabel
-                        control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-                        label="Custom icon"
+                          control={
+                            <Checkbox 
+                              icon={<FavoriteBorder color='secondary' />} 
+                              onChange={handleCheckboxChange}
+                              checked={personality.intelligent}
+                              checkedIcon={<Favorite />} 
+                              name="intelligent"
+                            />
+                          }
+                          label="Intelligent"
+                        />      
+                      <FormControlLabel
+                          control={
+                            <Checkbox 
+                              icon={<FavoriteBorder />} 
+                              onChange={handleCheckboxChange}
+                              checked={personality.loving}
+                              checkedIcon={<Favorite />} 
+                              name="loving"
+                            />
+                          }
+                         label="Loving"
+                        />      
+                      <FormControlLabel
+                          control={
+                            <Checkbox 
+                              icon={<FavoriteBorder />} 
+                              onChange={handleCheckboxChange}
+                              checked={personality.adventurous}
+                              checkedIcon={<Favorite />} 
+                              name="adventurous"
+                            />
+                          }
+                          label="Adventurous"
+                        />      
+                      <FormControlLabel
+                          control={
+                            <Checkbox 
+                              icon={<FavoriteBorder />} 
+                              onChange={handleCheckboxChange}
+                              checked={personality.social}
+                              checkedIcon={<Favorite />} 
+                              name="social"
+                            />
+                          }
+                          label="Social"
+                        />                          
+                        <FormControlLabel
+                        control={
+                          <Checkbox 
+                            icon={<FavoriteBorder />} 
+                            onChange={handleCheckboxChange}
+                            checked={personality.playful}
+                            checkedIcon={<Favorite />} 
+                            name="playful"
+                          />
+                        }
+                        label="Playful"
                       />      
-                      <FormControlLabel
-                        control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-                        label="Custom icon"
-                      />      
-                      <FormControlLabel
-                        control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-                        label="Custom icon"
-                      />    
-                      <FormControlLabel
-                        control={<Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite />} name="checkedH" />}
-                        label="Custom icon"
-                        />
                     </FormControl>
                   </Grid>   
-                  <Grid item container sm={12} justify='center' alignItems='center'>
-                    <Grid item  sm={4}>
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.button}
-                        onClick={() => openModal()}
-                      >
-                      Create Dawg!
-                      </Button>
-                    </Grid>
                   </Grid>
+                  </Grid>                 
+                   <Grid item container sm={12} justify='center' alignItems='center'>
+                    <Grid item  sm={2}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.button}
+                      onClick={() => openModal()}
+                    >
+                    Create Dawg!
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
         </form>
-
-      </Grid>
-      <Grid container justify='center' alignItems='center' sm={12} >
         {reviewDog &&
           <ReviewDogForm 
             dogName={dogDetailsForm.dogName} 
@@ -333,7 +382,6 @@ const handleOpen = () => {
             review={reviewDog}
           />
         }
-      </Grid>
     </Grid>
   )
 }
