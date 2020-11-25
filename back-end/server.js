@@ -53,19 +53,22 @@ const upload = multer({ storage });
 
 // Send all dog details over to frontend
 app.get('/dogs/details', (req,res) => {
-  
+  // need to get dog key from json file
+  //map through galleryData and use the key to get 
+  // dogs info to send over.
   const data = Object.keys(accounts);
+  console.log(data)
 
-  galleryData = data.map((dogId) => ({
-  name: accounts[dogId].name,
-  breed: accounts[dogId].breed,
-  votes: accounts[dogId].votes,
-  image: accounts[dogId].image,
-  username: accounts[dogId].username,
-  })
-)
+  galleryData = data.map((dogId) => (accounts[dogId].dogs.dog))
+  dogs = galleryData.map((dog)=>({
+    name : dog.dogName,
+    breed: dog.dogBreed,
+    votes: dog.votes,
+    image: dog.image,
+    username: dog.dogsOwner
+  }))
 
-  res.json(galleryData)
+  res.json(dogs)
 })
 
 // get username data
@@ -91,27 +94,53 @@ app.get('/photos/random', (req, res) => {
   res.json(randomImages)
 })
 
+//Save new account
+app.post('/signup/newaccount', (req,res) => {
+console.log(req.body)
+const newAccount={
+  username: req.body.username,
+  email:req.body.email,
+  password: req.body.password,
+  firstName: req.body.firstName,
+  surname: req.body.surname,
+  dateOfBirth: req.body.dateOfBirth,
+  termsandConditionsAgreed: true,
+  dogs:[]
+}
+accounts[newAccount.username] = newAccount
+saveData(accounts, 'accounts.json')
+
+res.json('account saved')
+})
+
 //save new dog
 app.post('/signup/newdog', upload.single('photo'), (req,res) => {
-  const newDog = {
-    email: req.body.email,
-    username: req.body.username,
-    password: req.body.password,
-    name: req.body.name,
-    breed: req.body.breed,
-    dob: req.body.dob,
-    colour: req.body.colour,
-    votes: 0,
-    image: `http://localhost:5000/photos/${req.file.filename}`
-  };
-  accounts[newDog.username] = newDog; // sets email as index
+  const dogNumber =  accounts[req.body.usernameValue].dogs.length+1
+  const dogObject = `Dog ${dogNumber}`
 
+  // need a key generator for dogs, each
+  // dog has an unique key this is saved where dogObject is
+  const  newDog =  { 
+    [dogObject]:{
+      dogName: req.body.dogName,
+      dogBreed: req.body.dogBreed,
+      dogDateOfBirth: req.body.dogDateOfBirth,
+      dogShortBio: req.body.dogShortBio,
+      dogPersonality: [req.body.dogPersonality],
+      dogPunchLine: req.body.dogPunchLine,
+      votes: 0,
+      image: `http://localhost:5000/photos/${req.file.filename}`
+    }
+  }
+accounts[req.body.usernameValue].dogs.push(newDog)
   saveData(accounts, 'accounts.json')
-
-  res.json('Your first dog and account details are saved')
+  res.json('dog saved')
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 
+  //each dogs has its own unique key,
+  // accounts[username].dogs.key.votes
+  //adapt code below so it plus 1 to that dogs vote
   const { name } = req.body
   const { username } = req.body
   if(accounts[username].name) {
@@ -136,14 +165,13 @@ app.post('/dogs/email/exist', (req, res) => {
   const {chosenEmail} = req.body;
   const data = Object.keys(accounts)
   const existingEmails = data.map((dogid) => accounts[dogid].email)
-  console.log(existingEmails)
-  const emailexist = existingEmails.includes(chosenEmail)
-  console.log(emailexist)
-  console.log(chosenEmail)
-  res.json(emailexist)
+  if(existingEmails.includes(chosenEmail)){
+    res.json('exists')
+  } else{
+    res.json(chosenEmail)
+  }
 });
 
 app.get('/', function(req,res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
-

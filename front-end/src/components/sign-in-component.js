@@ -32,7 +32,7 @@ export default function SignIn(props) {
       config= {{delay:500}}
     >
       { props => (
-        <Grid item style={props}  component='main' maxWidth="xs">
+        <Grid item  maxWidth="xs">
           <CssBaseline />
           <Typography style={{display: 'flex', justifyContent: 'center'}}  component="h2" variant="h5">
             Welcome Back {details.name}! 

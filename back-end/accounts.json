@@ -1,64 +1,27 @@
 {
-  "RoyPoodle": {
-    "name": "Roy",
-    "username": "RoyPoodle",
-    "breed": "Standard Poodle",
-    "colour": "Silver",
-    "votes": 63,
-    "dob": "22/11/2019",
-    "email": "roy@gmail.com",
-    "image": "http://localhost:5000/photos/roy.jpg"
-  },
-  "JacobPoodle": {
-    "name": "Jacob",
-    "username": "JacobPoodle",
-    "breed": "Toy Poodle",
-    "colour": "Parti Poodle",
-    "votes": 51,
-    "dob": "12/10/2012",
-    "email": "jacob@gmail.com",
-    "image": "http://localhost:5000/photos/jacob.jpg"
-  },
-  "IndiePoodle": {
-    "name": "Indie",
-    "username": "IndiePoodle",
-    "breed": "Miniature Poodle",
-    "colour": "Black",
-    "votes": 40,
-    "dob": "07/07/2011",
-    "email": "indie@gmail.com",
-    "image": "http://localhost:5000/photos/indie.jpg"
-  },
-  "DobbyPoodle": {
-    "name": "Dobby",
-    "username": "DobbyPoodle",
-    "breed": "Miniature Poodle",
-    "colour": "Cream",
-    "votes": 46,
-    "dob": "25/01/2018",
-    "email": "dobby@gmail.com",
-    "image": "http://localhost:5000/photos/dobby.jpg"
-  },
-  "HectorLabrador": {
-    "email": "arcticsurgeon@gmail.com",
-    "username": "HectorLabrador",
-    "password": "12345",
-    "name": "Hector",
-    "breed": "Labrador",
-    "dob": "??/??/????",
-    "colour": "Black",
-    "votes": 8,
-    "image": "http://localhost:5000/photos/photo-1604489391343.jpg"
-  },
-  "MansonPoodle": {
-    "email": "manson@gmail.com",
-    "username": "MansonPoodle",
-    "password": "MAnson",
-    "name": "Manson",
-    "breed": "Poodle (Miniature)",
-    "dob": "08/01/2019",
-    "colour": "Black",
-    "votes": 3,
-    "image": "http://localhost:5000/photos/photo-1604517123298.jpg"
+  "PoodlePower": {
+    "username": "PoodlePower",
+    "email": "conan@email.com",
+    "password": "manson",
+    "firstName": "Conan",
+    "surname": "Chamber",
+    "dateOfBirth": "1993-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": [
+      {
+        "dog": {
+          "dogName": "Manson",
+          "dogBreed": "Poodle (Miniature)",
+          "dogDateOfBirth": "Tue Jan 08 2019 00:01:00 GMT+0000 (Greenwich Mean Time)",
+          "dogPersonality": [
+            "true"
+          ],
+          "dogPunchLine": "true",
+          "votes": 0,
+          "image": "http://localhost:5000/photos/photo-1605894584240.jpg",
+          "dogOwner": "PoodlePower"
+        }
+      }
+    ]
   }
 }
