@@ -51,7 +51,7 @@ export default function DogForm(props) {
     dogShortBio: false,
     dogPunchLine: false,
     dogPersonality: true,
-    file: false,
+    file: true,
   })
 const [date, setDate] = useState(null)
 
@@ -112,8 +112,8 @@ const closeReviewDog=() => {
   setReviewDog(false)
 }
 
-const addAnotherDog = () => {
-  saveDog()
+const addAnotherDog = async () => {
+  await saveDog()
   document.getElementById('form').reset()
   setImagePreview(false)
   setBreed(null)
