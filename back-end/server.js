@@ -51,35 +51,34 @@ const storage = multer.diskStorage({
 //assign upload to storage
 const upload = multer({ storage });
 
+//Unique Id 
+const { v4: uuidv4 } = require('uuid');
+
 // Send all dog details over to frontend
+// Need to now specify what data!
 app.get('/dogs/details', (req,res) => {
-  // need to get dog key from json file
-  //map through galleryData and use the key to get 
-  // dogs info to send over.
-  const data = Object.keys(accounts);
-  console.log(data)
-
-  galleryData = data.map((dogId) => (accounts[dogId].dogs.dog))
-  dogs = galleryData.map((dog)=>({
-    name : dog.dogName,
-    breed: dog.dogBreed,
-    votes: dog.votes,
-    image: dog.image,
-    username: dog.dogsOwner
-  }))
-
-  res.json(dogs)
+  //retrieves dog data
+  const usernames = Object.keys(accounts)
+  const dogData = []
+  usernames.forEach(username=>{
+    const usersDogs = accounts[username].dogs
+    for( let prop in usersDogs){
+      const dogValues = usersDogs[prop]
+      dogData.push(dogValues)
+    }
+  })
+  res.json(dogData)
 })
+
+
+
 
 // get username data
 app.post('/accounts/details/username', (req,res) => {
   const usernameInputted = req.body.value
   if (accounts[usernameInputted]) {
-    const data = [accounts[usernameInputted].name,accounts[usernameInputted].image, false]
+    console.log(accounts[username])
     res.json(data)
-  } else {
-    const datadata = [false,false,true]
-    res.json(datadata)
   }
 })
 
@@ -97,31 +96,26 @@ app.get('/photos/random', (req, res) => {
 //Save new account
 app.post('/signup/newaccount', (req,res) => {
 console.log(req.body)
-const newAccount={
-  username: req.body.username,
+accountId = uuidv4()
+const newAccount = {
   email:req.body.email,
   password: req.body.password,
   firstName: req.body.firstName,
   surname: req.body.surname,
   dateOfBirth: req.body.dateOfBirth,
   termsandConditionsAgreed: true,
-  dogs:[]
+  dogs:{}
 }
-accounts[newAccount.username] = newAccount
+accounts[accountId] = newAccount
 saveData(accounts, 'accounts.json')
-
-res.json('account saved')
+res.json(accountId)
 })
 
 //save new dog
 app.post('/signup/newdog', upload.single('photo'), (req,res) => {
-  const dogNumber =  accounts[req.body.usernameValue].dogs.length+1
-  const dogObject = `Dog ${dogNumber}`
-
-  // need a key generator for dogs, each
-  // dog has an unique key this is saved where dogObject is
+  const dogId = uuidv4()
+  console.log(req.body)
   const  newDog =  { 
-    [dogObject]:{
       dogName: req.body.dogName,
       dogBreed: req.body.dogBreed,
       dogDateOfBirth: req.body.dogDateOfBirth,
@@ -129,31 +123,30 @@ app.post('/signup/newdog', upload.single('photo'), (req,res) => {
       dogPersonality: [req.body.dogPersonality],
       dogPunchLine: req.body.dogPunchLine,
       votes: 0,
-      image: `http://localhost:5000/photos/${req.file.filename}`
-    }
+      image: `http://localhost:5000/photos/${req.file.filename}`,
+      id: dogId,
   }
-accounts[req.body.usernameValue].dogs.push(newDog)
+
+  accounts[req.body.usernameValue].dogs[dogId] = newDog
   saveData(accounts, 'accounts.json')
-  res.json('dog saved')
+  res.json('dog saved to account')
 })
 
 app.post('/dog/username/name/vote', (req,res) => { 
-  //each dogs has its own unique key,
-  // accounts[username].dogs.key.votes
-  //adapt code below so it plus 1 to that dogs vote
-  const { name } = req.body
-  const { username } = req.body
-  if(accounts[username].name) {
-    
-    accounts[username].votes += 1;
-    saveData(accounts, 'accounts.json')
-    console.log(username)
-    const votes = accounts[username].votes
-
-    res.json(`${votes} for ${username} ${name}`);
-  } else {
-    res.json( `${name} doesn't exist under ${username}`);
-  }
+  const { dogName } = req.body
+  const { id } = req.body
+  const usernames = Object.keys(accounts)
+  usernames.forEach(accountId=>{
+    const dogs = accounts[accountId].dogs
+    if(dogs[id]){
+      dogs[id].votes += 1;
+      saveData(accounts, 'accounts.json')
+      const votes = dogs[id].votes
+      res.json(`${votes} for ${dogName} (${id})`);
+    } else {
+      res.json( `${id} doesn't exist`);
+    }
+  })
 });
 
 app.get('/dogs/breeds', (req, res) => {

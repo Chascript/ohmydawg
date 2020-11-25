@@ -66,7 +66,7 @@ export default function Dogs() {
     fetchDetails()
   }, []);
 
-const voteForDog = async (username, name) => {
+const voteForDog = async (username, name, id) => {
   await fetch('http://localhost:5000/dog/username/name/vote', {
   method: 'POST',
   headers: {
@@ -75,7 +75,8 @@ const voteForDog = async (username, name) => {
   },
   body: JSON.stringify({
     username: username,
-    name: name
+    dogName: name,
+    id: id
     })
   })
   .then(res => res.json()
@@ -93,10 +94,10 @@ const voteForDog = async (username, name) => {
           <GridListTile item="true" cols={4} sm={5} md={4} className={classes.dogContainer}>
             <img className={classes.image} src={dogDetails.image} alt={`${dogDetails.username} ${dogDetails.name}`}/>
             <Grid className={classes.details}>
-              <List className={classes.name} >{dogDetails.name}</List>
-              <List className={classes.breed}>{dogDetails.breed}</List>
+              <List className={classes.name} >{dogDetails.dogName}</List>
+              <List className={classes.breed}>{dogDetails.dogBreed}</List>
               <VoteNumber className={classes.votes}  voteNumber = {dogDetails.votes} />
-              <VoteButton username={dogDetails.username} voteForDog = {e => voteForDog(dogDetails.username, dogDetails.name)} />
+              <VoteButton  voteForDog = {() => voteForDog(dogDetails.username, dogDetails.dogName, dogDetails.id)} />
             </Grid>
           </GridListTile>
         )}
