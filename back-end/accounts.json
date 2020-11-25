@@ -1,60 +1,203 @@
 {
-  "697bd472-0d07-41c5-b5e5-2c00936d11af": {
-    "email": "example1@example.com",
-    "password": "example1",
-    "firstName": "example1",
-    "surname": "example1",
-    "dateOfBirth": "1999-01-10T00:10:00.000Z",
-    "termsandConditionsAgreed": true,
-    "dogs": {
-      "10ead30c-4b39-4758-b0ca-6e5926cbae11": {
-        "dogName": "Roy",
-        "dogBreed": "Poodle (Standard)",
-        "dogDateOfBirth": "Tue Jan 22 2019 00:11:00 GMT+0000 (Greenwich Mean Time)",
-        "dogShortBio": "its roy here whats up!",
-        "dogPersonality": [
-          "true"
-        ],
-        "dogPunchLine": "Off out on an Adventure! It's Roy by the way",
-        "votes": 1,
-        "image": "http://localhost:5000/photos/photo-1606042362485.jpg",
-        "id": "10ead30c-4b39-4758-b0ca-6e5926cbae11"
-      },
-      "91c090e3-411f-4e11-b875-7fd2aed5c404": {
-        "dogName": "Hector",
-        "dogBreed": "Labrador Retriever",
-        "dogDateOfBirth": "Sat Jan 01 2000 00:01:00 GMT+0000 (Greenwich Mean Time)",
-        "dogShortBio": "its Hector here whats up!",
-        "dogPersonality": [
-          "true"
-        ],
-        "dogPunchLine": "I'm Hector and I like to sniff dog butts",
-        "votes": 1,
-        "image": "http://localhost:5000/photos/photo-1606042392961.jpg",
-        "id": "91c090e3-411f-4e11-b875-7fd2aed5c404"
-      }
-    }
-  },
-  "02f1590a-74a9-4e40-8e0c-c06941da2600": {
+  "3c1e61be-8a3d-4f4a-ae21-b9c61551b709": {
     "email": "conanc1993@gmail.com",
-    "password": "manson",
-    "firstName": "Conan",
-    "surname": "Chambers",
-    "dateOfBirth": "1993-01-10T00:10:00.000Z",
+    "password": "q",
+    "firstName": "q",
+    "surname": "q",
+    "dateOfBirth": "2000-01-10T00:10:00.000Z",
     "termsandConditionsAgreed": true,
     "dogs": {
-      "cdd9548b-5703-4cbb-b27d-87f2f4991a88": {
+      "0d6e4b7a-c77d-410a-ba64-958c3c491778": {
         "dogName": "Manson",
         "dogBreed": "Poodle (Miniature)",
         "dogDateOfBirth": "Tue Jan 08 2019 00:01:00 GMT+0000 (Greenwich Mean Time)",
-        "dogShortBio": "hello im manson",
+        "dogShortBio": "hello",
         "dogPersonality": [
           "true"
         ],
-        "dogPunchLine": "Off out on an Adventure! It's Manson by the way",
+        "dogPunchLine": "Hey! I'm Manson and I love cuddles with my human",
+        "votes": 11,
+        "image": "http://localhost:5000/photos/photo-1606233790420.jpg",
+        "id": "0d6e4b7a-c77d-410a-ba64-958c3c491778"
+      },
+      "f4424881-4490-48cf-8859-91e32c2114ca": {
+        "dogName": "tester",
+        "dogBreed": "Poodle (Miniature)",
+        "dogDateOfBirth": "Tue Jan 08 2019 00:01:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "yoyo",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Off out on an Adventure! It's tester by the way",
+        "votes": 5,
+        "image": "http://localhost:5000/photos/photo-1606234371934.jpg",
+        "id": "f4424881-4490-48cf-8859-91e32c2114ca"
+      },
+      "d4527fa7-bca2-4350-8faa-08ce852032f1": {
+        "dogName": "test test",
+        "dogBreed": "Poodle (Miniature)",
+        "dogDateOfBirth": "Mon Jan 10 2000 00:10:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "tester",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm test test and I love cuddles with my human",
+        "votes": 5,
+        "image": "http://localhost:5000/photos/photo-1606234444195.jpg",
+        "id": "d4527fa7-bca2-4350-8faa-08ce852032f1"
+      }
+    }
+  },
+  "bd72af14-3e72-4830-bfb6-8dc0f5a4fd33": {
+    "email": "testert@tete.com",
+    "password": "hjhj",
+    "firstName": "haha",
+    "surname": "haha",
+    "dateOfBirth": "2000-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": {
+      "da139eb1-67ab-4d8b-a202-d95c5b62f137": {
+        "dogName": "manson",
+        "dogBreed": "Alaskan husky",
+        "dogDateOfBirth": "Tue Jan 12 1999 00:12:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "12121",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "I'm manson and I like to sniff dog butts",
+        "votes": 4,
+        "image": "http://localhost:5000/photos/photo-1606234495303.jpg",
+        "id": "da139eb1-67ab-4d8b-a202-d95c5b62f137"
+      },
+      "61636d3c-f0c2-4830-a125-01d46ebf688a": {
+        "dogName": "manson2",
+        "dogBreed": "Alopekis",
+        "dogDateOfBirth": "Mon Jan 10 2000 00:10:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "1212",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm manson2 and I love cuddles with my human",
         "votes": 1,
-        "image": "http://localhost:5000/photos/photo-1606042459114.jpg",
-        "id": "cdd9548b-5703-4cbb-b27d-87f2f4991a88"
+        "image": "http://localhost:5000/photos/photo-1606235221640.jpg",
+        "id": "61636d3c-f0c2-4830-a125-01d46ebf688a"
+      },
+      "7563d4d9-857d-4a71-98f3-5dafa7a2845d": {
+        "dogName": "dddd",
+        "dogBreed": "Alaskan Klee Kai",
+        "dogDateOfBirth": "Fri Jan 11 2019 00:11:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "cdcdsc",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm dddd and I love cuddles with my human",
+        "votes": 3,
+        "image": "http://localhost:5000/photos/photo-1606235457849.jpg",
+        "id": "7563d4d9-857d-4a71-98f3-5dafa7a2845d"
+      }
+    }
+  },
+  "0d9f3ac3-8cb6-4136-8b44-4f87e6a6372c": {
+    "email": "fefef@fadafd.cpm",
+    "password": "hello",
+    "firstName": "conan",
+    "surname": "consan",
+    "dateOfBirth": "2000-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": {}
+  },
+  "de863c0f-ccb0-4ca0-a000-27290369f6e9": {
+    "email": "dsdscsd@sd.d.com",
+    "password": "ds",
+    "firstName": "ddd",
+    "surname": "ddd",
+    "dateOfBirth": "2000-01-10T00:10:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": {
+      "8d9efcf4-c70c-4fea-9b52-e5f1c4f0147f": {
+        "dogName": "xsx",
+        "dogBreed": "Alaskan Malamute",
+        "dogDateOfBirth": "Mon Jan 10 2000 00:10:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "swsws",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm xsx and I love cuddles with my human",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1606235885482.jpg",
+        "id": "8d9efcf4-c70c-4fea-9b52-e5f1c4f0147f"
+      },
+      "a597e10d-7e40-4955-8083-fa22b3fbf1c9": {
+        "dogName": "ddd",
+        "dogBreed": "Alaskan Malamute",
+        "dogDateOfBirth": "Invalid Date",
+        "dogShortBio": "dwdwdw",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm ddd and I love cuddles with my human",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1606235988716.jpg",
+        "id": "a597e10d-7e40-4955-8083-fa22b3fbf1c9"
+      }
+    }
+  },
+  "35c56c33-79c3-4052-9e47-8df7f23b7f2b": {
+    "email": "dwdw@dwdw.com",
+    "password": "dewd",
+    "firstName": "d",
+    "surname": "d",
+    "dateOfBirth": "2020-11-10T16:52:00.000Z",
+    "termsandConditionsAgreed": true,
+    "dogs": {
+      "e457b510-f0fb-4289-b7fc-a5fc83f93c6e": {
+        "dogName": "ddd",
+        "dogBreed": "Alapaha Blue Blood Bulldog",
+        "dogDateOfBirth": "Mon Jan 10 2000 00:10:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "sdsxsx",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm ddd and I love cuddles with my human",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1606238637345.jpg",
+        "id": "e457b510-f0fb-4289-b7fc-a5fc83f93c6e"
+      },
+      "3b1dbf49-bac7-4306-97c7-41fb3b75db9d": {
+        "dogName": "fdf",
+        "dogBreed": "Alapaha Blue Blood Bulldog",
+        "dogDateOfBirth": "Mon Jan 10 2000 00:10:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "ddd",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm fdf and I love cuddles with my human",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1606238761958.jpg",
+        "id": "3b1dbf49-bac7-4306-97c7-41fb3b75db9d"
+      }
+    }
+  },
+  "6ae5d387-d2fd-48f9-851b-f15ac55a6c31": {
+    "email": "dsds@dsd.com",
+    "password": "as",
+    "firstName": "as",
+    "surname": "as",
+    "dateOfBirth": "2020-11-24T17:26:05.283Z",
+    "termsandConditionsAgreed": true,
+    "dogs": {
+      "1506a49f-b923-426a-8e4a-9bd78d36db79": {
+        "dogName": "as",
+        "dogBreed": "Alaskan husky",
+        "dogDateOfBirth": "Mon Jan 10 2000 00:10:00 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "as",
+        "dogPersonality": [
+          "true"
+        ],
+        "dogPunchLine": "Hey! I'm as and I love cuddles with my human",
+        "votes": 0,
+        "image": "http://localhost:5000/photos/photo-1606238793018.jpg",
+        "id": "1506a49f-b923-426a-8e4a-9bd78d36db79"
       }
     }
   }

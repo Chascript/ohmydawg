@@ -2,7 +2,8 @@ import { Grid, makeStyles, TextField, Typography, Button, Link } from '@material
 import React from 'react'
 import {  Pets } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns';
-import {MuiPickersUtilsProvider ,KeyboardDatePicker} from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+
 
 const useStyles = makeStyles((theme) =>({
   avatar: {
@@ -31,21 +32,7 @@ export default function AccountForm(props) {
       {props.fieldsEmpty && <Typography color='error'>All Fields Are Required*</Typography>}
     <Grid container sm={12} justify='center'  alignItems='center' spacing={2}>
 
-      <Grid item sm={6} justify='center' alignItems='center'>
-        <TextField   
-          onChange={props.handleUsernameChange}
-          variant="outlined"
-          error={props.accountFormValues.username.length < 1 }
-          helperText={props.accountFormValues.username.length < 1 && 'A Username is required'}
-          required
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          placeholder="Username Will Identify Account"
-        />
-      </Grid>
-      <Grid item sm={6} >
+      <Grid item sm={10} >
         <TextField 
             label='Humans Email'
             id='email'
@@ -72,7 +59,7 @@ export default function AccountForm(props) {
             onChange={props.handleEmail}
           />
       </Grid>
-      <Grid item sm={6} >
+      <Grid item sm={5} >
       <TextField 
           label='New Password'
           id='password'
@@ -86,7 +73,7 @@ export default function AccountForm(props) {
           onChange={props.handlePasswordChange}        
           />     
       </Grid>      
-      <Grid item sm={6} >
+      <Grid item sm={5} >
         <TextField
           label='Confirm Password'
           id='confirmPassword'
@@ -100,7 +87,7 @@ export default function AccountForm(props) {
           onChange = {props.handleConfirmPasswordChange}
         />     
       </Grid>
-      <Grid item sm={6}>
+      <Grid item sm={5}>
       <TextField   
           onChange={props.handleFirstNameChange}
           error={props.accountFormValues.firstName.length < 1}
@@ -114,7 +101,7 @@ export default function AccountForm(props) {
           placeholder="Account Holders First Name"
         />
       </Grid>
-      <Grid item sm={6}>
+      <Grid item sm={5}>
       <TextField   
           onChange={props.handleSurnameChange}
           error={props.accountFormValues.surname.length < 1}
@@ -128,9 +115,9 @@ export default function AccountForm(props) {
           placeholder="Account Holders Surname"
         />
       </Grid>
-      <Grid item sm={12}>
+      <Grid item sm={10}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
+          <DatePicker
             invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
             required
             fullWidth
@@ -138,7 +125,7 @@ export default function AccountForm(props) {
             value={props.accountFormValues.dateOfBirth}
             inputVariant = "outlined"
             label='Date Of Birth'
-            format="dd/mm/yyyy"
+            format="dd/MM/yyyy"
             onChange={props.handleDateOfBirthChange}
           />
         </MuiPickersUtilsProvider>
