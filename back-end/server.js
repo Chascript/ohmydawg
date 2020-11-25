@@ -62,9 +62,17 @@ app.get('/dogs/details', (req,res) => {
   const dogData = []
   usernames.forEach(username=>{
     const usersDogs = accounts[username].dogs
+
     for( let prop in usersDogs){
-      const dogValues = usersDogs[prop]
-      dogData.push(dogValues)
+      const {dogName, dogBreed, image, votes, id} = usersDogs[prop]
+      const dog = {
+        dogName: dogName,
+        dogBreed: dogBreed,
+        image: image,
+        votes: votes,
+        id: id
+      }
+      dogData.push(dog)
     }
   })
   res.json(dogData)

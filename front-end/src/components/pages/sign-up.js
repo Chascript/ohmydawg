@@ -12,14 +12,14 @@ export default function Signup() {
     dogForm: false
   })
   const [accountForm,setAccountForm] = useState({
-    username: false,
     email: false,
     password: false,
     confirmPassword: 'invalid',
     firstName: false,
     surname: false,
-    dateOfBirth: null,
+    dateOfBirth: new Date(),
   })
+  const [accountId, setAccountId] = useState()
   const initialRender = () =>{
   setRenderedComponents({
     accountForm: false,
@@ -91,7 +91,6 @@ const submitAccountForm = () => {
     setErrorMessage(true)
   } else {
     const details = {
-      username: accountForm.username,
       email: accountForm.email,
       password: accountForm.password,
       firstName: accountForm.firstName,
@@ -109,6 +108,7 @@ const submitAccountForm = () => {
     .then(res => res.json())
     .then(res => {
       console.log(res)
+      setAccountId(res)
       setRenderedComponents({
         acountForm: false,
         dogForm: true
@@ -125,7 +125,6 @@ const submitAccountForm = () => {
             <AccountForm
             fieldsEmpty={errorMessage}
             handleSubmitOnClick ={submitAccountForm}
-            handleUsernameChange={e => setAccountForm({...accountForm, username: e.target.value})}
             handleEmail={handleEmailChange}
             handleFirstNameChange={e => setAccountForm({...accountForm, firstName: e.target.value})}
             handleSurnameChange={e => setAccountForm({...accountForm, surname: e.target.value})}
@@ -140,7 +139,7 @@ const submitAccountForm = () => {
       <Grid item sm={12} >
         {renderedComponent.dogForm && 
           <DogForm 
-            usernameValue={accountForm.username}
+            usernameValue={accountId}
             title="Create Dawg!" 
           />
         }

@@ -35,9 +35,10 @@ const classes = useStyles()
           variant="outlined"
           margin="normal"
           required
-          id="username"
-          label="Username"
-          name="username"
+          id="email"
+          label="Email"
+          name="email"
+          placeholder="example@example.com"
         />
       </Grid>
       <Grid item className={classes.inputs} >

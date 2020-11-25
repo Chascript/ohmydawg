@@ -1,17 +1,16 @@
-import { Button, Checkbox, FormControlLabel, FormLabel, Grid, makeStyles, MenuItem, Paper, TextField, Typography } from '@material-ui/core'
+import { Button, Checkbox, FormControlLabel, FormLabel, Grid, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core'
 import {Spring} from 'react-spring/renderprops'
 import { Favorite, FavoriteBorder, Pets } from '@material-ui/icons'
 import MultilineTextBox from './inputs/multiline-text-input';
 import {MuiPickersUtilsProvider ,KeyboardDatePicker} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
-import { FormHelperText, InputLabel, FormControl, Select, } from '@material-ui/core';
-import InputBase from '@material-ui/core/InputBase';
+import { FormHelperText, FormControl, } from '@material-ui/core';
+import  dogDefault from './dog-not-chosen-default.png'
 
 import React,{useState, useEffect} from 'react'
 import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
-import { withStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
   imageNotSelected:{
@@ -37,53 +36,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const BootstrapInput = withStyles((theme) => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
-  },
-}))(InputBase);
-
 export default function DogForm(props) {
   const classes = useStyles()
+  const [breed, setBreed] = useState(null)
+  const [ open, setOpen] = useState(false)
   const [reviewDog, setReviewDog] = useState(false)
   const [allBreeds, setAllBreeds] = useState([]);
-  const [imagePreview, setImagePreview] = useState(true)
+  const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
     dogName: false,
-    dogBreed: false,
+    dogBreed: true,
     dogDateOfBirth: null,
-    dogShortBio: true,
-    dogPunchLine: true,
+    dogShortBio: false,
+    dogPunchLine: false,
     dogPersonality: true,
     file: false,
   })
@@ -102,7 +68,7 @@ const [date, setDate] = useState(null)
   }
 
   const handleDateChange = (date) => {
-    setDate(Date(date).toLocaleString())
+    setDate( new Date(date).toLocaleString())
 
     setDogDetailsForm({...dogDetailsForm, dogDateOfBirth: date })
   }
@@ -128,6 +94,7 @@ const [date, setDate] = useState(null)
       form.set('dogDateOfBirth', dogDetailsForm.dogDateOfBirth)
       form.set('dogPersonality', dogDetailsForm.dogPersonality)
       form.set('dogPunchLine', dogDetailsForm.dogPunchLine)
+      form.set('dogShortBio' , dogDetailsForm.dogShortBio)
       form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
 
       fetch('http://localhost:5000/signup/newdog', {
@@ -148,9 +115,10 @@ const closeReviewDog=() => {
 const addAnotherDog = () => {
   saveDog()
   document.getElementById('form').reset()
-  setImagePreview(true)
-  setDogDetailsForm({...dogDetailsForm, file: false})
+  setImagePreview(false)
+  setBreed(null)
   document.getElementById("button-file").value = ""
+  setDogDetailsForm({...dogDetailsForm, dogDateOfBirth: null })
   closeReviewDog()
 }
 
@@ -158,14 +126,14 @@ const saveDogNoNewDog = () => {
   saveDog()
 }
 
- const openModal =() => {
+ const openModal = () => {
   setErrorMessage(false)
   const formValues = Object.values(dogDetailsForm)
   const formError = [formValues.includes(false), formValues.includes(null), formValues.includes('Invalid Date')]
   console.log(formValues)
   console.log(formError)
   // need to fix error on datepicker
-  if(formError[0] || formError[1]||formError[2]){
+  if(formError[0] || formError[1] || formError[2]){
     setErrorMessage(true)
     console.log('error')
   } else{
@@ -173,6 +141,19 @@ const saveDogNoNewDog = () => {
   }
 }
 
+const handleChange = (event) => {
+  const target = event.target
+  const value = target.value
+  setBreed(value)
+}
+
+const handleClose = () => {
+  setOpen(false);
+};
+
+const handleOpen = () => {
+  setOpen(true);
+};
 
   
   return(
@@ -185,7 +166,7 @@ const saveDogNoNewDog = () => {
                   {imagePreview ?(
                     <img className={classes.imageSelected} src={imagePreview} alt={dogDetailsForm.file.name} />
                     ):(
-                    <img className={classes.imageNotSelected} src={require('./dog-not-chosen-default.png')} alt="default"/>
+                    <img className={classes.imageNotSelected} src={dogDefault} alt="default"/>
                   )}
                 </Grid>
                 <Grid item sm={10}>
@@ -193,7 +174,7 @@ const saveDogNoNewDog = () => {
                     className={classes.button}
                     inputAccept='image/'
                     buttonText='Upload a photo of yourself'
-                    errorMessage='Please Select a jpeg or png file'
+                    errorMessage= {imagePreview && 'Please Select a jpeg or png file'}
                     fileName={imagePreview && dogDetailsForm.file.name}
                     multiple={false}
                     handleChange={handleFileChange}
@@ -229,23 +210,26 @@ const saveDogNoNewDog = () => {
                       handleChange={e => setDogDetailsForm({...dogDetailsForm, dogName: e.target.value})}
                     />
                   </Grid>
-                  <Grid item sm={5} >
-                    <TextField
-                      fullWidth
+                  <Grid sm={5}>
+                  <FormControl >
+                    <InputLabel id="breed">What Breed At You...?</InputLabel>
+                    <Select
+                      labelId="breed"
                       id="breed"
-                      label="What Breed Are You..." 
-                      variant='outlined'
-                      value={dogDetailsForm.dogBreed}
-                      error={dogDetailsForm.dogBreed.length < 1}
-                      name= 'breed'
-                      onChange={e => setDogDetailsForm({...dogDetailsForm, dogBreed: e.target.value})}
-                      select
-                      >
-                      
+                      open={open}
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      value={breed}
+                      onChange={handleChange}
+                    >
+                      <MenuItem value="">
+                        <em></em>
+                      </MenuItem>
                       {allBreeds.map(allBreeds => 
                         <MenuItem value={allBreeds}>{allBreeds}</MenuItem>
                       )}
-                    </TextField>
+                    </Select>
+                  </FormControl>
                   </Grid>
                   <Grid item sm={5}>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -256,6 +240,7 @@ const saveDogNoNewDog = () => {
                         disableFuture={true}
                         value={dogDetailsForm.dogDateOfBirth}
                         inputVariant = "outlined"
+                        id='dogDateOfBirth'
                         label='Date Of Birth'
                         format="dd/mm/yyyy"
                         onChange={handleDateChange}
