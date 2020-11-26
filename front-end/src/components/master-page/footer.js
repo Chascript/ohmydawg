@@ -16,14 +16,14 @@ const useStyles = makeStyles((theme) => ({
 export default function Footer() {
 const classes = useStyles()
   return (
-    <Grid container className={classes.color} component={Paper}  sm={12} direction="row" justify="space-between" alignItems="center" wrap='wrap' >
-       <CssBaseline className={classes.root}/>
+    <Grid container className={classes.color} component={Paper} direction="row" justify="space-between" alignItems="center" wrap='wrap' >
+       <CssBaseline />
       <Grid item sm={4} >
         <img className={classes.paw} src={paw} alt={'paw-print'} />
       </Grid >
-        <Grid container justify='space-between' alignItems='center' direction='column' sm={4} >
+        <Grid container item justify='space-between' alignItems='center' direction='column' sm={4} >
           <Grid item  >
-            <Typography variant="body2" align="center"> A Site For Dawgs </Typography>
+            <Typography component='p' variant="body2" align="center"> A Site For Dawgs </Typography>
           </Grid>
           <Grid item>
             <ContactIcons/>

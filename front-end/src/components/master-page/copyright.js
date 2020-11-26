@@ -5,7 +5,7 @@ import React from 'react'
 
 export default function Copyright() {
   return (
-    <Typography variant="body2" align="center">
+    <Typography variant="body1" align="center">
       {' © '}
       <Link color="inherit" href="http://www.ohmydawg.co.uk/home.html">
         ohmydawg

@@ -19,7 +19,8 @@ const useStyles = makeStyles((theme)=>({
     alignItems:'center',
   },
 buttonContainer:{
-justifyContent:'center',    
+justifyContent:'center',
+alignItems: 'center'    
 }
 }))
 
@@ -28,20 +29,20 @@ const classes = useStyles()
   return(
     <Grid container className={classes.container} spacing={2} >
       <CssBaseline />
-      <Grid item className={classes.inputs}>
+      <Grid item sm={4} className={classes.inputs}>
         <TextField 
          color='secondary'
           size='small'
           variant="outlined"
           margin="normal"
           required
-          id="email"
+          id="loginEmail"
           label="Email"
           name="email"
           placeholder="example@example.com"
         />
       </Grid>
-      <Grid item className={classes.inputs} >
+      <Grid item sm={4} className={classes.inputs} >
         <TextField
           color='secondary'
           size='small'
@@ -51,12 +52,12 @@ const classes = useStyles()
           name="password"
           label="Password"
           type="password"
-          id="password"
+          id="loginPassword"
           autoComplete="current-password"
           placeholder="******"
         />         
       </Grid>
-      <Grid item  className={classes.buttonContainer}>
+      <Grid item sm={2}  className={classes.buttonContainer}>
         <Button
           className={classes.submit}
           type="submit"
