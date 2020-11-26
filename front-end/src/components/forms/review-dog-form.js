@@ -5,12 +5,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import { getThemeProps } from '@material-ui/styles';
 import { Grid, Typography } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import { Pets } from '@material-ui/icons';
@@ -49,14 +43,13 @@ export default function ReviewDogForm(props) {
       <Dialog
         TransitionComponent={Transition}
         keepMounted
-        fullWidth='md'
         maxWidth='md'
         open={props.review}
         onClose={props.handleClose}
         aria-labelledby="max-width-dialog-title"
       >
         <DialogContent>
-        <Grid container sm={12} >
+        <Grid container >
           <Grid container item sm={4}>
             <img className={classes.image} src={props.dogPhoto} alt={props.dogName}  />
           </Grid>
@@ -67,7 +60,7 @@ export default function ReviewDogForm(props) {
                 Review {props.dogName} 
               </Typography>
             </Grid> 
-            <Grid item justify='center' >
+            <Grid item >
               <Pets className={classes.avatar}/>
             </Grid>
 

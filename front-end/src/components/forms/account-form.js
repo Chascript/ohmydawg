@@ -3,6 +3,7 @@ import React from 'react'
 import {  Pets } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
+import {Spring} from 'react-spring/renderprops'
 
 
 const useStyles = makeStyles((theme) =>({
@@ -21,7 +22,13 @@ const useStyles = makeStyles((theme) =>({
 export default function AccountForm(props) {
   const classes = useStyles()
   return(      
-    <Grid container sm={12} >
+    <Spring
+    from={{ opacity: 0, marginTop: -16 }}
+    to={{ opacity:1, marginTop:0 }}
+    config={{duration:2000}}
+    >
+      {transition=> (
+    <Grid style={transition} container >
     <Grid container item sm={12} className={classes.title} direction='row' alignItems='flex-start' justify='flex-start'>
       <Grid item >
         <Typography component="h1" variant="h4">
@@ -33,7 +40,7 @@ export default function AccountForm(props) {
       </Grid>
     </Grid>
       {props.fieldsEmpty && <Typography color='error'>All Fields Are Required*</Typography>}
-    <Grid container sm={12} justify='center'  alignItems='center' spacing={2}>
+    <Grid container justify='center'  alignItems='center' spacing={2}>
 
       <Grid item sm={10} >
         <TextField 
@@ -136,13 +143,13 @@ export default function AccountForm(props) {
           />
         </MuiPickersUtilsProvider>
       </Grid>
-      <Typography component='body2'>
+      <Typography component='p' variant='body2'>
         By clicking Create Account, you agree to Oh My Dawgs Terms. 
         Learn how we collect, use and share your data in our <Link>Data Policy </Link> 
          and how we use cookies and similar technology in our <Link>Cookie Policy</Link>.
         You may recieve emails from Oh My Dawg but this is not frequent at all!
       </Typography>
-      <Grid sm={8}> 
+      <Grid item sm={8}> 
         <Button
           fullWidth
           variant="contained"
@@ -155,5 +162,7 @@ export default function AccountForm(props) {
       </Grid>
     </Grid> 
   </Grid>   
+      )}
+      </Spring>
   )
 }

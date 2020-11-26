@@ -23,8 +23,8 @@ export default function Signup() {
   const [accountId, setAccountId] = useState()
   const initialRender = () =>{
   setRenderedComponents({
-    accountForm: true,
-    dogForm: false
+    accountForm: false,
+    dogForm: true
   })
 }
 
@@ -35,7 +35,6 @@ useEffect(()=>{
 const handleEmailChange = async event =>{
   const target = event.target
   const emailValue = target.value
-  console.log(emailValue)
 if( emailValue < 1 ) {
   setAccountForm({...accountForm, email:null})
 } else {
@@ -50,16 +49,13 @@ if( emailValue < 1 ) {
           "Content-Type": "application/json"
         }  
       })).json() ;
-      console.log(emailExistsResult)
       setAccountForm({...accountForm, email:emailExistsResult})
-      console.log(accountForm)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
     }     
   } else {
       setAccountForm({...accountForm, email:'invalid'})
-      console.log(accountForm.email)
   }
 }
 }
@@ -118,7 +114,6 @@ const submitAccountForm = () => {
     })
     .then(res => res.json())
     .then(res => {
-      console.log(res)
       setAccountId(res)
       setRenderedComponents({
         acountForm: false,
@@ -129,7 +124,7 @@ const submitAccountForm = () => {
   }
 }
   return(
-    <Grid container sm={12} spacing={4} justify='center' wrap='wrap'  >
+    <Grid container spacing={4} justify='center' wrap='wrap'  >
         <CssBaseline />
         {renderedComponent.accountForm && 
           <Grid item sm={4} component={Paper}>

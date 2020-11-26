@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, FormLabel, Grid, makeStyles, MenuItem, Paper, TextField, Typography } from '@material-ui/core'
+import { Button, Checkbox, FormControlLabel, FormLabel, Grid, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core'
 import {Spring} from 'react-spring/renderprops'
 import { Favorite, FavoriteBorder, Pets } from '@material-ui/icons'
 import MultilineTextBox from './inputs/multiline-text-input';
@@ -15,7 +15,6 @@ import ReviewDogForm from './review-dog-form';
 const useStyles = makeStyles((theme) => ({
   imageNotSelected:{
     display: 'flex',
-    justifyContent: 'center',
     height: 300,
     width: 200,
   },
@@ -37,7 +36,21 @@ const useStyles = makeStyles((theme) => ({
   container:{
     paddingTop: 20
   },
+  menuPaper: {
+    maxHeight: 100
+  },
 }))
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 export default function DogForm(props) {
   const classes = useStyles()
@@ -114,27 +127,23 @@ export default function DogForm(props) {
       .then(res => {
         console.log(res)
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 
 const closeReviewDog=() => {
   setReviewDog(false)
 }
 
-useEffect(()=>{
-  console.log(dogDetailsForm)
-},[dogDetailsForm])
-
 const addAnotherDog = () => {
   saveDog()
   document.getElementById('form').reset()
   setImagePreview(false)
-  setPunchLine(null)
-  setBreed(null)
+  setPunchLine('')
+  setBreed('')
   document.getElementById("button-file").value = ""
   setDogDetailsForm({...dogDetailsForm, 
     dogDateOfBirth: null,
-    dogBreed: false,
+    dogBreed: [false],
     dogPunchLine: false
   })
   closeReviewDog()
@@ -148,11 +157,9 @@ const saveDogNoNewDog = () => {
   setErrorMessage(false)
   const formValues = Object.values(dogDetailsForm)
   const formError = [formValues.includes(false), formValues.includes(null)]
-  console.log(formValues)
-  console.log(formError)
   if(formError[0] || formError[1] || formError[2]){
     setErrorMessage(true)
-    console.log('error')
+    console.error('not all fields are filled')
   } else{
       setReviewDog(true)
   }
@@ -163,12 +170,18 @@ const handleCheckboxChange = event => {
   setDogDetailsForm({...dogDetailsForm, dogPersonality: true})
 }
   
-  return(
-    <Grid container component={Paper} className={classes.container} spacing={4} justify='center'   alignItems='center' >
+  return(    
+  <Spring
+    from={{ opacity: 0, marginTop: -16 }}
+    to={{ opacity:1, marginTop:0 }}
+    config={{duration:2000}}
+    >
+      {transition=> (
+    <Grid container  style={transition} component={Paper} className={classes.container} spacing={4} justify='center'   alignItems='center' >
          <form id='form' >
             <Grid container item sm={12} justify='center' alignItems='center'>
-              <Grid container item sm={4} >
-                <Grid item justify='center' sm={10}>
+              <Grid item sm={3}>
+                <Grid container justify='center'>
                   {imagePreview ?(
                     <img className={classes.imageSelected} src={imagePreview} alt={dogDetailsForm.file.name} />
                     ):(
@@ -196,7 +209,7 @@ const handleCheckboxChange = event => {
                       {props.title} 
                     </Typography>
                   </Grid>
-                  <Grid item justify='center' >
+                  <Grid item >
                     <Pets className={classes.avatar}/>
                   </Grid>    
                 </Grid>  
@@ -217,28 +230,30 @@ const handleCheckboxChange = event => {
                     />
                   </Grid>
                   <Grid item sm={5}>
-                    <TextField
-                      fullWidth
-                      id="breed"
-                      label="What Breed Are You...?" 
-                      variant='outlined'
-                      value={breed}
-                      onChange={e => {
-                        setBreed(e.target.value)
-                        setDogDetailsForm({...dogDetailsForm, dogBreed: e.target.value})
-                      }} 
-                      select
-                      >
-                      <MenuItem value="">
-                        <em></em>
-                      </MenuItem>
-                      {allBreeds.map(allBreeds => 
-                        <MenuItem value={allBreeds}>{allBreeds}</MenuItem>
-                      )}
-                    </TextField>
+                  <FormControl variant='outlined' fullWidth>
+                  <InputLabel id="breed">What Breed Are You...?</InputLabel>
+                      <Select
+                        labelId="breed"
+                        id="breed"
+                        value={breed}
+                        onChange={e => {
+                          setBreed(e.target.value)
+                          setDogDetailsForm({...dogDetailsForm, dogBreed: e.target.value})
+                        }} 
+                        MenuProps={MenuProps}
+                        displayEmpty
+                        >
+                        <MenuItem value="">
+                          <em></em>
+                        </MenuItem>
+                        {allBreeds.map(allBreeds => 
+                          <MenuItem key={allBreeds} value={allBreeds}>{allBreeds}</MenuItem>
+                        )}
+                      </Select>
+                    </FormControl>
                   </Grid>
                   <Grid item sm={5}>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <MuiPickersUtilsProvider  utils={DateFnsUtils}>
                       <DatePicker
                         invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
                         required
@@ -267,10 +282,10 @@ const handleCheckboxChange = event => {
                     <MenuItem value="">
                       <em></em>
                     </MenuItem>
-                      <MenuItem value={`Hey! I'm ${dogDetailsForm.dogName} and I love cuddles with my human`}>{`Hey! I'm ${dogDetailsForm.dogName} and I love cuddles with my human`}</MenuItem>
-                      <MenuItem value={`Off out on an Adventure! It's ${dogDetailsForm.dogName} by the way`}>{`Off out on an Adventure! It's ${dogDetailsForm.dogName} by the way`}</MenuItem>
-                      <MenuItem value={`I'm ${dogDetailsForm.dogName} and I like to sniff dog butts`}>{`I'm ${dogDetailsForm.dogName} and I like to sniff dog butts`}</MenuItem>
-                      <MenuItem value={`What's up! It's ${dogDetailsForm.dogName} Chilling here`}>{`What's up! It's ${dogDetailsForm.dogName} Chilling here`}</MenuItem>
+                      <MenuItem key='punchline1' value={`Hey! I'm ${dogDetailsForm.dogName} and I love cuddles with my human`}>{`Hey! I'm ${dogDetailsForm.dogName} and I love cuddles with my human`}</MenuItem>
+                      <MenuItem key='punchline2' value={`Off out on an Adventure! It's ${dogDetailsForm.dogName} by the way`}>{`Off out on an Adventure! It's ${dogDetailsForm.dogName} by the way`}</MenuItem>
+                      <MenuItem key='punchline3' value={`I'm ${dogDetailsForm.dogName} and I like to sniff dog butts`}>{`I'm ${dogDetailsForm.dogName} and I like to sniff dog butts`}</MenuItem>
+                      <MenuItem key='punchline4' value={`What's up! It's ${dogDetailsForm.dogName} Chilling here`}>{`What's up! It's ${dogDetailsForm.dogName} Chilling here`}</MenuItem>
                   </TextField>
                 </Grid>
                   <Grid item sm={5}>
@@ -383,5 +398,7 @@ const handleCheckboxChange = event => {
           />
         }
     </Grid>
+      )}
+</Spring>
   )
 }

@@ -47,7 +47,7 @@ function App() {
   return (
     <Router> 
       <ThemeProvider theme = {darkMode ? darkTheme : lightTheme} >
-        <Grid container sm={12} flexGrow={1} flex-wrap='wrap' >
+        <Grid container flex-wrap='wrap' >
           <Grid item sm={12}>   
             <DenseAppBar  onChange={()=> setDarkMode(!darkMode)} />
           </Grid>

@@ -78,29 +78,6 @@ app.get('/dogs/details', (req,res) => {
   res.json(dogData)
 })
 
-
-
-
-// get username data
-app.post('/accounts/details/username', (req,res) => {
-  const usernameInputted = req.body.value
-  if (accounts[usernameInputted]) {
-    console.log(accounts[username])
-    res.json(data)
-  }
-})
-
-// 3 random dog photos
-app.get('/photos/random', (req, res) => {
-  const data = Object.keys(accounts);
-  const images = data.map((accountId) => accounts[accountId].image)
-  const randomNumber1 = Math.floor(Math.random()*images.length);
-  const randomNumber2 = Math.floor(Math.random()*images.length);
-  const randomNumber3 = Math.floor(Math.random()*images.length);
-  const randomImages = [images[randomNumber1],images[randomNumber2],images[randomNumber3]];
-  res.json(randomImages)
-})
-
 //Save new account
 app.post('/signup/newaccount', (req,res) => {
 console.log(req.body)

@@ -5,7 +5,7 @@ import React from 'react'
 export default function ContactIcons() {
 
   return(
-    <Grid >
+    <Grid item >
       <IconButton onClick={() => window.open("https://github.com/Chascript")}>
         <GitHub />
       </IconButton>
