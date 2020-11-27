@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, FormLabel, Grid, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography } from '@material-ui/core'
+import { Button, Checkbox, FormControlLabel, FormLabel, Grid, Hidden, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import {Spring} from 'react-spring/renderprops'
 import { Favorite, FavoriteBorder, Pets } from '@material-ui/icons'
 import MultilineTextBox from './inputs/multiline-text-input';
@@ -11,6 +11,17 @@ import React,{useState, useEffect} from 'react'
 import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 const useStyles = makeStyles((theme) => ({
   imageNotSelected:{
@@ -41,16 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+
 
 export default function DogForm(props) {
   const classes = useStyles()
@@ -63,21 +65,22 @@ export default function DogForm(props) {
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
-  const [reviewDog, setReviewDog] = useState(false)
+  const [reviewDog, setReviewDog] = useState(true)
   const [allBreeds, setAllBreeds] = useState([]);
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
-    dogName: false,
-    dogBreed: false,
+    dogName: 'Manson',
+    dogBreed: 'Poodle',
     dogDateOfBirth: null,
-    dogShortBio: false,
-    dogPunchLine: false,
-    dogPersonality: [false],
+    dogShortBio: 'I love e a and eever hello dogs food cats',
+    dogPunchLine: 'dwdwdw dw dw d w dw dw dwwdwdw dwdw ',
+    dogPersonality: ['helll', 'efdeded', 'dedede', 'ededed'],
     file: true,
   })
   const [date, setDate] = useState(null)
-
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
   const handleFileChange = (e) => { 
     const types = ['image/png', 'image/jpeg'];
     let selected = e.target.files[0];
@@ -104,6 +107,7 @@ export default function DogForm(props) {
       console.error(error)
     }
   }
+
   useEffect(() => {
     fetchBreeds()
     }, []);
@@ -177,9 +181,21 @@ const handleCheckboxChange = event => {
     config={{duration:2000}}
     >
       {transition=> (
-    <Grid container  style={transition} component={Paper} className={classes.container} spacing={4} justify='center'   alignItems='center' >
+    <Grid container  style={transition} component={Paper} className={classes.container} justify='center'   alignItems='center' >
          <form id='form' >
-            <Grid container item sm={12} justify='center' alignItems='center'>
+         <Hidden smUp>   
+            <Grid container  item xs={12} alignItems='center' justify='center' >
+              <Grid item >
+                <Typography component="h1" variant="h4">
+                  {props.title} 
+                </Typography>
+              </Grid>
+              <Grid item >
+                <Pets className={classes.avatar}/>
+              </Grid>    
+            </Grid>  
+          </Hidden>
+            <Grid container item xs={12} sm={12} className={classes.container} justify='center' alignItems='center' >
               <Grid item sm={3}>
                 <Grid container justify='center'>
                   {imagePreview ?(
@@ -188,7 +204,7 @@ const handleCheckboxChange = event => {
                     <img className={classes.imageNotSelected} src={dogDefault} alt="default"/>
                   )}
                 </Grid>
-                <Grid item sm={10}>
+                <Grid item  sm={10}>
                   <FileUploadButton
                     className={classes.button}
                     inputAccept='image/'
@@ -202,8 +218,9 @@ const handleCheckboxChange = event => {
                   />
                 </Grid>
               </Grid>
-              <Grid container item sm={8} spacing={2}>
-                <Grid container item sm={12} alignItems='center' justify='flex-start'>
+              <Grid container xs={10} item sm={8} spacing={2}>
+              <Hidden xsDown>   
+                <Grid container item sm={12} alignItems='center' justify='flex-start' >
                   <Grid item >
                     <Typography component="h1" variant="h4">
                       {props.title} 
@@ -213,11 +230,12 @@ const handleCheckboxChange = event => {
                     <Pets className={classes.avatar}/>
                   </Grid>    
                 </Grid>  
+                </Hidden>
                 <Grid item>
                 {errorMessage && <Typography color='error'>All Fields Are Required</Typography>}
                 </Grid>
-                <Grid container item sm={12} spacing={2}>
-                  <Grid item sm={5}>
+                <Grid container item justify={matches && 'center'} sm={12} spacing={2}>
+                  <Grid item xs={10} sm={5}>
                     <TextBox 
                       label='What do your humans call you?'
                       id='dogName'
@@ -229,7 +247,7 @@ const handleCheckboxChange = event => {
                       handleChange={e => setDogDetailsForm({...dogDetailsForm, dogName: e.target.value})}
                     />
                   </Grid>
-                  <Grid item sm={5}>
+                  <Grid item xs={10} sm={5}>
                   <FormControl variant='outlined' fullWidth>
                   <InputLabel id="breed">What Breed Are You...?</InputLabel>
                       <Select
@@ -243,16 +261,13 @@ const handleCheckboxChange = event => {
                         MenuProps={MenuProps}
                         displayEmpty
                         >
-                        <MenuItem value="">
-                          <em></em>
-                        </MenuItem>
                         {allBreeds.map(allBreeds => 
                           <MenuItem key={allBreeds} value={allBreeds}>{allBreeds}</MenuItem>
                         )}
                       </Select>
                     </FormControl>
                   </Grid>
-                  <Grid item sm={5}>
+                  <Grid item xs={10} sm={5}>
                     <MuiPickersUtilsProvider  utils={DateFnsUtils}>
                       <DatePicker
                         invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
@@ -267,7 +282,7 @@ const handleCheckboxChange = event => {
                       />
                     </MuiPickersUtilsProvider>
                   </Grid>
-                  <Grid item sm={5} >
+                  <Grid item xs={10} sm={5} >
                   <TextField
                     fullWidth
                     id="punchline"
@@ -288,7 +303,7 @@ const handleCheckboxChange = event => {
                       <MenuItem key='punchline4' value={`What's up! It's ${dogDetailsForm.dogName} Chilling here`}>{`What's up! It's ${dogDetailsForm.dogName} Chilling here`}</MenuItem>
                   </TextField>
                 </Grid>
-                  <Grid item sm={5}>
+                  <Grid item xs={10} sm={5}>
                     <MultilineTextBox 
                       label='About Me*'
                       id='about-me'

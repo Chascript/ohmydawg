@@ -2,9 +2,10 @@ import React, {useState, useEffect} from 'react'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
 import {makeStyles} from '@material-ui/core/styles'
-import { GridListTile, List, Typography } from '@material-ui/core'
+import { GridListTile, Typography } from '@material-ui/core'
 import VoteButton from './votebutton'
 import VoteNumber from './votenumbertally'
+import { Spring } from 'react-spring/renderprops'
 
 const useStyles = makeStyles(() => ({
   pageContainer:{
@@ -87,21 +88,29 @@ const voteForDog = async (username, name, id) => {
 }
 
   return(
-    <Grid container component={Paper} className={classes.pageContainer}>
-      <Typography component="h1" variant="h3" className={classes.header}>The Gallery</Typography>
-      <Grid  component={Paper}  className={classes.voteContainer}>
-        {dogDetails.map(dogDetails =>
-          <GridListTile item="true" cols={4} sm={5} md={4} className={classes.dogContainer}>
-            <img className={classes.image} src={dogDetails.image} alt={`${dogDetails.username} ${dogDetails.name}`}/>
-            <Grid className={classes.details}>
-              <List className={classes.name} >{dogDetails.dogName}</List>
-              <List className={classes.breed}>{dogDetails.dogBreed}</List>
-              <VoteNumber className={classes.votes}  voteNumber = {dogDetails.votes} />
-              <VoteButton  voteForDog = {() => voteForDog(dogDetails.username, dogDetails.dogName, dogDetails.id)} />
-            </Grid>
-          </GridListTile>
-        )}
+    <Spring 
+    from = {{ opacity: 0, marginTop: -16 }}
+    to = {{ opacity:1, marginTop:0 }}
+    config = {{ duration:2000 }}
+    >
+      { transition => ( 
+      <Grid container style={transition} component={Paper} className={classes.pageContainer}>
+        <Typography component="h1" variant="h3" className={classes.header}>Dog Gallery</Typography>
+        <Grid  component={Paper}  className={classes.voteContainer}>
+          {dogDetails.map(dogDetails =>
+            <GridListTile item="true" cols={4} sm={5} md={4} className={classes.dogContainer}>
+              <img className={classes.image} src={dogDetails.image} alt={`${dogDetails.username} ${dogDetails.name}`}/>
+              <Grid className={classes.details}>
+                <Typography className={classes.name} >{dogDetails.dogName}</Typography>
+                <Typography className={classes.breed}>{dogDetails.dogBreed}</Typography>
+                <VoteNumber className={classes.votes}  voteNumber = {dogDetails.votes} />
+                <VoteButton  voteForDog = {() => voteForDog(dogDetails.username, dogDetails.dogName, dogDetails.id)} />
+              </Grid>
+            </GridListTile>
+          )}
+        </Grid>
       </Grid>
-    </Grid>
+      )}
+    </Spring>
   )
 }

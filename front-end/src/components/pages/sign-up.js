@@ -7,10 +7,7 @@ import DogForm from '../forms/dog-form'
 
 export default function Signup() {
 
-  const [renderedComponent, setRenderedComponents] = useState({
-    accountForm: true,
-    dogForm: false
-  })
+
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(null)
   const [accountForm,setAccountForm] = useState({
     email: false,
@@ -21,12 +18,16 @@ export default function Signup() {
     dateOfBirth: null,
   })
   const [accountId, setAccountId] = useState()
+const [renderedComponent, setRenderedComponents] = useState({
+    accountForm: false,
+    dogForm: true
+  })
   const initialRender = () =>{
   setRenderedComponents({
     accountForm: false,
     dogForm: true
   })
-}
+}  
 
 useEffect(()=>{
   initialRender()
@@ -124,7 +125,7 @@ const submitAccountForm = () => {
   }
 }
   return(
-    <Grid container spacing={4} justify='center' wrap='wrap'  >
+    <Grid container justify='center' >
         <CssBaseline />
         {renderedComponent.accountForm && 
           <Grid item sm={4} component={Paper}>

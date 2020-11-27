@@ -27,9 +27,9 @@ alignItems: 'center'
 export default function Login(){
 const classes = useStyles()
   return(
-    <Grid container className={classes.container} spacing={2} >
+    <Grid container alignItems='center' className={classes.container} spacing={1} >
       <CssBaseline />
-      <Grid item sm={4} className={classes.inputs}>
+      <Grid item sm={5} className={classes.inputs}>
         <TextField 
          color='secondary'
           size='small'
@@ -42,7 +42,7 @@ const classes = useStyles()
           placeholder="example@example.com"
         />
       </Grid>
-      <Grid item sm={4} className={classes.inputs} >
+      <Grid item sm={5} className={classes.inputs} >
         <TextField
           color='secondary'
           size='small'

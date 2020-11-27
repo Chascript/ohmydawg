@@ -11,7 +11,7 @@ import Signup from './../pages/sign-up'
 
 export function Section() {
   return(
-    <Grid>
+    <Grid container>
       <Route path="/" component={Home} exact/>
       <Route path="/gallery" component={Gallery} exact />
       <Route path="/signup" component={Signup} exact/>

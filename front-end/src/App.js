@@ -10,8 +10,6 @@ import Footer from './components/master-page/footer';
 import { Grid } from '@material-ui/core';
 const font = ['Mali']
 
-
-
 function App() {
   const [darkMode, setDarkMode] = useState(false)
   const darkTheme = createMuiTheme({
@@ -47,14 +45,14 @@ function App() {
   return (
     <Router> 
       <ThemeProvider theme = {darkMode ? darkTheme : lightTheme} >
-        <Grid container flex-wrap='wrap' >
-          <Grid item sm={12}>   
+        <Grid container  >
+          <Grid item container xs={12} sm={12}>   
             <DenseAppBar  onChange={()=> setDarkMode(!darkMode)} />
           </Grid>
-          <Grid item container sm={12} style={{marginTop:'120px', marginBottom:'44px'}} justify='center' align='center' >
+          <Grid item container xs={12} sm={12} style={{marginTop:'120px', marginBottom:'44px'}} justify='center' alignItems='center' >
             <Section/>        
           </Grid>
-          <Grid  item sm={12}>
+          <Grid  item container xs={12} sm={12}>
             <Footer />
           </Grid>
         </Grid>
