@@ -4,10 +4,10 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, Hidden, Typography, useMediaQuery } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import { Pets } from '@material-ui/icons';
+import { useTheme } from '@material-ui/styles'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     margin: 'auto',
     width: 'fit-content',
+  },
+  imagePadding:{
+    paddingTop: 10,
+    paddingBottom: 10
   },
   formControl: {
     marginTop: theme.spacing(2),
@@ -37,6 +41,9 @@ image:{
 
 export default function ReviewDogForm(props) {
   const classes = useStyles();
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
 
   return (
     <React.Fragment>
@@ -49,58 +56,100 @@ export default function ReviewDogForm(props) {
         aria-labelledby="max-width-dialog-title"
       >
         <DialogContent>
-        <Grid container >
-          <Grid container item sm={4}>
-            <img className={classes.image} src={props.dogPhoto} alt={props.dogName}  />
+          <Grid container >
+            <Hidden smUp>
+              <Grid container alignItems='center' justify='center' >
+                <Grid item >
+                  <Typography component="h1" variant="h4">
+                    Review {props.dogName} 
+                  </Typography>
+                </Grid> 
+                <Grid item  >
+                  <Pets className={classes.avatar}/>
+                </Grid>
+              </Grid>
+            </Hidden>
+            <Grid container justify={matches && 'center'} className={matches && classes.imagePadding} item  xs={12} sm={4}>
+              <img className={classes.image} src={props.dogPhoto} alt={props.dogName}  />
+            </Grid>
+            <Grid container item xs={12} sm={8} justify='center' alignItems='center' spacing={2} >
+              <Hidden xsDown>
+                <Grid item xs={8} sm={5} >
+                  <Typography component="h1" variant="h4">
+                    Review {props.dogName} 
+                  </Typography>
+                </Grid> 
+                <Grid item xs={4} sm={7} >
+                  <Pets className={classes.avatar}/>
+                </Grid>
+              </Hidden>
+              <Grid item xs={4} sm={4}>
+                <Typography component='p'>
+                Name -
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Typography component='p'>
+                  {props.dogName},
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <Typography component='p'>
+                Breed -
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Typography component='p'>
+                  {props.dogBreed},
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <Typography component='p'>
+                Date Of Birth -
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Typography component='p'>
+                  {props.dogDateOgBirth},
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <Typography component='p'>
+                Punchline -
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Typography component='p'>
+                  {props.dogPunchline},
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <Typography component='p'>
+                Personality -
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Typography component='p'>
+                  {props.dogPersonality},
+                </Typography>
+              </Grid>
+              <Grid item xs={4} sm={4}>
+                <Typography component='p'>
+                About Me -
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Typography component='p'>
+                  {props.dogShortBio},
+                </Typography>
+              </Grid>
+
+            </Grid>
           </Grid>
-
-          <Grid container item sm={8} alignItems='center' >
-            <Grid item >
-              <Typography component="h1" variant="h4">
-                Review {props.dogName} 
-              </Typography>
-            </Grid> 
-            <Grid item >
-              <Pets className={classes.avatar}/>
-            </Grid>
-
-
-            <Grid item sm={12}>
-              <DialogContentText>
-                Hello my name is {props.dogName},
-              </DialogContentText>
-            </Grid>
-            <Grid item sm={12}>
-              <DialogContentText>
-                I am a {props.dogBreed},
-              </DialogContentText>
-            </Grid>
-            <Grid item sm={12} >
-              <DialogContentText>
-                I was born on the {props.dogDateOfBirth},
-              </DialogContentText>
-            </Grid>
-            <Grid item sm={12}>
-              <DialogContentText>
-                The punchline that best defines me is: {props.dogPunchline},
-              </DialogContentText>
-            </Grid>
-            <Grid item sm={12}>
-              <DialogContentText>
-                The personality options you selected for me were: {props.dogPersonality},
-              </DialogContentText>
-            </Grid>
-            <Grid item sm={12}>
-              <DialogContentText>
-                My human said this about me: {props.dogShortBio}
-              </DialogContentText>
-            </Grid>
-          </Grid>
-        </Grid>
         </DialogContent>
         <DialogActions>
-          <Grid container item sm={6} >
-            <Grid item sm={4}>
+          <Grid container spacing={1} item sm={6} justify={matches && 'center'} >
+            <Grid item xs={10} sm={4}>
               <Button
                 fullWidth
                 variant="contained"
@@ -111,7 +160,7 @@ export default function ReviewDogForm(props) {
                 Edit Dog
               </Button>
             </Grid>
-            <Grid item sm={4}>
+            <Grid item xs={10} sm={4}>
               <Button
                 fullWidth
                 variant="contained"
@@ -122,7 +171,7 @@ export default function ReviewDogForm(props) {
                 Add Another
               </Button>
             </Grid>
-            <Grid item sm={4}>
+            <Grid item xs={10} sm={4}>
               <Button
                 href='/gallery'
                 fullWidth

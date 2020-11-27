@@ -5,15 +5,8 @@ import { Pets } from '@material-ui/icons';
 import RandomDogImage from '../random-online-dog';
 
 const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column'
-  },
   title:{
     fontSize: 50,
-    display: 'flex',
-    alignItems: 'center'
   },
   dogImage:{
     display: 'flex',
@@ -31,22 +24,24 @@ export default function PageNotReady(props) {
   };
 
   return (
-    <Grid container component={Paper} className={classes.root}>
+    <Grid container component={Paper} justify='center' alignItems='center' >
       <Typography component='h1' className={classes.title} id="continuous-slider" gutterBottom>
       {details.page} Page Under Construction
       </Typography>
-      <Grid container spacing={2}>
-        <Grid item>
+      <Grid container justify='center' spacing={2}>
+        <Grid item xs={1} sm={1}>
           <Pets color='primary' />
         </Grid>
-        <Grid item xs>
+        <Grid item xs={10} sm={10}>
           <Slider value={value} min={0} step={0.001} max={1} onChange={handleChange} aria-labelledby="continuous-slider" />
         </Grid>
-        <Grid item>
+        <Grid item xs={1} sm={1}>
           <Pets />
         </Grid>
+        <Grid item sx={12} sm={12} >
+       <RandomDogImage opacity={value} />     
+        </Grid>
       </Grid>
-        <RandomDogImage opacity={value} />     
     </Grid>
   )
 }

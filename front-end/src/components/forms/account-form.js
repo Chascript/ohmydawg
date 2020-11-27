@@ -1,9 +1,11 @@
-import { Grid, makeStyles, TextField, Typography, Button, Link } from '@material-ui/core'
+import { useMediaQuery, Grid, makeStyles, TextField, Typography, Button, Link } from '@material-ui/core'
 import React from 'react'
 import {  Pets } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import {Spring} from 'react-spring/renderprops'
+import { useTheme } from '@material-ui/styles'
+
 
 
 const useStyles = makeStyles((theme) =>({
@@ -21,6 +23,9 @@ const useStyles = makeStyles((theme) =>({
 
 export default function AccountForm(props) {
   const classes = useStyles()
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
   return(      
     <Spring
     from={{ opacity: 0, marginTop: -16 }}
@@ -29,7 +34,12 @@ export default function AccountForm(props) {
     >
       {transition=> (
     <Grid style={transition} container >
-    <Grid container item sm={12} className={classes.title} direction='row' alignItems='flex-start' justify='flex-start'>
+    <Grid container item sm={12}
+      className={classes.title} 
+      direction='row' 
+      alignItems={matches ? 'center' : 'flex-start' }
+      justify={matches ? 'center' : 'flex-start' }
+    >
       <Grid item >
         <Typography component="h1" variant="h4">
           {props.title} 
@@ -143,13 +153,15 @@ export default function AccountForm(props) {
           />
         </MuiPickersUtilsProvider>
       </Grid>
-      <Typography component='p' variant='body2'>
-        By clicking Create Account, you agree to Oh My Dawgs Terms. 
-        Learn how we collect, use and share your data in our <Link>Data Policy </Link> 
-         and how we use cookies and similar technology in our <Link>Cookie Policy</Link>.
-        You may recieve emails from Oh My Dawg but this is not frequent at all!
-      </Typography>
-      <Grid item sm={8}> 
+      <Grid item xs={7} >
+        <Typography component='p' variant='body2'>
+          By clicking Create Account, you agree to Oh My Dawgs Terms. 
+          Learn how we collect, use and share your data in our <Link>Data Policy </Link> 
+          and how we use cookies and similar technology in our <Link>Cookie Policy</Link>.
+          You may recieve emails from Oh My Dawg but this is not frequent at all!
+        </Typography>
+      </Grid>
+      <Grid item xs={7} sm={8}> 
         <Button
           fullWidth
           variant="contained"
