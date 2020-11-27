@@ -7,7 +7,7 @@ import DogForm from '../forms/dog-form'
 
 export default function Signup() {
 
-
+  const [allBreeds, setAllBreeds] = useState([]);
   const [passwordsDontMatch, setPasswordsDontMatch] = useState(null)
   const [accountForm,setAccountForm] = useState({
     email: false,
@@ -22,6 +22,19 @@ const [renderedComponent, setRenderedComponents] = useState({
     accountForm: false,
     dogForm: true
   })
+  const fetchBreeds = async () => {
+  try{
+    const response = await (await fetch('http://localhost:5000/dogs/breeds')).json()
+    setAllBreeds(response)
+    }
+    catch(error){
+    console.error(error)
+  }
+}
+
+useEffect(() => {
+  fetchBreeds()
+  }, []);
   const initialRender = () =>{
   setRenderedComponents({
     accountForm: true,
@@ -32,6 +45,8 @@ const [renderedComponent, setRenderedComponents] = useState({
 useEffect(()=>{
   initialRender()
 },[])
+
+
 
 const handleEmailChange = async event =>{
   const target = event.target
@@ -149,6 +164,7 @@ const submitAccountForm = () => {
           <DogForm 
             usernameValue={accountId}
             title="Create Dawg!" 
+            allBreeds={allBreeds}
           />
         }
       </Grid>

@@ -7,7 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { FormHelperText, FormControl, } from '@material-ui/core';
 import  dogDefault from './dog-not-chosen-default.png'
 
-import React,{useState, useEffect} from 'react'
+import React,{useState} from 'react'
 import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
@@ -66,7 +66,6 @@ export default function DogForm(props) {
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
   const [reviewDog, setReviewDog] = useState(false)
-  const [allBreeds, setAllBreeds] = useState([]);
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
@@ -98,19 +97,6 @@ export default function DogForm(props) {
     setDogDetailsForm({...dogDetailsForm, dogDateOfBirth:  new Date(date) })
   }
 
-  const fetchBreeds = async () => {
-    try{
-      const response = await (await fetch('http://localhost:5000/dogs/breeds')).json()
-      setAllBreeds(response)
-      }
-      catch(error){
-      console.error(error)
-    }
-  }
-
-  useEffect(() => {
-    fetchBreeds()
-    }, []);
 
   const saveDog = () => {         
       const form = new FormData();
@@ -261,7 +247,7 @@ const handleCheckboxChange = event => {
                         MenuProps={MenuProps}
                         displayEmpty
                         >
-                        {allBreeds.map(allBreeds => 
+                        {props.allBreeds.map(allBreeds => 
                           <MenuItem key={allBreeds} value={allBreeds}>{allBreeds}</MenuItem>
                         )}
                       </Select>
