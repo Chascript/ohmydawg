@@ -22,6 +22,20 @@ const [renderedComponent, setRenderedComponents] = useState({
     accountForm: false,
     dogForm: true
   })
+
+
+
+  const initialRender = () =>{
+    setRenderedComponents({
+      accountForm: true,
+      dogForm: false
+    })
+  }  
+  useEffect(()=>{
+    initialRender()
+  },[])
+
+
   const fetchBreeds = async () => {
   try{
     const response = await (await fetch('http://localhost:5000/dogs/breeds')).json()
@@ -31,22 +45,9 @@ const [renderedComponent, setRenderedComponents] = useState({
     console.error(error)
   }
 }
-
 useEffect(() => {
   fetchBreeds()
   }, []);
-  const initialRender = () =>{
-  setRenderedComponents({
-    accountForm: true,
-    dogForm: false
-  })
-}  
-
-useEffect(()=>{
-  initialRender()
-},[])
-
-
 
 const handleEmailChange = async event =>{
   const target = event.target

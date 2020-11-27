@@ -4,9 +4,11 @@ import Dogs from '../dogs'
 
 export function Gallery() {
   return  (
-    <Grid>    
+    <Grid container justify='center' align='center'>    
       <CssBaseline/> 
+      <Grid item xs={12} sm={12}>
       <Dogs />
+      </Grid>
     </Grid>
   )
 }

@@ -61,7 +61,6 @@ export default function DogForm(props) {
     social: false,
     adventurous: false,
     loving: false,
-    playful: false
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
@@ -75,7 +74,7 @@ export default function DogForm(props) {
     dogShortBio: false,
     dogPunchLine: false,
     dogPersonality: [false],
-    file: true,
+    file: false,
   })
   const [date, setDate] = useState(null)
   const theme = useTheme()
@@ -98,27 +97,43 @@ export default function DogForm(props) {
   }
 
 
-  const saveDog = () => {         
-      const form = new FormData();
-      form.append('usernameValue', props.usernameValue)
-      form.set('dogName', dogDetailsForm.dogName)
-      form.set('dogBreed', dogDetailsForm.dogBreed)
-      form.set('dogDateOfBirth', dogDetailsForm.dogDateOfBirth)
-      form.set('dogPersonality', dogDetailsForm.dogPersonality)
-      form.set('dogPunchLine', dogDetailsForm.dogPunchLine)
-      form.set('dogShortBio' , dogDetailsForm.dogShortBio)
-      form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
+  const saveDog = () => {
+    dogDetailsForm.dogPersonality.shift()
+    if(personality.intelligent){
+      dogDetailsForm.dogPersonality.push('intelligent')
+    }    
+    if(personality.social){
+      dogDetailsForm.dogPersonality.push('social')
+    }    
+    if(personality.adventurous){
+      dogDetailsForm.dogPersonality.push('adventurous')
+    }    
+    if(personality.loving){
+      dogDetailsForm.dogPersonality.push('loving')
+    }
 
-      fetch('http://localhost:5000/signup/newdog', {
-        method: 'POST',
-        body: form,
-      })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res)
-      })
-      .catch(error => console.error(error))
+
+    const form = new FormData();
+    form.append('usernameValue', props.usernameValue)
+    form.set('dogName', dogDetailsForm.dogName)
+    form.set('dogBreed', dogDetailsForm.dogBreed)
+    form.set('dogDateOfBirth', dogDetailsForm.dogDateOfBirth)
+    form.set('dogPersonality', dogDetailsForm.dogPersonality)
+    form.set('dogPunchLine', dogDetailsForm.dogPunchLine)
+    form.set('dogShortBio' , dogDetailsForm.dogShortBio)
+    form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
+
+    fetch('http://localhost:5000/signup/newdog', {
+      method: 'POST',
+      body: form,
+    })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+    })
+    .catch(error => console.error(error))
   }
+
 
 const closeReviewDog=() => {
   setReviewDog(false)
@@ -145,9 +160,13 @@ const saveDogNoNewDog = () => {
 
  const openModal = () => {
   setErrorMessage(false)
-  const formValues = Object.values(dogDetailsForm)
-  const formError = [formValues.includes(false), formValues.includes(null)]
-  if(formError[0] || formError[1] || formError[2]){
+  const formValues = Object.values(dogDetailsForm) 
+  const personalities = Object.values(personality)
+  const formError = [formValues.includes(false), formValues.includes(null), personalities.includes(true)]
+ 
+  console.log(formError)
+
+  if(formError[0] || formError[1] || !formError[2]){
     setErrorMessage(true)
     console.error('not all fields are filled')
   } else{
@@ -157,7 +176,7 @@ const saveDogNoNewDog = () => {
 
 const handleCheckboxChange = event => {
   setPersonality({...personality, [event.target.name]: event.target.checked})
-  setDogDetailsForm({...dogDetailsForm, dogPersonality: true})
+  console.log(personality)
 }
   
   return(    
@@ -182,8 +201,8 @@ const handleCheckboxChange = event => {
             </Grid>  
           </Hidden>
             <Grid container item xs={12} sm={12} className={classes.container} justify='center' alignItems='center' >
-              <Grid item sm={3}>
-                <Grid container justify='center'>
+              <Grid item container sm={3} justify='center'>
+                <Grid item justify='center'>
                   {imagePreview ?(
                     <img className={classes.imageSelected} src={imagePreview} alt={dogDetailsForm.file.name} />
                     ):(
@@ -321,7 +340,6 @@ const handleCheckboxChange = event => {
                             <Checkbox 
                               icon={<FavoriteBorder />} 
                               onChange={handleCheckboxChange}
-                              checked={personality.loving}
                               checkedIcon={<Favorite />} 
                               name="loving"
                             />
@@ -333,7 +351,6 @@ const handleCheckboxChange = event => {
                             <Checkbox 
                               icon={<FavoriteBorder />} 
                               onChange={handleCheckboxChange}
-                              checked={personality.adventurous}
                               checkedIcon={<Favorite />} 
                               name="adventurous"
                             />
@@ -345,7 +362,6 @@ const handleCheckboxChange = event => {
                             <Checkbox 
                               icon={<FavoriteBorder />} 
                               onChange={handleCheckboxChange}
-                              checked={personality.social}
                               checkedIcon={<Favorite />} 
                               name="social"
                             />
@@ -357,7 +373,6 @@ const handleCheckboxChange = event => {
                           <Checkbox 
                             icon={<FavoriteBorder />} 
                             onChange={handleCheckboxChange}
-                            checked={personality.playful}
                             checkedIcon={<Favorite />} 
                             name="playful"
                           />
@@ -390,7 +405,7 @@ const handleCheckboxChange = event => {
             dogDateOfBirth={date}
             dogShortBio={dogDetailsForm.dogShortBio}
             dogPunchline={dogDetailsForm.dogPunchLine}
-            dogPersonality={dogDetailsForm.dogPersonality}
+            dogPersonality={personality}
             dogPhoto={imagePreview}
             handleAddNewDogClick={()=> addAnotherDog()}
             handleSaveDogNoNewDog={()=> saveDogNoNewDog()}

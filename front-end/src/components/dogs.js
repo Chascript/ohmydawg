@@ -8,10 +8,7 @@ import VoteNumber from './votenumbertally'
 import { Spring } from 'react-spring/renderprops'
 
 const useStyles = makeStyles(() => ({
-  pageContainer:{
-    display:'flex',
-    flexDirection: 'column',
-  },
+
   header:{
     display: 'flex',
     alignSelf: 'center',
@@ -94,7 +91,7 @@ const voteForDog = async (username, name, id) => {
     config = {{ duration:2000 }}
     >
       { transition => ( 
-      <Grid container style={transition} component={Paper} className={classes.pageContainer}>
+      <Grid container style={transition} component={Paper} justify='center' align='center' direction='column' >
         <Typography component="h1" variant="h3" className={classes.header}>Dog Gallery</Typography>
         <Grid  component={Paper}  className={classes.voteContainer}>
           {dogDetails.map(dogDetails =>

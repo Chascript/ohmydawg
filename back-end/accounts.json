@@ -1,56 +1,25 @@
 {
-  "944d864c-da83-4f06-bb3b-c14bfb2b06a2": {
-    "email": "manson@gmail.com",
-    "password": "manson",
-    "firstName": "Conan",
-    "surname": "Chambers",
-    "dateOfBirth": "2020-11-10T17:17:00.000Z",
+  "ad4a88ee-b5f9-46db-89d1-97c61ae2627c": {
+    "email": "conanc1993@gmail.com",
+    "password": "as",
+    "firstName": "as",
+    "surname": "as",
+    "dateOfBirth": "2020-11-27T15:34:33.657Z",
     "termsandConditionsAgreed": true,
     "dogs": {
-      "266cca43-2e54-47ac-9c90-ff4861567245": {
-        "dogName": "Manson",
-        "dogBreed": "Poodle (Miniature)",
-        "dogDateOfBirth": "Thu Nov 19 2020 17:19:00 GMT+0000 (Greenwich Mean Time)",
-        "dogShortBio": "sadsadasdsadasdsad",
+      "47b842d4-c94e-4306-9e8c-672d5b321bf7": {
+        "dogName": "manson",
+        "dogBreed": "Alaskan husky",
+        "dogDateOfBirth": "Fri Nov 27 2020 15:35:18 GMT+0000 (Greenwich Mean Time)",
+        "dogShortBio": "zzzz",
         "dogPersonality": [
-          "false"
+          "false,loving"
         ],
-        "dogPunchLine": "Hey! I'm Manson and I love cuddles with my human",
-        "votes": 1,
-        "image": "http://localhost:5000/photos/photo-1606411258793.jpg",
-        "id": "266cca43-2e54-47ac-9c90-ff4861567245"
-      },
-      "1a9a1417-6208-4f33-afcb-389561f6ad93": {
-        "dogName": "sacsa",
-        "dogBreed": "Akita",
-        "dogDateOfBirth": "Wed Nov 18 2020 17:19:00 GMT+0000 (Greenwich Mean Time)",
-        "dogShortBio": "csacscscs",
-        "dogPersonality": [
-          "false"
-        ],
-        "dogPunchLine": "Off out on an Adventure! It's sacsa by the way",
-        "votes": 1,
-        "image": "http://localhost:5000/photos/photo-1606411285936.jpg",
-        "id": "1a9a1417-6208-4f33-afcb-389561f6ad93"
+        "dogPunchLine": "Hey! I'm manson and I love cuddles with my human",
+        "votes": 2,
+        "image": "http://localhost:5000/photos/photo-1606491336903.jpg",
+        "id": "47b842d4-c94e-4306-9e8c-672d5b321bf7"
       }
     }
-  },
-  "2b411baa-5e22-4d19-95ca-7c49b0592ccb": {
-    "email": "scacsacc@cdcds.com",
-    "password": "dwdw",
-    "firstName": "dwdw",
-    "surname": "dwdw",
-    "dateOfBirth": "2020-11-17T18:09:00.000Z",
-    "termsandConditionsAgreed": true,
-    "dogs": {}
-  },
-  "83ebac2f-3054-487b-93ac-f975a12fd961": {
-    "email": "deewd@dede.com",
-    "password": "s",
-    "firstName": "u",
-    "surname": "u",
-    "dateOfBirth": "2020-11-27T14:17:20.069Z",
-    "termsandConditionsAgreed": true,
-    "dogs": {}
   }
 }

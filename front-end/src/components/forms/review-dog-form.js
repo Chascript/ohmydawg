@@ -83,9 +83,10 @@ export default function ReviewDogForm(props) {
                   <Pets className={classes.avatar}/>
                 </Grid>
               </Hidden>
+              <Grid container item xs={12} sm={12}>
               <Grid item xs={4} sm={4}>
                 <Typography component='p'>
-                Name -
+                Name:
                 </Typography>
               </Grid>
               <Grid item xs={8} sm={8}>
@@ -93,9 +94,11 @@ export default function ReviewDogForm(props) {
                   {props.dogName},
                 </Typography>
               </Grid>
+              </Grid>
+              <Grid container item xs={12} sm={12}>
               <Grid item xs={4} sm={4}>
                 <Typography component='p'>
-                Breed -
+                Breed:
                 </Typography>
               </Grid>
               <Grid item xs={8} sm={8}>
@@ -103,9 +106,11 @@ export default function ReviewDogForm(props) {
                   {props.dogBreed},
                 </Typography>
               </Grid>
+              </Grid>
+              <Grid container item xs={12} sm={12}>
               <Grid item xs={4} sm={4}>
                 <Typography component='p'>
-                Date Of Birth -
+                Date Of Birth:
                 </Typography>
               </Grid>
               <Grid item xs={8} sm={8}>
@@ -113,9 +118,11 @@ export default function ReviewDogForm(props) {
                   {props.dogDateOgBirth},
                 </Typography>
               </Grid>
+              </Grid>
+              <Grid container item xs={12} sm={12}>
               <Grid item xs={4} sm={4}>
                 <Typography component='p'>
-                Punchline -
+                Punchline:
                 </Typography>
               </Grid>
               <Grid item xs={8} sm={8}>
@@ -123,27 +130,50 @@ export default function ReviewDogForm(props) {
                   {props.dogPunchline},
                 </Typography>
               </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography component='p'>
-                Personality -
-                </Typography>
               </Grid>
-              <Grid item xs={8} sm={8}>
-                <Typography component='p'>
-                  {props.dogPersonality},
-                </Typography>
+              <Grid container item xs={12} sm={12}>
+              <Grid container alignItems='flex-start' item xs={4} sm={4}>
+                <Grid item xs={5} sm={4}>
+                  <Typography component='p'>
+                  Personality:
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item xs={4} sm={4}>
-                <Typography component='p'>
-                About Me -
-                </Typography>
+              <Grid container item xs={8} sm={8}>
+                <Grid item xs={12} sm={12}>
+                  <Typography component='p' >
+                      {props.dogPersonality.intelligent && 'Intellgiant'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                  <Typography component='p' >
+                  {props.dogPersonality.loving && 'Loving'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                  <Typography component='p' >
+                  {props.dogPersonality.adventurous && 'Adventurous'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                  <Typography component='p' >
+                  {props.dogPersonality.social && 'Social'}
+                    </Typography>
+                  </Grid>
+                </Grid>
               </Grid>
-              <Grid item xs={8} sm={8}>
-                <Typography component='p'>
-                  {props.dogShortBio},
-                </Typography>
+              <Grid container item xs={12} sm={12}>
+                <Grid item xs={4} sm={4}>
+                  <Typography component='p'>
+                  About Me:
+                  </Typography>
+                </Grid>
+                <Grid item xs={8} sm={8}>
+                  <Typography component='p'>
+                    {props.dogShortBio},
+                  </Typography>
+                </Grid>
               </Grid>
-
             </Grid>
           </Grid>
         </DialogContent>
