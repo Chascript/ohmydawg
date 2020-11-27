@@ -65,17 +65,17 @@ export default function DogForm(props) {
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
-  const [reviewDog, setReviewDog] = useState(true)
+  const [reviewDog, setReviewDog] = useState(false)
   const [allBreeds, setAllBreeds] = useState([]);
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
-    dogName: 'Manson',
-    dogBreed: 'Poodle',
+    dogName: false,
+    dogBreed: false,
     dogDateOfBirth: null,
-    dogShortBio: 'I love e a and eever hello dogs food cats',
-    dogPunchLine: 'dwdwdw dw dw d w dw dw dwwdwdw dwdw ',
-    dogPersonality: ['helll', 'efdeded', 'dedede', 'ededed'],
+    dogShortBio: false,
+    dogPunchLine: false,
+    dogPersonality: [false],
     file: true,
   })
   const [date, setDate] = useState(null)

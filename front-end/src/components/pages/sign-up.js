@@ -24,8 +24,8 @@ const [renderedComponent, setRenderedComponents] = useState({
   })
   const initialRender = () =>{
   setRenderedComponents({
-    accountForm: false,
-    dogForm: true
+    accountForm: true,
+    dogForm: false
   })
 }  
 
