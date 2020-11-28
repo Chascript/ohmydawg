@@ -123,7 +123,7 @@ export default function DogForm(props) {
     form.set('dogShortBio' , dogDetailsForm.dogShortBio)
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
 
-    fetch('http://localhost:5000/signup/newdog', {
+    fetch(`${process.env.REACT_APP_API_URL}/signup/newdog`, {
       method: 'POST',
       body: form,
     })
@@ -202,7 +202,7 @@ const handleCheckboxChange = event => {
           </Hidden>
             <Grid container item xs={12} sm={12} className={classes.container} justify='center' alignItems='center' >
               <Grid item container sm={3} justify='center'>
-                <Grid item justify='center'>
+                <Grid item >
                   {imagePreview ?(
                     <img className={classes.imageSelected} src={imagePreview} alt={dogDetailsForm.file.name} />
                     ):(
@@ -239,7 +239,7 @@ const handleCheckboxChange = event => {
                 <Grid item>
                 {errorMessage && <Typography color='error'>All Fields Are Required</Typography>}
                 </Grid>
-                <Grid container item justify={matches && 'center'} sm={12} spacing={2}>
+                <Grid container item justify={matches ? 'center' : 'flex-start'} sm={12} spacing={2}>
                   <Grid item xs={10} sm={5}>
                     <TextBox 
                       label='What do your humans call you?'

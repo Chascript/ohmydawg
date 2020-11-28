@@ -4,10 +4,9 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import { Grid, Hidden, Typography, useMediaQuery } from '@material-ui/core';
+import { Grid, Hidden, Typography } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import { Pets } from '@material-ui/icons';
-import { useTheme } from '@material-ui/styles'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -41,9 +40,6 @@ image:{
 
 export default function ReviewDogForm(props) {
   const classes = useStyles();
-  const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('xs'));
-
 
   return (
     <React.Fragment>
@@ -69,7 +65,7 @@ export default function ReviewDogForm(props) {
                 </Grid>
               </Grid>
             </Hidden>
-            <Grid container justify={matches && 'center'} className={matches && classes.imagePadding} item  xs={12} sm={4}>
+            <Grid container justify='center' className={classes.imagePadding} item  xs={12} sm={4}>
               <img className={classes.image} src={props.dogPhoto} alt={props.dogName}  />
             </Grid>
             <Grid container item xs={12} sm={8} justify='center' alignItems='center' spacing={2} >
@@ -178,7 +174,7 @@ export default function ReviewDogForm(props) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Grid container spacing={1} item sm={6} justify={matches && 'center'} >
+          <Grid container spacing={1} item sm={6} justify='center' >
             <Grid item xs={10} sm={4}>
               <Button
                 fullWidth

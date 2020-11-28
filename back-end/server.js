@@ -109,7 +109,7 @@ app.post('/signup/newdog', upload.single('photo'), (req,res) => {
       dogPersonality: [req.body.dogPersonality],
       dogPunchLine: req.body.dogPunchLine,
       votes: 0,
-      image: `http://localhost:5000/photos/${req.file.filename}`,
+      image: `${process.env.REACT_APP_API_URL}/photos/${req.file.filename}`,
       id: dogId,
   }
 
