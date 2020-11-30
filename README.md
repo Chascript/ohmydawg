@@ -1,5 +1,5 @@
 # ohmydawg
-www.ohmydawg.co.uk (currently dogsite) will become this repo by end of November 2020. A ReadME still needs to be created so use description for brief info on repo. ohmydawg will be a site where dogs can create profiles, make paw pals, post their walks and photos, vote for favourite photos. Like facebook but for dogs. This is in development and expect there to be errors, I am learning and this is my first ReactJS project. I first began to learn in Novemeber 2019. For full journey in creating this repo and DogSite look at twitter and LinkedIn (Links on profile). All feedback is helpful, even if its pointing at the obvious that I have missed.
+www.ohmydawg.co.uk (currently dogsite) will become this repo (Aiming for end of 2020). A ReadME still needs to be created so use description for brief info on repo. ohmydawg will be a site where dogs can create profiles, make paw pals, post their walks and photos, vote for favourite photos. Like facebook but for dogs. This is in development and expect there to be errors, I am learning and this is my first ReactJS project. I first began to learn in Novemeber 2019. For full journey in creating this repo and DogSite look at twitter and LinkedIn (Links on profile). All feedback is helpful, even if its pointing at the obvious that I have missed.
 
 ## Current Features 
 
