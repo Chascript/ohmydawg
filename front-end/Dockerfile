@@ -3,6 +3,8 @@ FROM node:14
 # Create app directory
 WORKDIR C:/Users/conan/Documents/code/react-sites/dog-site/ohmydawg/front-end
 
+
+ENV REACT_APP_API_URL=http://0.0.0.0:5000
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
