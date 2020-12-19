@@ -123,7 +123,7 @@ export default function DogForm(props) {
     form.set('dogShortBio' , dogDetailsForm.dogShortBio)
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
 
-    fetch(`${process.env.REACT_APP_API_URL}/signup/newdog`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/signup/newdog`, {
       method: 'POST',
       body: form,
     })
