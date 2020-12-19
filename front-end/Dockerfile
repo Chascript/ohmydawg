@@ -9,7 +9,6 @@ WORKDIR C:/Users/conan/Documents/code/react-sites/dog-site/ohmydawg/front-end
 COPY package*.json ./
 
 RUN npm install
-RUN npm install react-scripts@3.4.1 -g
 # RUN npm ci --only=production
 
 # Bundle app source
