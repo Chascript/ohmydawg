@@ -111,7 +111,7 @@ export default function ReviewDogForm(props) {
               </Grid>
               <Grid item xs={8} sm={8}>
                 <Typography component='p'>
-                  {props.dogDateOgBirth},
+                  {props.dogDateOfBirth},
                 </Typography>
               </Grid>
               </Grid>

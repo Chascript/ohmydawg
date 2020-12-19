@@ -77,8 +77,10 @@ export default function DogForm(props) {
     file: false,
   })
   const [date, setDate] = useState(null)
+
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
   const handleFileChange = (e) => { 
     const types = ['image/png', 'image/jpeg'];
     let selected = e.target.files[0];
@@ -92,7 +94,12 @@ export default function DogForm(props) {
   }
 
   const handleDateChange = (date) => {
-    setDate( new Date(date).toLocaleString())
+    setDate( new Date(date).toLocaleString('en-US', {
+      weekday: 'short', 
+      day: '2-digit', 
+      month: 'long', 
+      year: 'numeric' 
+    }));
     setDogDetailsForm({...dogDetailsForm, dogDateOfBirth:  new Date(date) })
   }
 
