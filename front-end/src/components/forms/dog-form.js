@@ -68,12 +68,12 @@ export default function DogForm(props) {
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
-    dogName: false,
-    dogBreed: false,
+    dogName: 'sam',
+    dogBreed: 'poodle',
     dogDateOfBirth: null,
-    dogShortBio: false,
-    dogPunchLine: false,
-    dogPersonality: [false],
+    dogShortBio: 'hello',
+    dogPunchLine: 'hello',
+    dogPersonality: ['hello'],
     file: false,
   })
   const [date, setDate] = useState(null)
@@ -129,8 +129,9 @@ export default function DogForm(props) {
     form.set('dogPunchLine', dogDetailsForm.dogPunchLine)
     form.set('dogShortBio' , dogDetailsForm.dogShortBio)
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
+    console.log('sendingdog')
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/signup/newdog`, {
+    fetch(`${process.env.REACT_APP_API_URL}/signup/newdog`, {
       method: 'POST',
       body: form,
     })
@@ -173,11 +174,12 @@ const saveDogNoNewDog = () => {
  
   console.log(formError)
 
-  if(formError[0] || formError[1] || !formError[2]){
-    setErrorMessage(true)
-    console.error('not all fields are filled')
+
+  if(formError[0] || formError[1] || formError[2]){
+    setReviewDog(true)
   } else{
-      setReviewDog(true)
+      setErrorMessage(true)
+      console.error('not all fields are filled')
   }
 }
 
