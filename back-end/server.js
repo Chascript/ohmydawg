@@ -57,7 +57,7 @@ const { v4: uuidv4 } = require('uuid');
 
 // Send all dog details over to frontend
 // Need to now specify what data!
-app.get('/dogs/details', (req,res) => {
+app.get('/api/dogs/details', (req,res) => {
   //retrieves dog data
   const usernames = Object.keys(accounts)
   const dogData = []
@@ -80,7 +80,7 @@ app.get('/dogs/details', (req,res) => {
 })
 
 //Save new account
-app.post('/signup/newaccount', (req,res) => {
+app.post('/api/signup/newaccount', (req,res) => {
 console.log(req.body)
 accountId = uuidv4()
 const newAccount = {
@@ -98,7 +98,7 @@ res.json(accountId)
 })
 
 //save new dog
-app.post('/signup/newdog', upload.single('photo'), (req,res) => {
+app.post('/api/signup/newdog', upload.single('photo'), (req,res) => {
   const dogId = uuidv4()
   console.log(req.body)
   const  newDog =  { 
@@ -118,7 +118,7 @@ app.post('/signup/newdog', upload.single('photo'), (req,res) => {
   res.json('dog saved to account')
 })
 
-app.post('/dog/username/name/vote', (req,res) => { 
+app.post('/api/dog/username/name/vote', (req,res) => { 
   const { dogName } = req.body
   const { id } = req.body
   const usernames = Object.keys(accounts)
@@ -135,12 +135,12 @@ app.post('/dog/username/name/vote', (req,res) => {
   })
 });
 
-app.get('/dogs/breeds', (req, res) => {
+app.get('/api/dogs/breeds', (req, res) => {
   const data = Object.values(breeds);
   res.json(data[0]);
 })
 
-app.post('/dogs/email/exist', (req, res) => {
+app.post('/api/dogs/email/exist', (req, res) => {
   const {chosenEmail} = req.body;
   const data = Object.keys(accounts)
   const existingEmails = data.map((dogid) => accounts[dogid].email)

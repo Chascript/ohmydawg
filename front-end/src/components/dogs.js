@@ -53,7 +53,7 @@ export default function Dogs() {
   const [dogDetails, setDogDetails] = useState([])
   
     const fetchDetails = async () => {
-        await fetch(`${process.env.REACT_APP_API_URL}/dogs/details`)
+        await fetch(`${process.env.REACT_APP_API_URL}/api/dogs/details`)
         .then(res => res.json())
         .then(galleryData => setDogDetails([...galleryData]))
         .catch(error => console.error(error))
@@ -65,7 +65,7 @@ export default function Dogs() {
   }, []);
 
 const voteForDog = async (username, name, id) => {
-  await fetch(`${process.env.REACT_APP_API_URL}/dog/username/name/vote`, {
+  await fetch(`${process.env.REACT_APP_API_URL}/api/dog/username/name/vote`, {
   method: 'POST',
   headers: {
     'Accept': 'application/json , text/plain',

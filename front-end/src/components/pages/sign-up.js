@@ -38,7 +38,7 @@ const [renderedComponent, setRenderedComponents] = useState({
 
   const fetchBreeds = async () => {
   try{
-    const response = await (await fetch(`${process.env.REACT_APP_API_URL}/dogs/breeds`)).json()
+    const response = await (await fetch(`${process.env.REACT_APP_API_URL}/api/dogs/breeds`)).json()
     setAllBreeds(response)
     }
     catch(error){
@@ -58,7 +58,7 @@ if( emailValue < 1 ) {
   const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
   if (emailValue.match(pattern)) {
     try {    
-      const emailExistsResult = await (await fetch(`${process.env.REACT_APP_API_URL}/dogs/email/exist`, {
+      const emailExistsResult = await (await fetch(`${process.env.REACT_APP_API_URL}/api/dogs/email/exist`, {
         method: 'POST',
         body: JSON.stringify({ chosenEmail: emailValue}),
         headers: {
@@ -121,7 +121,7 @@ const submitAccountForm = () => {
       surname: accountForm.surname,
       dateOfBirth: accountForm.dateOfBirth,
     }
-    fetch(`${process.env.REACT_APP_API_URL}/signup/newaccount`, {
+    fetch(`${process.env.REACT_APP_API_URL}/api/signup/newaccount`, {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         "Content-Type": "application/json"
