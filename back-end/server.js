@@ -51,7 +51,22 @@ const storage = multer.diskStorage({
 });
 //assign upload to storage
 const upload = multer({ storage });
-
+// resizes the image
+const resize = (image, w, h) => {
+  try {
+    sharp(`public/photosofdogs/${image}`).resize(w, h).toBuffer((err, buffer) => {
+      fs.writeFile(`public/photosofdogs/${image}`, buffer, finished);
+      function finished(error) {
+        if (err) {
+          // eslint-disable-next-line no-console
+          console.error(error);
+        }
+      }
+    });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+  }
 //Unique Id 
 const { v4: uuidv4 } = require('uuid');
 
@@ -112,7 +127,7 @@ app.post('/api/signup/newdog', upload.single('photo'), (req,res) => {
       image: `/photos/${req.file.filename}`,
       id: dogId,
   }
-
+  resize(newDog.image, 200, 300); // w x h
   accounts[req.body.usernameValue].dogs[dogId] = newDog
   saveData(accounts, 'accounts.json')
   res.json('dog saved to account')
