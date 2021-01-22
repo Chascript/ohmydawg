@@ -4,7 +4,7 @@ import PageNotReady from './page-not-ready'
 const page = 'Story'
 export function Story() {
   return  (
-    <Grid>    
+    <Grid container justify='center' align='center'>    
       <CssBaseline/> 
       <PageNotReady page={page}/>
     </Grid>

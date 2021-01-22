@@ -5,7 +5,7 @@ import PageNotReady from './page-not-ready'
 const page = 'Contact'
 export function Contact() {
   return  (
-    <Grid>    
+    <Grid container justify='center' align='center'>    
       <CssBaseline/> 
       <PageNotReady page={page} />
     </Grid>

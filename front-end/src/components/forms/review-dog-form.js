@@ -131,7 +131,7 @@ export default function ReviewDogForm(props) {
               <Grid container alignItems='flex-start' item xs={4} sm={4}>
                 <Grid item xs={5} sm={4}>
                   <Typography component='p'>
-                  Personality:
+                    Personality:
                   </Typography>
                 </Grid>
               </Grid>
@@ -142,18 +142,23 @@ export default function ReviewDogForm(props) {
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                  <Typography component='p' >
-                  {props.dogPersonality.loving && 'Loving'}
+                    <Typography component='p' >
+                      {props.dogPersonality.loving && 'Loving'}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                  <Typography component='p' >
-                  {props.dogPersonality.adventurous && 'Adventurous'}
+                    <Typography component='p' >
+                      {props.dogPersonality.adventurous && 'Adventurous'}
                     </Typography>
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                  <Typography component='p' >
-                  {props.dogPersonality.social && 'Social'}
+                    <Typography component='p' >
+                      {props.dogPersonality.social && 'Social'}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12}>
+                    <Typography component='p' >
+                      {props.dogPersonality.playful && 'Playful'}
                     </Typography>
                   </Grid>
                 </Grid>

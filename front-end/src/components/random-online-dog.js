@@ -1,6 +1,5 @@
 import { Grid, makeStyles } from '@material-ui/core'
 import React from 'react'
-import { useTheme } from '@material-ui/styles'
 
 
 const useStyles = makeStyles(() => ({
@@ -11,7 +10,6 @@ const useStyles = makeStyles(() => ({
 
 export default function RandomDogImage(props) {
 const classes = useStyles()
-const theme = useTheme()
   return (
     <Grid item xs={12} sm={12}>    
       <img 

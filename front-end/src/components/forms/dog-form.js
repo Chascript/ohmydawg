@@ -1,6 +1,6 @@
-import { Button, Checkbox, FormControlLabel, FormLabel, Grid, Hidden, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography, useMediaQuery, useTheme } from '@material-ui/core'
+import { Button, Grid, Hidden, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import {Spring} from 'react-spring/renderprops'
-import { Favorite, FavoriteBorder, Pets } from '@material-ui/icons'
+import { Pets } from '@material-ui/icons'
 import MultilineTextBox from './inputs/multiline-text-input';
 import {MuiPickersUtilsProvider, DatePicker} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
@@ -11,6 +11,7 @@ import React,{useState} from 'react'
 import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
+import PersonalityCheckBoxes from './inputs/personality-checkboxes';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -73,11 +74,11 @@ export default function DogForm(props) {
     dogDateOfBirth: null,
     dogShortBio: 'hello',
     dogPunchLine: 'hello',
-    dogPersonality: ['hello'],
-    file: false,
+    dogPersonality: [''],
+    file: true,
   })
   const [date, setDate] = useState(null)
-
+  const [renderPersonalityCheckBoxes, setPersonalityCheckBoxes] = useState(false)
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
 
@@ -103,6 +104,13 @@ export default function DogForm(props) {
     setDogDetailsForm({...dogDetailsForm, dogDateOfBirth:  new Date(date) })
   }
 
+  const resetPersonalityCheckBoxoff = () => {
+    setPersonalityCheckBoxes(false)
+  }
+  const resetPersonalityCheckBoxon = () => {
+    setPersonalityCheckBoxes(true)
+  }
+
 
   const saveDog = () => {
     dogDetailsForm.dogPersonality.shift()
@@ -117,6 +125,9 @@ export default function DogForm(props) {
     }    
     if(personality.loving){
       dogDetailsForm.dogPersonality.push('loving')
+    }    
+    if(personality.playful){
+      dogDetailsForm.dogPersonality.push('playful')
     }
 
 
@@ -131,7 +142,7 @@ export default function DogForm(props) {
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
     console.log('sendingdog')
 
-    fetch(`${process.env.REACT_APP_API_URL}/api/signup/newdog`, {
+    fetch(`/api/signup/newdog`, {
       method: 'POST',
       body: form,
     })
@@ -148,11 +159,18 @@ const closeReviewDog=() => {
 }
 
 const addAnotherDog = () => {
-  saveDog()
+ // saveDog()
+ resetPersonalityCheckBoxoff()
   document.getElementById('form').reset()
   setImagePreview(false)
   setPunchLine('')
   setBreed('')
+  setPersonality({  
+    intelligent: false,
+    social: false,
+    adventurous: false,
+    loving: false
+  })
   document.getElementById("button-file").value = ""
   setDogDetailsForm({...dogDetailsForm, 
     dogDateOfBirth: null,
@@ -258,7 +276,10 @@ const handleCheckboxChange = event => {
                       required={true}
                       errorFunc={dogDetailsForm.dogName.length < 1}
                       errorMessage='name is required'
-                      handleChange={e => setDogDetailsForm({...dogDetailsForm, dogName: e.target.value})}
+                      handleChange={e => {
+                      resetPersonalityCheckBoxon()
+                      setDogDetailsForm({...dogDetailsForm, dogName: e.target.value})}
+                      }
                     />
                   </Grid>
                   <Grid item xs={10} sm={5}>
@@ -328,68 +349,13 @@ const handleCheckboxChange = event => {
                       handleChange={e => setDogDetailsForm({...dogDetailsForm, dogShortBio: e.target.value})}
                     />
                     {dogDetailsForm.dogShortBio.length < 1 && <FormHelperText error >About Me Is Required</FormHelperText> }
-                  </Grid>     
-                  <Grid item >
-                    <FormControl required >
-                      <FormLabel component="legend">Your Personality! (Can Pick Multiple!)</FormLabel>
-                      <FormControlLabel
-                          control={
-                            <Checkbox 
-                              icon={<FavoriteBorder color='secondary' />} 
-                              onChange={handleCheckboxChange}
-                              checked={personality.intelligent}
-                              checkedIcon={<Favorite />} 
-                              name="intelligent"
-                            />
-                          }
-                          label="Intelligent"
-                        />      
-                      <FormControlLabel
-                          control={
-                            <Checkbox 
-                              icon={<FavoriteBorder />} 
-                              onChange={handleCheckboxChange}
-                              checkedIcon={<Favorite />} 
-                              name="loving"
-                            />
-                          }
-                         label="Loving"
-                        />      
-                      <FormControlLabel
-                          control={
-                            <Checkbox 
-                              icon={<FavoriteBorder />} 
-                              onChange={handleCheckboxChange}
-                              checkedIcon={<Favorite />} 
-                              name="adventurous"
-                            />
-                          }
-                          label="Adventurous"
-                        />      
-                      <FormControlLabel
-                          control={
-                            <Checkbox 
-                              icon={<FavoriteBorder />} 
-                              onChange={handleCheckboxChange}
-                              checkedIcon={<Favorite />} 
-                              name="social"
-                            />
-                          }
-                          label="Social"
-                        />                          
-                        <FormControlLabel
-                        control={
-                          <Checkbox 
-                            icon={<FavoriteBorder />} 
-                            onChange={handleCheckboxChange}
-                            checkedIcon={<Favorite />} 
-                            name="playful"
-                          />
-                        }
-                        label="Playful"
-                      />      
-                    </FormControl>
-                  </Grid>   
+                  </Grid>
+
+                  { renderPersonalityCheckBoxes &&
+                      <PersonalityCheckBoxes 
+                        checkboxChange= {(event) => handleCheckboxChange(event)}
+                      />
+                  }
                   </Grid>
                   </Grid>                 
                    <Grid item container sm={12} justify='center' alignItems='center'>
