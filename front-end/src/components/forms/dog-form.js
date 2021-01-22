@@ -70,7 +70,7 @@ export default function DogForm(props) {
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
     dogName: false,
-    dogBreed: 'false',
+    dogBreed: false,
     dogDateOfBirth: null,
     dogShortBio: false,
     dogPunchLine: false,
@@ -197,7 +197,7 @@ const saveDogNoNewDog = () => {
   console.log(formError)
   console.log(dogDetailsForm)
 
-  if(formError[0] || formError[1] || formError[2]){
+  if(formError[0] || formError[1] || !formError[2]){
     setErrorMessage(true)
     console.error('not all fields are filled')
 } else{
