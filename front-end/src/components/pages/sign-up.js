@@ -27,8 +27,8 @@ const [renderedComponent, setRenderedComponents] = useState({
 
   const initialRender = () =>{
     setRenderedComponents({
-      accountForm: false,
-      dogForm: true
+      accountForm: true,
+      dogForm: false
     })
   }  
   useEffect(()=>{
@@ -108,7 +108,7 @@ const submitAccountForm = () => {
     formValues.includes('invalid'),
     formValues.includes('exists')
   ]
-  // need to fix error on datepicker
+ 
   if(formError[0] || formError[1]||formError[2]||formError[3]){
     console.log('error')
     setErrorMessage(true)

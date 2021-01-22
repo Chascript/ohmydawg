@@ -69,13 +69,13 @@ export default function DogForm(props) {
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
-    dogName: 'sam',
-    dogBreed: 'poodle',
+    dogName: false,
+    dogBreed: 'false',
     dogDateOfBirth: null,
-    dogShortBio: 'hello',
-    dogPunchLine: 'hello',
-    dogPersonality: [''],
-    file: true,
+    dogShortBio: false,
+    dogPunchLine: false,
+    dogPersonality: [],
+    file: false,
   })
   const [date, setDate] = useState(null)
   const [renderPersonalityCheckBoxes, setPersonalityCheckBoxes] = useState(false)
@@ -130,7 +130,6 @@ export default function DogForm(props) {
       dogDetailsForm.dogPersonality.push('playful')
     }
 
-
     const form = new FormData();
     form.append('usernameValue', props.usernameValue)
     form.set('dogName', dogDetailsForm.dogName)
@@ -159,7 +158,7 @@ const closeReviewDog=() => {
 }
 
 const addAnotherDog = () => {
- // saveDog()
+ saveDog()
  resetPersonalityCheckBoxoff()
   document.getElementById('form').reset()
   setImagePreview(false)
@@ -173,11 +172,16 @@ const addAnotherDog = () => {
   })
   document.getElementById("button-file").value = ""
   setDogDetailsForm({...dogDetailsForm, 
+    dogBreed: false,
     dogDateOfBirth: null,
-    dogBreed: [false],
-    dogPunchLine: false
+    dogName: false,
+    dogPersonality: [],
+    dogPunchLine: false,
+    dogShortBio: false,
+    file: false
   })
   closeReviewDog()
+  console.log(dogDetailsForm)
 }
 
 const saveDogNoNewDog = () => {
@@ -191,13 +195,14 @@ const saveDogNoNewDog = () => {
   const formError = [formValues.includes(false), formValues.includes(null), personalities.includes(true)]
  
   console.log(formError)
-
+  console.log(dogDetailsForm)
 
   if(formError[0] || formError[1] || formError[2]){
-    setReviewDog(true)
-  } else{
-      setErrorMessage(true)
-      console.error('not all fields are filled')
+    setErrorMessage(true)
+    console.error('not all fields are filled')
+} else{
+      setReviewDog(true)
+
   }
 }
 
