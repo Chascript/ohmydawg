@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './fonts.css';
 import DenseAppBar from './components/master-page/navigation-bar';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider,  } from '@material-ui/core/styles';
@@ -8,7 +8,7 @@ import {Section} from '../src/components/master-page/section';
 import {BrowserRouter as Router} from 'react-router-dom'
 import Footer from './components/master-page/footer';
 import { Grid } from '@material-ui/core';
-const font = ['Mali']
+const font = "'Mali', 'cursive'";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -30,15 +30,15 @@ function App() {
     },
     typography: {
       fontFamily: font,
-    }
-  });
+     }
+    });
   const lightTheme = createMuiTheme({
     palette: {
       primary: grey,
       secondary: blueGrey,
     },
     typography:{
-      fontFamily: font,
+      fontFamily: font
     }
   });
     

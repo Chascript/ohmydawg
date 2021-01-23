@@ -95,7 +95,7 @@ const voteForDog = async (username, name, id) => {
         <Typography component="h1" variant="h3" className={classes.header}>Dog Gallery</Typography>
         <Grid  component={Paper}  className={classes.voteContainer}>
           {dogDetails.map(dogDetails =>
-            <GridListTile item="true" cols={4} sm={5} md={4} className={classes.dogContainer}>
+            <GridListTile container ="true" cols={4} sm={5} md={4} className={classes.dogContainer} key={dogDetails.id}>
               <img className={classes.image} src={dogDetails.image} alt={`${dogDetails.username} ${dogDetails.name}`}/>
               <Grid className={classes.details}>
                 <Typography className={classes.name} >{dogDetails.dogName}</Typography>

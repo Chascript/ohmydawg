@@ -67,6 +67,7 @@ const resize = (image, w, h) => {
     // eslint-disable-next-line no-console
     console.error(error);
   }
+}
 //Unique Id 
 const { v4: uuidv4 } = require('uuid');
 

@@ -120,7 +120,7 @@ const submitAccountForm = () => {
       surname: accountForm.surname,
       dateOfBirth: accountForm.dateOfBirth,
     }
-    fetch(`/api/signup/newaccount`, {
+    fetch(`http://localhost:5000/api/signup/newaccount`, {
       headers: {
         'Accept': 'application/json, text/plain, */*',
         "Content-Type": "application/json"

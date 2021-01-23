@@ -65,7 +65,7 @@ export default function DogForm(props) {
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
-  const [reviewDog, setReviewDog] = useState(false)
+  const [reviewDog, setReviewDog] = useState()
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
@@ -181,7 +181,6 @@ const addAnotherDog = () => {
     file: false
   })
   closeReviewDog()
-  console.log(dogDetailsForm)
 }
 
 const saveDogNoNewDog = () => {
@@ -192,17 +191,12 @@ const saveDogNoNewDog = () => {
   setErrorMessage(false)
   const formValues = Object.values(dogDetailsForm) 
   const personalities = Object.values(personality)
-  const formError = [formValues.includes(false), formValues.includes(null), personalities.includes(true)]
- 
-  console.log(formError)
-  console.log(dogDetailsForm)
-
+  const formError = [formValues.includes(false), formValues.includes(null), personalities.includes(true)] 
   if(formError[0] || formError[1] || !formError[2]){
     setErrorMessage(true)
     console.error('not all fields are filled')
 } else{
       setReviewDog(true)
-
   }
 }
 

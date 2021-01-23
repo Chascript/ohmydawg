@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import { Grid, Hidden, Typography } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
 import { Pets } from '@material-ui/icons';
+import {Link} from 'react-router-dom'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -204,12 +205,12 @@ export default function ReviewDogForm(props) {
             </Grid>
             <Grid item xs={10} sm={4}>
               <Button
-                href='/gallery'
+                component={ Link } to="/gallery"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={props.handleSaveDogNoNewDog}
+                onClick={props.handleSaveDogNoNewDog} 
               >
                 Create Dawg
               </Button>
