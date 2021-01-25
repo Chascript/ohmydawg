@@ -14,23 +14,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const useStyles = makeStyles((theme) => ({
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    margin: 'auto',
-    width: 'fit-content',
-  },
-  imagePadding:{
-    paddingTop: 10,
-    paddingBottom: 10
-  },
-  formControl: {
-    marginTop: theme.spacing(2),
-    minWidth: 120,
-  },
-  formControlLabel: {
-    marginTop: theme.spacing(1),
-  },
 image:{
   height: 300,
   width: 200,
@@ -55,35 +38,35 @@ export default function ReviewDogForm(props) {
         <DialogContent>
           <Grid container >
             <Hidden smUp>
-              <Grid container alignItems='center' justify='center' >
+              <Grid container item sm={12} alignItems='center' justify='center' >
                 <Grid item >
                   <Typography component="h1" variant="h4">
                     Review {props.dogName} 
                   </Typography>
                 </Grid> 
                 <Grid item  >
-                  <Pets className={classes.avatar}/>
+                  <Pets />
                 </Grid>
               </Grid>
             </Hidden>
-            <Grid container justify='center' className={classes.imagePadding} item  xs={12} sm={4}>
+            <Grid container item justify='center' xs={12} sm={4}>
               <img className={classes.image} src={props.dogPhoto} alt={props.dogName}  />
             </Grid>
             <Grid container item xs={12} sm={8} justify='center' alignItems='center' spacing={2} >
               <Hidden xsDown>
                 <Grid item xs={8} sm={5} >
-                  <Typography component="h1" variant="h4">
+                  <Typography component="h1" variant="h5">
                     Review {props.dogName} 
                   </Typography>
                 </Grid> 
                 <Grid item xs={4} sm={7} >
-                  <Pets className={classes.avatar}/>
+                  <Pets />
                 </Grid>
               </Hidden>
               <Grid container item xs={12} sm={12}>
               <Grid item xs={4} sm={4}>
                 <Typography component='p'>
-                Name:
+                  Name:
                 </Typography>
               </Grid>
               <Grid item xs={8} sm={8}>
@@ -95,7 +78,7 @@ export default function ReviewDogForm(props) {
               <Grid container item xs={12} sm={12}>
               <Grid item xs={4} sm={4}>
                 <Typography component='p'>
-                Breed:
+                  Breed:
                 </Typography>
               </Grid>
               <Grid item xs={8} sm={8}>
@@ -172,7 +155,7 @@ export default function ReviewDogForm(props) {
                 </Grid>
                 <Grid item xs={8} sm={8}>
                   <Typography component='p'>
-                    {props.dogShortBio},
+                    {props.dogShortBio}
                   </Typography>
                 </Grid>
               </Grid>
@@ -186,7 +169,6 @@ export default function ReviewDogForm(props) {
                 fullWidth
                 variant="contained"
                 color="primary"
-                className={classes.submit}
                 onClick={props.handleClose}
               >
                 Edit Dog
@@ -197,7 +179,6 @@ export default function ReviewDogForm(props) {
                 fullWidth
                 variant="contained"
                 color="primary"
-                className={classes.submit}
                 onClick={props.handleAddNewDogClick}
               >
                 Add Another
@@ -209,7 +190,6 @@ export default function ReviewDogForm(props) {
                 fullWidth
                 variant="contained"
                 color="primary"
-                className={classes.submit}
                 onClick={props.handleSaveDogNoNewDog} 
               >
                 Create Dawg

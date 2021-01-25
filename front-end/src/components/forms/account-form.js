@@ -48,13 +48,14 @@ export default function AccountForm(props) {
       <Grid item  >
         <Pets className={classes.avatar}/>
       </Grid>
-      <Typography component="p" >
-        Please Enter Account Holders Information
-      </Typography>
+      <Grid item sm={12}>
+        <Typography component="p" >
+          Please Enter Account Holders Information
+        </Typography>
+      </Grid>
     </Grid>
       {props.fieldsEmpty && <Typography color='error'>All Fields Are Required*</Typography>}
     <Grid container justify='center'  alignItems='center' spacing={2}>
-
       <Grid item sm={10} >
         <TextField 
             label='Humans Email'
@@ -124,7 +125,7 @@ export default function AccountForm(props) {
           id="firstName"
           label="First Name"
           name="firstName"
-          placeholder="Account Holders First Name"
+          placeholder="Your First Name"
         />
       </Grid>
       <Grid item sm={5}>
@@ -138,7 +139,7 @@ export default function AccountForm(props) {
           id="surname"
           label="Surname"
           name="surname"
-          placeholder="Account Holders Surname"
+          placeholder="Your Surname"
         />
       </Grid>
       <Grid item sm={10}>

@@ -65,7 +65,7 @@ export default function DogForm(props) {
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
-  const [reviewDog, setReviewDog] = useState()
+  const [reviewDog, setReviewDog] = useState(true)
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
@@ -202,7 +202,6 @@ const saveDogNoNewDog = () => {
 
 const handleCheckboxChange = event => {
   setPersonality({...personality, [event.target.name]: event.target.checked})
-  console.log(personality)
 }
   
   return(    
@@ -212,19 +211,25 @@ const handleCheckboxChange = event => {
     config={{duration:2000}}
     >
       {transition=> (
-    <Grid container  style={transition} component={Paper} className={classes.container} justify='center'   alignItems='center' >
+    <Grid container style={transition} component={Paper} className={classes.container} justify='center' alignItems='center' >
          <form id='form' >
          <Hidden smUp>   
-            <Grid container  item xs={12} alignItems='center' justify='center' >
+            <Grid container item xs={12} alignItems='center' justify='center' >
               <Grid item >
                 <Typography component="h1" variant="h4">
                   {props.title} 
                 </Typography>
               </Grid>
               <Grid item >
-                <Pets className={classes.avatar}/>
-              </Grid>    
-            </Grid>  
+                <Pets />
+              </Grid>  
+              <Grid item sm={12}>
+                <Typography component="p" >
+                  Please Enter Your Dogs Information
+                </Typography>
+              </Grid>
+            </Grid>
+              
           </Hidden>
             <Grid container item xs={12} sm={12} className={classes.container} justify='center' alignItems='center' >
               <Grid item container sm={3} justify='center'>
@@ -249,7 +254,7 @@ const handleCheckboxChange = event => {
                   />
                 </Grid>
               </Grid>
-              <Grid container xs={10} item sm={8} spacing={2}>
+              <Grid container xs={10} item sm={9} spacing={2}>
               <Hidden xsDown>   
                 <Grid container item sm={12} alignItems='center' justify='flex-start' >
                   <Grid item >
@@ -258,8 +263,13 @@ const handleCheckboxChange = event => {
                     </Typography>
                   </Grid>
                   <Grid item >
-                    <Pets className={classes.avatar}/>
-                  </Grid>    
+                    <Pets />
+                  </Grid>
+                  <Grid item sm={12}>
+                    <Typography component="p" >
+                      Please Enter Your Dogs Information
+                    </Typography>
+                  </Grid>  
                 </Grid>  
                 </Hidden>
                 <Grid item>
@@ -268,7 +278,7 @@ const handleCheckboxChange = event => {
                 <Grid container item justify={matches ? 'center' : 'flex-start'} sm={12} spacing={2}>
                   <Grid item xs={10} sm={5}>
                     <TextBox 
-                      label='What do your humans call you?'
+                      label='What Is Your Name?'
                       id='dogName'
                       placeholder='Dogs Name'
                       type='text'
@@ -283,7 +293,7 @@ const handleCheckboxChange = event => {
                   </Grid>
                   <Grid item xs={10} sm={5}>
                   <FormControl variant='outlined' fullWidth>
-                  <InputLabel id="breed">What Breed Are You...?</InputLabel>
+                  <InputLabel id="breed">What Breed Are You..? *</InputLabel>
                       <Select
                         labelId="breed"
                         id="breed"
@@ -320,7 +330,7 @@ const handleCheckboxChange = event => {
                   <TextField
                     fullWidth
                     id="punchline"
-                    label="Punchline..." 
+                    label="Punchline... *" 
                     variant='outlined'
                     value={punchLine}
                     onChange={e=> {
@@ -339,11 +349,11 @@ const handleCheckboxChange = event => {
                 </Grid>
                   <Grid item xs={10} sm={5}>
                     <MultilineTextBox 
-                      label='About Me*'
+                      label='About Me'
                       id='about-me'
                       numOfRows='3'
                       placeholder='A bit about you!'
-                      required={false}
+                      required={true}
                       error={dogDetailsForm.dogShortBio.length > 1}
                       handleChange={e => setDogDetailsForm({...dogDetailsForm, dogShortBio: e.target.value})}
                     />

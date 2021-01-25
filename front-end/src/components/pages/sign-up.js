@@ -23,12 +23,10 @@ const [renderedComponent, setRenderedComponents] = useState({
     dogForm: true
   })
 
-
-
   const initialRender = () =>{
     setRenderedComponents({
-      accountForm: true,
-      dogForm: false
+      accountForm: false,
+      dogForm: true
     })
   }  
   useEffect(()=>{
