@@ -65,7 +65,7 @@ export default function DogForm(props) {
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
-  const [reviewDog, setReviewDog] = useState(true)
+  const [reviewDog, setReviewDog] = useState()
   const [imagePreview, setImagePreview] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
