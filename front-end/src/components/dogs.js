@@ -53,7 +53,7 @@ export default function Dogs() {
   const [dogDetails, setDogDetails] = useState([])
   
     const fetchDetails = async () => {
-        await fetch(`/api/dogs/details`)
+        await fetch(`http://localhost:5000/api/dogs/details`)
         .then(res => res.json())
         .then(galleryData => setDogDetails([...galleryData]))
         .catch(error => console.error(error))
@@ -65,7 +65,7 @@ export default function Dogs() {
   }, []);
 
 const voteForDog = async (username, name, id) => {
-  await fetch(`/api/dog/username/name/vote`, {
+  await fetch(`http://localhost:5000/api/dog/username/name/vote`, {
   method: 'POST',
   headers: {
     'Accept': 'application/json , text/plain',

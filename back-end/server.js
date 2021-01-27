@@ -10,6 +10,7 @@ app.listen(PORT, HOST, () => console.log(`CORS-enabled server started on port ${
 // Middleware
 const bodyParser = require('body-parser');
 const multer = require('multer');
+const sharp = require('sharp')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -54,8 +55,8 @@ const upload = multer({ storage });
 // resizes the image
 const resize = (image, w, h) => {
   try {
-    sharp(`public/photosofdogs/${image}`).resize(w, h).toBuffer((err, buffer) => {
-      fs.writeFile(`public/photosofdogs/${image}`, buffer, finished);
+    sharp(`static/photos/${image}`).resize(w, h).toBuffer((err, buffer) => {
+      fs.writeFile(`static/photos/${image}`, buffer, finished);
       function finished(error) {
         if (err) {
           // eslint-disable-next-line no-console
