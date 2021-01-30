@@ -7,7 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { FormHelperText, FormControl, } from '@material-ui/core';
 import  dogDefault from './dog-not-chosen-default.png'
 
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
@@ -77,6 +77,7 @@ export default function DogForm(props) {
     dogPersonality: [],
     file: false,
   })
+  const [accountDetails, setAccountDetails] = useState('')
   const [date, setDate] = useState(null)
   const [renderPersonalityCheckBoxes, setPersonalityCheckBoxes] = useState(false)
   const theme = useTheme()
@@ -93,6 +94,10 @@ export default function DogForm(props) {
       setImagePreview(false)
     }
   }
+
+  useEffect(() => {
+    setAccountDetails(JSON.parse(sessionStorage.getItem('userDetails')))
+  },[])
 
   const handleDateChange = (date) => {
     setDate( new Date(date).toLocaleString('en-US', {
@@ -113,6 +118,7 @@ export default function DogForm(props) {
 
 
   const saveDog = () => {
+    console.log(accountDetails)
     dogDetailsForm.dogPersonality.shift()
     if(personality.intelligent){
       dogDetailsForm.dogPersonality.push('intelligent')
@@ -132,6 +138,10 @@ export default function DogForm(props) {
 
     const form = new FormData();
     form.append('usernameValue', props.usernameValue)
+    form.append('accountHoldersFirstName', accountDetails.firstName)
+    form.append('accountHoldersSurname', accountDetails.surname)
+    form.append('accountHoldersPassword', accountDetails.password)
+    form.append('accountHoldersDateOfBirth', accountDetails.dateOfBirth)
     form.set('dogName', dogDetailsForm.dogName)
     form.set('dogBreed', dogDetailsForm.dogBreed)
     form.set('dogDateOfBirth', dogDetailsForm.dogDateOfBirth)

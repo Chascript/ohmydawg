@@ -111,24 +111,21 @@ const submitAccountForm = () => {
     console.log('error')
     setErrorMessage(true)
   } else {
-    const details = {
-      email: accountForm.email,
-      password: accountForm.password,
-      firstName: accountForm.firstName,
-      surname: accountForm.surname,
-      dateOfBirth: accountForm.dateOfBirth,
-    }
-    fetch(`http://localhost:5000/api/signup/newaccount`, {
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        "Content-Type": "application/json"
-      },
-      method: 'POST',
-      body: JSON.stringify(details)
-    })
+    fetch(`http://localhost:5000/api/signup/newaccount`)
     .then(res => res.json())
     .then(res => {
       setAccountId(res)
+      const accountId = {
+        email: accountForm.email,
+        password: accountForm.password,
+        firstName: accountForm.firstName,
+        surname: accountForm.surname,
+        dateOfBirth: accountForm.dateOfBirth,
+      }
+  
+      sessionStorage.setItem('userDetails', JSON.stringify(accountId))
+
+      console.log('userDetails saved to sessionStorage')
       setRenderedComponents({
         acountForm: false,
         dogForm: true

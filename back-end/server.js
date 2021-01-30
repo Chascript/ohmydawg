@@ -96,21 +96,10 @@ app.get('/api/dogs/details', (req,res) => {
   res.json(dogData)
 })
 
+
 //Save new account
-app.post('/api/signup/newaccount', (req,res) => {
-console.log(req.body)
+app.get('/api/signup/newaccount', (req,res) => {
 accountId = uuidv4()
-const newAccount = {
-  email:req.body.email,
-  password: req.body.password,
-  firstName: req.body.firstName,
-  surname: req.body.surname,
-  dateOfBirth: req.body.dateOfBirth,
-  termsandConditionsAgreed: true,
-  dogs:{}
-}
-accounts[accountId] = newAccount
-saveData(accounts, 'accounts.json')
 res.json(accountId)
 })
 
@@ -118,7 +107,8 @@ res.json(accountId)
 app.post('/api/signup/newdog', upload.single('photo'), (req,res) => {
   const dogId = uuidv4()
   console.log(req.body)
-  const  newDog =  { 
+  if(accounts[req.body.usernameValue]){
+    const  newDog =  { 
       dogName: req.body.dogName,
       dogBreed: req.body.dogBreed,
       dogDateOfBirth: req.body.dogDateOfBirth,
@@ -129,10 +119,41 @@ app.post('/api/signup/newdog', upload.single('photo'), (req,res) => {
       image: `/photos/${req.file.filename}`,
       id: dogId,
   }
-  resize(newDog.image, 200, 300); // w x h
+
+ // resize(newDog.image, 200, 300); // w x h
   accounts[req.body.usernameValue].dogs[dogId] = newDog
   saveData(accounts, 'accounts.json')
   res.json('dog saved to account')
+  } else {
+const userDetails = {
+      email:req.body.accountHoldersEmail,
+      password: req.body.accountHoldersPassword,
+      firstName: req.body.accountHoldersFirstName,
+      surname: req.body.accountHoldersSurname,
+      dateOfBirth: req.body.accountHoldersDateOfBirth,
+      termsandConditionsAgreed: true,
+      dogs:{}
+    }
+    accounts[req.body.usernameValue] = userDetails
+    saveData(accounts, 'accounts.json')
+
+    const  newDog =  { 
+      dogName: req.body.dogName,
+      dogBreed: req.body.dogBreed,
+      dogDateOfBirth: req.body.dogDateOfBirth,
+      dogShortBio: req.body.dogShortBio,
+      dogPersonality: [req.body.dogPersonality],
+      dogPunchLine: req.body.dogPunchLine,
+      votes: 0,
+      image: `/photos/${req.file.filename}`,
+      id: dogId,
+  }
+
+ // resize(newDog.image, 200, 300); // w x h
+  accounts[req.body.usernameValue].dogs[dogId] = newDog
+  saveData(accounts, 'accounts.json')
+  res.json('dog saved to account')
+  }
 })
 
 app.post('/api/dog/username/name/vote', (req,res) => { 
