@@ -55,7 +55,7 @@ export default function Dogs() {
 
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('dogsVoted')) == null){
-      localStorage.setItem('dogsVoted', [])
+      localStorage.setItem('dogsVoted', JSON.stringify([]))
     } 
     const previousDogsVoted = JSON.parse(localStorage.getItem('dogsVoted'))
     setDogsVoted(previousDogsVoted)
