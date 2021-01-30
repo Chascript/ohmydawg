@@ -107,25 +107,8 @@ res.json(accountId)
 app.post('/api/signup/newdog', upload.single('photo'), (req,res) => {
   const dogId = uuidv4()
   console.log(req.body)
-  if(accounts[req.body.usernameValue]){
-    const  newDog =  { 
-      dogName: req.body.dogName,
-      dogBreed: req.body.dogBreed,
-      dogDateOfBirth: req.body.dogDateOfBirth,
-      dogShortBio: req.body.dogShortBio,
-      dogPersonality: [req.body.dogPersonality],
-      dogPunchLine: req.body.dogPunchLine,
-      votes: 0,
-      image: `/photos/${req.file.filename}`,
-      id: dogId,
-  }
-
- // resize(newDog.image, 200, 300); // w x h
-  accounts[req.body.usernameValue].dogs[dogId] = newDog
-  saveData(accounts, 'accounts.json')
-  res.json('dog saved to account')
-  } else {
-const userDetails = {
+  if(!accounts[req.body.usernameValue]){
+  const userDetails = {
       email:req.body.accountHoldersEmail,
       password: req.body.accountHoldersPassword,
       firstName: req.body.accountHoldersFirstName,
@@ -136,24 +119,22 @@ const userDetails = {
     }
     accounts[req.body.usernameValue] = userDetails
     saveData(accounts, 'accounts.json')
-
-    const  newDog =  { 
-      dogName: req.body.dogName,
-      dogBreed: req.body.dogBreed,
-      dogDateOfBirth: req.body.dogDateOfBirth,
-      dogShortBio: req.body.dogShortBio,
-      dogPersonality: [req.body.dogPersonality],
-      dogPunchLine: req.body.dogPunchLine,
-      votes: 0,
-      image: `/photos/${req.file.filename}`,
-      id: dogId,
   }
-
+  const  newDog =  { 
+    dogName: req.body.dogName,
+    dogBreed: req.body.dogBreed,
+    dogDateOfBirth: req.body.dogDateOfBirth,
+    dogShortBio: req.body.dogShortBio,
+    dogPersonality: [req.body.dogPersonality],
+    dogPunchLine: req.body.dogPunchLine,
+    votes: 0,
+    image: `/photos/${req.file.filename}`,
+    id: dogId,
+  }
  // resize(newDog.image, 200, 300); // w x h
   accounts[req.body.usernameValue].dogs[dogId] = newDog
   saveData(accounts, 'accounts.json')
   res.json('dog saved to account')
-  }
 })
 
 app.post('/api/dog/username/name/vote', (req,res) => { 
