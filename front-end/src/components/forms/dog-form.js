@@ -118,7 +118,6 @@ export default function DogForm(props) {
 
 
   const saveDog = () => {
-    console.log(accountDetails)
     dogDetailsForm.dogPersonality.shift()
     if(personality.intelligent){
       dogDetailsForm.dogPersonality.push('intelligent')

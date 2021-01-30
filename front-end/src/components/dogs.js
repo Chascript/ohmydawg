@@ -51,7 +51,16 @@ export default function Dogs() {
   const classes = useStyles()
   
   const [dogDetails, setDogDetails] = useState([])
-  
+  const [dogsVoted, setDogsVoted] = useState()
+
+  useEffect(() => {
+    if(JSON.parse(localStorage.getItem('dogsVoted')) == null){
+      localStorage.setItem('dogsVoted', [])
+    } 
+    const previousDogsVoted = JSON.parse(localStorage.getItem('dogsVoted'))
+    setDogsVoted(previousDogsVoted)
+   } ,[dogDetails]);
+
     const fetchDetails = async () => {
         await fetch(`http://localhost:5000/api/dogs/details`)
         .then(res => res.json())
@@ -65,23 +74,29 @@ export default function Dogs() {
   }, []);
 
 const voteForDog = async (username, name, id) => {
-  await fetch(`http://localhost:5000/api/dog/username/name/vote`, {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json , text/plain',
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    username: username,
-    dogName: name,
-    id: id
+  if(dogsVoted.includes(id)){
+    console.log('id exists')
+  } else{
+    await fetch(`http://localhost:5000/api/dog/username/name/vote`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json , text/plain',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      username: username,
+      dogName: name,
+      id: id
+      })
     })
-  })
-  .then(res => res.json()
-  .then(res => {
-    console.log(`${res}`)
-  }))
-  fetchDetails()
+    .then(res => res.json()
+    .then(res => {
+      console.log(`${res}`)
+      setDogsVoted(dogsVoted.push(id))
+    }))
+    fetchDetails()
+    localStorage.setItem('dogsVoted', JSON.stringify(dogsVoted))
+    }
 }
 
   return(
