@@ -35,7 +35,7 @@ const [renderedComponent, setRenderedComponents] = useState({
 
   const fetchBreeds = async () => {
   try{
-    const response = await (await fetch(`http://localhost:5000/api/dogs/breeds`)).json()
+    const response = await (await fetch(`/api/dogs/breeds`)).json()
     setAllBreeds(response)
     }
     catch(error){
@@ -55,7 +55,7 @@ if( emailValue < 1 ) {
   const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
   if (emailValue.match(pattern)) {
     try {    
-      const emailExistsResult = await (await fetch(`http://localhost:5000/api/dogs/email/exist`, {
+      const emailExistsResult = await (await fetch(`/api/dogs/email/exist`, {
         method: 'POST',
         body: JSON.stringify({ chosenEmail: emailValue}),
         headers: {
@@ -111,7 +111,7 @@ const submitAccountForm = () => {
     console.log('error')
     setErrorMessage(true)
   } else {
-    fetch(`http://localhost:5000/api/signup/newaccount`)
+    fetch(`/api/signup/newaccount`)
     .then(res => res.json())
     .then(res => {
       setAccountId(res)

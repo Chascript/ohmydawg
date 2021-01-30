@@ -150,7 +150,7 @@ export default function DogForm(props) {
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
     console.log('sendingdog')
 
-    fetch(`http://localhost:5000/api/signup/newdog`, {
+    fetch(`/api/signup/newdog`, {
       method: 'POST',
       body: form,
     })

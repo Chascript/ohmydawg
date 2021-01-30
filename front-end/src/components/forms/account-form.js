@@ -5,7 +5,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from "@material-ui/pickers";
 import {Spring} from 'react-spring/renderprops'
 import { useTheme } from '@material-ui/styles'
-
+import Pdf from '../forms/ohmydawgcookies.pdf';
 
 
 const useStyles = makeStyles((theme) =>({
@@ -161,7 +161,7 @@ export default function AccountForm(props) {
         <Typography component='p' variant='body2'>
           By clicking Create Account, you agree to Oh My Dawgs Terms. 
           Learn how we collect, use and share your data in our <Link>Data Policy </Link> 
-          and how we use cookies and similar technology in our <Link>Cookie Policy</Link>.
+          and how we use cookies and similar technology in our <Link href = {Pdf} target = "_blank" >Cookie Policy</Link>.
           You may recieve emails from Oh My Dawg but this is not frequent at all!
         </Typography>
       </Grid>
