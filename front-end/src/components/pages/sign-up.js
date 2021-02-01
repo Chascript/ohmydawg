@@ -17,11 +17,16 @@ export default function Signup() {
     surname: false,
     dateOfBirth: null,
   })
+  const [emailError, setEmailError] = useState(false)
+  const [firstNameError, setFirstNameError] = useState(false)
+  const [surnameError, setSurnameError] = useState(false)
+  const [passwordError, setPasswordError] = useState(false)
+  const [dateOfBirthError, setDateOfBirthError] = useState(false)
   const [accountId, setAccountId] = useState()
-const [renderedComponent, setRenderedComponents] = useState({
-    accountForm: false,
-    dogForm: true
-  })
+  const [renderedComponent, setRenderedComponents] = useState({
+      accountForm: false,
+      dogForm: true
+    })
 
   const initialRender = () =>{
     setRenderedComponents({
@@ -42,40 +47,42 @@ const [renderedComponent, setRenderedComponents] = useState({
     console.error(error)
   }
 }
-useEffect(() => {
-  fetchBreeds()
-  }, []);
+  useEffect(() => {
+    fetchBreeds()
+    }, []);
 
-const handleEmailChange = async event =>{
-  const target = event.target
-  const emailValue = target.value
-if( emailValue < 1 ) {
-  setAccountForm({...accountForm, email:null})
-} else {
-  const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-  if (emailValue.match(pattern)) {
-    try {    
-      const emailExistsResult = await (await fetch(`/api/dogs/email/exist`, {
-        method: 'POST',
-        body: JSON.stringify({ chosenEmail: emailValue}),
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          "Content-Type": "application/json"
-        }  
-      })).json() ;
-      setAccountForm({...accountForm, email:emailExistsResult})
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }     
-  } else {
+  const handleEmailChange = async event =>{
+    const target = event.target
+    const emailValue = target.value
+    if( emailValue < 1 ) {
+      setAccountForm({...accountForm, email:null})
+    } else {
+    const pattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
+    setEmailError(false)
+    if (emailValue.match(pattern)) {
+      try {    
+        const emailExistsResult = await (await fetch(`/api/dogs/email/exist`, {
+          method: 'POST',
+          body: JSON.stringify({ chosenEmail: emailValue}),
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            "Content-Type": "application/json"
+          }  
+        })).json() ;
+        setAccountForm({...accountForm, email:emailExistsResult})
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error(error);
+      }     
+    } else {
       setAccountForm({...accountForm, email:'invalid'})
+    }
   }
-}
 }
 const handlePasswordChange = event => {
   const target = event.target
   const value = target.value
+  setPasswordError(false)
   setPasswordsDontMatch(true)
   setAccountForm({...accountForm, password: value})
   if(value === accountForm.confirmPassword){
@@ -94,11 +101,26 @@ const handleConfirmPassword = event =>{
 }
 const handleDateChange = (date) => {
   setAccountForm({...accountForm, dateOfBirth: date})
+  setDateOfBirthError(false)
 }
-const [errorMessage, setErrorMessage] = useState(false)
 
-const submitAccountForm = () => {
-  setErrorMessage(false)
+const submitAccountForm = () => {  
+  if(!accountForm.email) {
+    setEmailError(true)
+  }
+  if(!accountForm.password) {
+    setPasswordError(true)
+  } 
+  if(!accountForm.firstName) {
+    setFirstNameError(true)
+  }
+  if(!accountForm.surname) {
+    setSurnameError(true)
+    console.log('surname')
+  } if(!accountForm.dateOfBirth) {
+    setDateOfBirthError(true)
+  }
+
   const formValues = Object.values(accountForm)
   const formError = [
     formValues.includes(false),
@@ -106,12 +128,10 @@ const submitAccountForm = () => {
     formValues.includes('invalid'),
     formValues.includes('exists')
   ]
- 
+  
   if(formError[0] || formError[1]||formError[2]||formError[3]){
-    console.log('error')
-    setErrorMessage(true)
-  } else {
-    fetch(`/api/signup/newaccount`)
+    console.error('not all field filled in')
+  } else {    fetch(`/api/signup/newaccount`)
     .then(res => res.json())
     .then(res => {
       setAccountId(res)
@@ -140,16 +160,26 @@ const submitAccountForm = () => {
         {renderedComponent.accountForm && 
           <Grid item sm={4} component={Paper}>
             <AccountForm
-            fieldsEmpty={errorMessage}
             handleSubmitOnClick ={submitAccountForm}
             handleEmail={handleEmailChange}
-            handleFirstNameChange={e => setAccountForm({...accountForm, firstName: e.target.value})}
-            handleSurnameChange={e => setAccountForm({...accountForm, surname: e.target.value})}
+            handleFirstNameChange={e => {
+              setFirstNameError(false)
+              setAccountForm({...accountForm, firstName: e.target.value})}
+            } 
+            handleSurnameChange={e => {
+              setSurnameError(false)
+              setAccountForm({...accountForm, surname: e.target.value})}
+            }
             handleDateOfBirthChange={handleDateChange}
             handlePasswordChange={handlePasswordChange}
             handleConfirmPasswordChange={handleConfirmPassword}
             passwordsDontMatch={passwordsDontMatch}
             accountFormValues={accountForm}
+            firstNameError={firstNameError}
+            surnameError={surnameError}
+            emailError={emailError}
+            passwordError={passwordError}
+            dateOfBirthError={dateOfBirthError}
             title="Sign Up!" 
             />
           </Grid>

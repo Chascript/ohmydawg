@@ -155,7 +155,7 @@ export default function ReviewDogForm(props) {
                 </Grid>
                 <Grid item xs={8} sm={8}>
                   <Typography component='p'>
-                    {props.dogShortBio}
+                    {props.dogShortBio ? (`${props.dogShortBio}`) : ('-') }
                   </Typography>
                 </Grid>
               </Grid>

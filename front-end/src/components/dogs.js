@@ -62,7 +62,7 @@ export default function Dogs() {
    } ,[dogDetails]);
 
     const fetchDetails = async () => {
-        await fetch(`/api/dogs/details`)
+        await fetch(`http://localhost:5000/api/dogs/details`)
         .then(res => res.json())
         .then(galleryData => setDogDetails([...galleryData]))
         .catch(error => console.error(error))
@@ -77,7 +77,7 @@ const voteForDog = async (username, name, id) => {
   if(dogsVoted.includes(id)){
     console.log('id exists')
   } else{
-    await fetch(`/api/dog/username/name/vote`, {
+    await fetch(`http://localhost:5000/api/dog/username/name/vote`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json , text/plain',

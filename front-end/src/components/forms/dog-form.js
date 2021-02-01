@@ -51,6 +51,12 @@ const useStyles = makeStyles((theme) => ({
   menuPaper: {
     maxHeight: 100
   },
+  paddingTop: {
+    marginTop: 20,
+  },
+  none: {
+
+  }
 }))
 
 
@@ -62,17 +68,22 @@ export default function DogForm(props) {
     social: false,
     adventurous: false,
     loving: false,
+    playful: false,
   })
   const [breed, setBreed] = useState('')
   const [punchLine, setPunchLine] = useState('')
   const [reviewDog, setReviewDog] = useState()
   const [imagePreview, setImagePreview] = useState(false)
-  const [errorMessage, setErrorMessage] = useState(false)
+  const [dogNameError, setDogNameError] = useState(false)
+  const [dogBreedError, setDogBreedError] = useState(false)
+  const [dogDateOfBirthError, setDogDateOfBirthError] = useState(false)
+  const [dogPunchLineError, setDogPunchLineError] = useState(false)
+  const [dogPersonalityError, setDogPersonalityError] = useState(false)
+  const [dogImageError, setDogImageError] = useState(false)
   const [dogDetailsForm,setDogDetailsForm] = useState({
     dogName: false,
     dogBreed: false,
     dogDateOfBirth: null,
-    dogShortBio: false,
     dogPunchLine: false,
     dogPersonality: [],
     file: false,
@@ -89,9 +100,11 @@ export default function DogForm(props) {
     if (selected && types.includes(selected.type)) {
       setDogDetailsForm({...dogDetailsForm, file: selected})
       setImagePreview(URL.createObjectURL(selected))
+      setDogImageError(false)
     } else {
       setDogDetailsForm({...dogDetailsForm, file: false})
       setImagePreview(false)
+      setDogImageError(true)
     }
   }
 
@@ -106,6 +119,7 @@ export default function DogForm(props) {
       month: 'long', 
       year: 'numeric' 
     }));
+    setDogDateOfBirthError(false)
     setDogDetailsForm({...dogDetailsForm, dogDateOfBirth:  new Date(date) })
   }
 
@@ -186,7 +200,7 @@ const addAnotherDog = () => {
     dogName: false,
     dogPersonality: [],
     dogPunchLine: false,
-    dogShortBio: false,
+    dogShortBio: ``,
     file: false
   })
   closeReviewDog()
@@ -197,12 +211,32 @@ const saveDogNoNewDog = () => {
 }
 
  const openModal = () => {
-  setErrorMessage(false)
-  const formValues = Object.values(dogDetailsForm) 
   const personalities = Object.values(personality)
+   if(!dogDetailsForm.dogName){
+     setDogNameError(true)
+   }
+   if(!dogDetailsForm.dogBreed){
+     setDogBreedError(true)
+   }
+   if(!dogDetailsForm.dogDateOfBirth) {
+     setDogDateOfBirthError(true)
+   }
+   if(!dogDetailsForm.dogPunchLine) {
+     setDogPunchLineError(true)
+   }
+   if(!personalities.includes(true)) {
+     setDogPersonalityError(true)
+   } else{
+     setDogPersonalityError(false)
+   }
+   if(!dogDetailsForm.file) {
+     setDogImageError(true)
+   }
+  const formValues = Object.values(dogDetailsForm) 
   const formError = [formValues.includes(false), formValues.includes(null), personalities.includes(true)] 
   if(formError[0] || formError[1] || !formError[2]){
-    setErrorMessage(true)
+
+
     console.error('not all fields are filled')
 } else{
       setReviewDog(true)
@@ -262,6 +296,7 @@ const handleCheckboxChange = event => {
                     size='small'
                   />
                 </Grid>
+                {dogImageError && <FormHelperText error >  Please Select A Photo</FormHelperText> }
               </Grid>
               <Grid container xs={10} item sm={9} spacing={2}>
               <Hidden xsDown>   
@@ -281,34 +316,34 @@ const handleCheckboxChange = event => {
                   </Grid>  
                 </Grid>  
                 </Hidden>
-                <Grid item>
-                {errorMessage && <Typography color='error'>All Fields Are Required</Typography>}
-                </Grid>
                 <Grid container item justify={matches ? 'center' : 'flex-start'} sm={12} spacing={2}>
-                  <Grid item xs={10} sm={5}>
+                  <Grid className={matches ? classes.paddingTop : classes.none} item xs={10} sm={5}>
                     <TextBox 
                       label='What Is Your Name?'
                       id='dogName'
                       placeholder='Dogs Name'
                       type='text'
                       required={true}
-                      errorFunc={dogDetailsForm.dogName.length < 1}
-                      errorMessage='name is required'
+                      errorFunc={dogDetailsForm.dogName.length < 1 || dogNameError}
+                      errorMessage='Name Is Required'
                       handleChange={e => {
                       resetPersonalityCheckBoxon()
+                      setDogNameError(false)
                       setDogDetailsForm({...dogDetailsForm, dogName: e.target.value})}
                       }
                     />
                   </Grid>
                   <Grid item xs={10} sm={5}>
                   <FormControl variant='outlined' fullWidth>
-                  <InputLabel id="breed">What Breed Are You..? *</InputLabel>
+                  <InputLabel error={dogBreedError} id="breed">What Breed Are You..? *</InputLabel>
                       <Select
                         labelId="breed"
                         id="breed"
+                        error={dogBreedError}
                         value={breed}
                         onChange={e => {
                           setBreed(e.target.value)
+                          setDogBreedError(false)
                           setDogDetailsForm({...dogDetailsForm, dogBreed: e.target.value})
                         }} 
                         MenuProps={MenuProps}
@@ -319,10 +354,13 @@ const handleCheckboxChange = event => {
                         )}
                       </Select>
                     </FormControl>
+                    {dogBreedError && <FormHelperText error >  Please Select A Breed</FormHelperText> }
+
                   </Grid>
                   <Grid item xs={10} sm={5}>
                     <MuiPickersUtilsProvider  utils={DateFnsUtils}>
                       <DatePicker
+                        error={dogDateOfBirthError}
                         invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
                         required
                         fullWidth
@@ -334,16 +372,21 @@ const handleCheckboxChange = event => {
                         onChange={handleDateChange}
                       />
                     </MuiPickersUtilsProvider>
+                    {dogDateOfBirthError && <FormHelperText error >  Date Of Birth Is Required</FormHelperText> }
+
                   </Grid>
                   <Grid item xs={10} sm={5} >
                   <TextField
                     fullWidth
+                    helperText={dogPunchLineError && 'Please Select A PunchLine'}
+                    error={dogPunchLineError}
                     id="punchline"
                     label="Punchline... *" 
                     variant='outlined'
                     value={punchLine}
                     onChange={e=> {
                       setPunchLine(e.target.value)
+                      setDogPunchLineError(false)
                       setDogDetailsForm({...dogDetailsForm, dogPunchLine: e.target.value})
                     }} 
                     select>
@@ -362,17 +405,16 @@ const handleCheckboxChange = event => {
                       id='about-me'
                       numOfRows='3'
                       placeholder='A bit about you!'
-                      required={true}
-                      error={dogDetailsForm.dogShortBio.length > 1}
                       handleChange={e => setDogDetailsForm({...dogDetailsForm, dogShortBio: e.target.value})}
                     />
-                    {dogDetailsForm.dogShortBio.length < 1 && <FormHelperText error >About Me Is Required</FormHelperText> }
                   </Grid>
 
                   { renderPersonalityCheckBoxes &&
                       <PersonalityCheckBoxes 
                         checkboxChange= {(event) => handleCheckboxChange(event)}
+                        error={dogPersonalityError}
                       />
+
                   }
                   </Grid>
                   </Grid>                 

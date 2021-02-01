@@ -1,4 +1,4 @@
-import { useMediaQuery, Grid, makeStyles, TextField, Typography, Button, Link } from '@material-ui/core'
+import { useMediaQuery, Grid, makeStyles, TextField, Typography, Button, Link, FormHelperText } from '@material-ui/core'
 import React from 'react'
 import {  Pets } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns';
@@ -54,7 +54,6 @@ export default function AccountForm(props) {
         </Typography>
       </Grid>
     </Grid>
-      {props.fieldsEmpty && <Typography color='error'>All Fields Are Required*</Typography>}
     <Grid container justify='center'  alignItems='center' spacing={2}>
       <Grid item sm={10} >
         <TextField 
@@ -62,25 +61,27 @@ export default function AccountForm(props) {
             id='email'
             variant="outlined"
             required
+            name="email"
             fullWidth  
+            autoComplete="new-password"
             placeholder='example@domain.com'
             type='text'
-            error={props.accountFormValues.email === null || props.accountFormValues.email === 'invalid' || props.accountFormValues.email === 'exists'}
-            helperText= {props.accountFormValues.email === null ? (
-              'An email is required'
+            error={props.accountFormValues.email === null || props.accountFormValues.email === 'invalid' || props.accountFormValues.email === 'exists' || props.emailError}
+            helperText= {props.accountFormValues.email === null || props.emailError ? (
+              'An Email Is Required'
               ) : ( 
                 props.accountFormValues.email === 'invalid' ? (
-                'email is not valid'
+                `Email Isn't Valid`
                 ) : ( 
                   props.accountFormValues.email === 'exists' ? (
-                  `email already exists`
+                  `Email Already Exists`
                   ) : ( 
                   ''
                   )
                 )
               )     
             }
-            onChange={props.handleEmail}
+            onBlur={props.handleEmail}
           />
       </Grid>
       <Grid item sm={5} >
@@ -91,10 +92,10 @@ export default function AccountForm(props) {
           required
           fullWidth
           variant='outlined'
-          error={props.accountFormValues.password.length < 1 || props.passwordsDontMatch}
-          helperText={props.accountFormValues.password.length < 1 ?
-            ('password is required'):(
-              props.passwordsDontMatch && 'Passwords do not match'
+          error={props.accountFormValues.password.length < 1 || props.passwordsDontMatch || props.passwordError}
+          helperText={props.accountFormValues.password.length < 1 || props.passwordError ?
+            ('Password Is Required'):(
+              props.passwordsDontMatch && `Passwords Don't Match`
             )}
           type='password'
           onChange={props.handlePasswordChange}        
@@ -107,7 +108,7 @@ export default function AccountForm(props) {
           placeholder="******"
           variant='outlined'
           fullWidth
-          helperText={props.passwordsDontMatch && 'Passwords do not match'}
+          helperText={props.passwordsDontMatch && `Passwords Don't Match`}
           required
           error={props.passwordsDontMatch}
           type='password'
@@ -116,12 +117,15 @@ export default function AccountForm(props) {
       </Grid>
       <Grid item sm={5}>
       <TextField   
-          onChange={props.handleFirstNameChange}
-          error={props.accountFormValues.firstName.length < 1}
-          helperText={props.accountFormValues.firstName.length < 1 && 'First Name is Required'}
+          onBlur={props.handleFirstNameChange}
+          error={props.accountFormValues.firstName.length < 1 || props.firstNameError}
+          helperText={props.accountFormValues.firstName.length < 1 || props.firstNameError ? 
+            ('First Name Is Required') : ('')
+          }
           variant="outlined"
           required
           fullWidth
+          autoComplete="new-password"
           id="firstName"
           label="First Name"
           name="firstName"
@@ -130,12 +134,15 @@ export default function AccountForm(props) {
       </Grid>
       <Grid item sm={5}>
       <TextField   
-          onChange={props.handleSurnameChange}
-          error={props.accountFormValues.surname.length < 1}
-          helperText={props.accountFormValues.surname.length < 1 && 'Surname is required'}
+          onBlur={props.handleSurnameChange}
+          error={props.accountFormValues.surname.length < 1 || props.surnameError}
+          helperText={props.accountFormValues.surname.length < 1 || props.surnameError ? 
+            ('Surname Is Required') : ('')
+          }
           variant="outlined"
           required
           fullWidth
+          autoComplete="new-password"
           id="surname"
           label="Surname"
           name="surname"
@@ -145,6 +152,7 @@ export default function AccountForm(props) {
       <Grid item sm={10}>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <DatePicker
+            error={props.dateOfBirthError}
             invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
             required
             fullWidth
@@ -156,6 +164,7 @@ export default function AccountForm(props) {
             onChange={props.handleDateOfBirthChange}
           />
         </MuiPickersUtilsProvider>
+        {props.dateOfBirthError && <FormHelperText error >  Date Of Birth Is Required</FormHelperText> }
       </Grid>
       <Grid item xs={7} >
         <Typography component='p' variant='body2'>
