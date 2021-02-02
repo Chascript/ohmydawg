@@ -1,9 +1,9 @@
-import { CssBaseline, Grid, makeStyles, Typography } from '@material-ui/core'
+import { CssBaseline, Grid, makeStyles, Typography, Link } from '@material-ui/core'
 import React from 'react'
 import ContactIcons from './contact-icons'
 import Copyright from './copyright'
 import paw from './paw-print-footer.png'
-
+import cookie from './ohmydawgcookies.pdf';
 
 const useStyles = makeStyles((theme) => ({
   paw: {
@@ -24,6 +24,7 @@ const classes = useStyles()
         <Grid container item xs={6} sm={4}  justify='space-between' alignItems='center' direction='column' >
           <Grid item  >
             <Typography component='p' variant="body2" align="center"> A Site For Dawgs </Typography>
+            <Typography  component='p' variant="caption" align="center"> <Link color='textPrimary' href = {cookie} target = "_blank" >Cookie Policy</Link> </Typography>
           </Grid>
           <Grid item xs={12}>
             <ContactIcons/>
