@@ -1,12 +1,15 @@
 import React from 'react'
-import { Grid, CssBaseline } from '@material-ui/core'
-import PageNotReady from './page-not-ready'
-const page = 'Home'
+import { Grid, CssBaseline, Typography } from '@material-ui/core'
+import { HomeContent } from '../home-content'
+
 export function Home() {
   return  (
-    <Grid container justify='center' align='center'>    
+    <Grid container >    
       <CssBaseline/> 
-      <PageNotReady page={page} />
+      <HomeContent />
+   <Typography variant='caption' >
+     For more information checkout my github repo located in the footer
+   </Typography>
     </Grid>
   )
 }
