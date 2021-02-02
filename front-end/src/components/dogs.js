@@ -12,6 +12,7 @@ const useStyles = makeStyles(() => ({
   header:{
     display: 'flex',
     alignSelf: 'center',
+    marginBottom: 20,
   },
   details:{
     display: 'flex',

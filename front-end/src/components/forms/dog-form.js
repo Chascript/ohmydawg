@@ -1,10 +1,10 @@
-import { Button, Grid, Hidden, InputLabel, makeStyles, MenuItem, Paper, Select, TextField, Typography, useMediaQuery, useTheme } from '@material-ui/core'
+import { Button, Grid, Hidden, makeStyles, MenuItem, Paper, TextField, Typography, useMediaQuery, useTheme } from '@material-ui/core'
 import {Spring} from 'react-spring/renderprops'
 import { Pets } from '@material-ui/icons'
 import MultilineTextBox from './inputs/multiline-text-input';
 import {MuiPickersUtilsProvider, DatePicker} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns';
-import { FormHelperText, FormControl, } from '@material-ui/core';
+import { FormHelperText} from '@material-ui/core';
 import  dogDefault from './dog-not-chosen-default.png'
 
 import React,{useEffect, useState} from 'react'
@@ -12,17 +12,6 @@ import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
 import PersonalityCheckBoxes from './inputs/personality-checkboxes';
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 const useStyles = makeStyles((theme) => ({
   imageNotSelected:{
@@ -296,7 +285,9 @@ const handleCheckboxChange = event => {
                     size='small'
                   />
                 </Grid>
-                {dogImageError && <FormHelperText error >  Please Select A Photo</FormHelperText> }
+                <Grid item  sm={10}>
+                  {dogImageError && <FormHelperText error >  Please Select A Photo</FormHelperText> }
+                </Grid>
               </Grid>
               <Grid container xs={10} item sm={9} spacing={2}>
               <Hidden xsDown>   
@@ -334,33 +325,34 @@ const handleCheckboxChange = event => {
                     />
                   </Grid>
                   <Grid item xs={10} sm={5}>
-                  <FormControl variant='outlined' fullWidth>
-                  <InputLabel error={dogBreedError} id="breed">What Breed Are You..? *</InputLabel>
-                      <Select
-                        labelId="breed"
+                      <TextField
+                        fullWidth
+                        variant='outlined'
+                        label="What Breed Are you..?"
                         id="breed"
                         error={dogBreedError}
+                        helperText={dogBreedError && 'Please Select A Breed'}
                         value={breed}
                         onChange={e => {
                           setBreed(e.target.value)
                           setDogBreedError(false)
                           setDogDetailsForm({...dogDetailsForm, dogBreed: e.target.value})
                         }} 
-                        MenuProps={MenuProps}
-                        displayEmpty
+                        select
                         >
+                        <MenuItem value=''>
+                          <em></em>
+                        </MenuItem>
                         {props.allBreeds.map(allBreeds => 
                           <MenuItem key={allBreeds} value={allBreeds}>{allBreeds}</MenuItem>
                         )}
-                      </Select>
-                    </FormControl>
-                    {dogBreedError && <FormHelperText error >  Please Select A Breed</FormHelperText> }
-
+                      </TextField>
                   </Grid>
                   <Grid item xs={10} sm={5}>
                     <MuiPickersUtilsProvider  utils={DateFnsUtils}>
                       <DatePicker
                         error={dogDateOfBirthError}
+                        helperText={dogDateOfBirthError && 'Date Of Birth Is Required'}
                         invalidDateMessage='A Complete Date Is Required dd/mm/yyyy'
                         required
                         fullWidth
@@ -372,8 +364,6 @@ const handleCheckboxChange = event => {
                         onChange={handleDateChange}
                       />
                     </MuiPickersUtilsProvider>
-                    {dogDateOfBirthError && <FormHelperText error >  Date Of Birth Is Required</FormHelperText> }
-
                   </Grid>
                   <Grid item xs={10} sm={5} >
                   <TextField
@@ -393,8 +383,8 @@ const handleCheckboxChange = event => {
                     <MenuItem value="">
                       <em></em>
                     </MenuItem>
-                      <MenuItem key='punchline1' value={`Hey! I'm ${dogDetailsForm.dogName} and I love cuddles with my human`}>{`Hey! I'm ${dogDetailsForm.dogName} and I love cuddles with my human`}</MenuItem>
-                      <MenuItem key='punchline2' value={`Off out on an Adventure! It's ${dogDetailsForm.dogName} by the way`}>{`Off out on an Adventure! It's ${dogDetailsForm.dogName} by the way`}</MenuItem>
+                      <MenuItem key='punchline1' value={`Hey! I'm ${dogDetailsForm.dogName}, I love cuddles`}>{`Hey! I'm ${dogDetailsForm.dogName}, I love cuddles`}</MenuItem>
+                      <MenuItem key='punchline2' value={`It's ${dogDetailsForm.dogName}, off out on an Adventure!`}>{`It's ${dogDetailsForm.dogName}, off out on an Adventure!`}</MenuItem>
                       <MenuItem key='punchline3' value={`I'm ${dogDetailsForm.dogName} and I like to sniff dog butts`}>{`I'm ${dogDetailsForm.dogName} and I like to sniff dog butts`}</MenuItem>
                       <MenuItem key='punchline4' value={`What's up! It's ${dogDetailsForm.dogName} Chilling here`}>{`What's up! It's ${dogDetailsForm.dogName} Chilling here`}</MenuItem>
                   </TextField>

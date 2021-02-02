@@ -1,4 +1,4 @@
-import { useMediaQuery, Grid, makeStyles, TextField, Typography, Button, Link, FormHelperText } from '@material-ui/core'
+import { useMediaQuery, Grid, makeStyles, TextField, Typography, Button, Link } from '@material-ui/core'
 import React from 'react'
 import {  Pets } from '@material-ui/icons'
 import DateFnsUtils from '@date-io/date-fns';
@@ -162,9 +162,9 @@ export default function AccountForm(props) {
             label='Date Of Birth'
             format="dd/MM/yyyy"
             onChange={props.handleDateOfBirthChange}
+            helperText={props.dateOfBirthError && 'Date Of Birth Is Required'}
           />
         </MuiPickersUtilsProvider>
-        {props.dateOfBirthError && <FormHelperText error >  Date Of Birth Is Required</FormHelperText> }
       </Grid>
       <Grid item xs={7} >
         <Typography component='p' variant='body2'>

@@ -116,7 +116,6 @@ const submitAccountForm = () => {
   }
   if(!accountForm.surname) {
     setSurnameError(true)
-    console.log('surname')
   } if(!accountForm.dateOfBirth) {
     setDateOfBirthError(true)
   }
