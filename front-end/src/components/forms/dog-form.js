@@ -255,7 +255,7 @@ const handleCheckboxChange = event => {
               <Grid item >
                 <Pets />
               </Grid>  
-              <Grid item sm={12}>
+              <Grid item container justify='center' sm={12}>
                 <Typography component="p" >
                   Please Enter Your Dogs Information
                 </Typography>
@@ -265,15 +265,16 @@ const handleCheckboxChange = event => {
           </Hidden>
             <Grid container item xs={12} sm={12} className={classes.container} justify='center' alignItems='center' >
               <Grid item container sm={3} justify='center'>
-                <Grid item >
+                <Grid container justify='center' item >
                   {imagePreview ?(
                     <img className={classes.imageSelected} src={imagePreview} alt={dogDetailsForm.file.name} />
                     ):(
                     <img className={classes.imageNotSelected} src={dogDefault} alt="default"/>
                   )}
                 </Grid>
-                <Grid item  sm={10}>
+                <Grid item  sm={11  }>
                   <FileUploadButton
+                    width='50'
                     className={classes.button}
                     inputAccept='image/'
                     buttonText='Upload a photo of yourself'
@@ -285,7 +286,7 @@ const handleCheckboxChange = event => {
                     size='small'
                   />
                 </Grid>
-                <Grid item  sm={10}>
+                <Grid container justify='center'>
                   {dogImageError && <FormHelperText error >  Please Select A Photo</FormHelperText> }
                 </Grid>
               </Grid>
