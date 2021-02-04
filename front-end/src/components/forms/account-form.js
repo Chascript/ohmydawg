@@ -7,7 +7,6 @@ import {Spring} from 'react-spring/renderprops'
 import { useTheme } from '@material-ui/styles'
 import Pdf from '../forms/ohmydawgcookies.pdf';
 
-
 const useStyles = makeStyles((theme) =>({
   avatar: {
     margin: theme.spacing(1),

@@ -8,7 +8,7 @@ export function Home() {
       <CssBaseline/> 
       <HomeContent />
    <Typography variant='caption' >
-     For more information checkout my github repo located in the footer
+     Currently updating homepage
    </Typography>
     </Grid>
   )

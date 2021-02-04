@@ -7,7 +7,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { FormHelperText} from '@material-ui/core';
 import  dogDefault from './dog-not-chosen-default.png'
 
-import React,{useEffect, useState} from 'react'
+import React,{ useState} from 'react'
 import TextBox from './inputs/text-input';
 import FileUploadButton from './inputs/file-upload-button';
 import ReviewDogForm from './review-dog-form';
@@ -77,7 +77,6 @@ export default function DogForm(props) {
     dogPersonality: [],
     file: false,
   })
-  const [accountDetails, setAccountDetails] = useState('')
   const [date, setDate] = useState(null)
   const [renderPersonalityCheckBoxes, setPersonalityCheckBoxes] = useState(false)
   const theme = useTheme()
@@ -96,6 +95,7 @@ export default function DogForm(props) {
       setDogImageError(true)
     }
   }
+
 
   const handleDateChange = (date) => {
     setDate( new Date(date).toLocaleString('en-US', {
@@ -150,7 +150,7 @@ export default function DogForm(props) {
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
     console.log('sendingdog')
 
-    fetch(`http://localhost:5000/api/signup/newdog`, {
+    fetch(`/api/signup/newdog`, {
     method: 'POST',
       body: form,
     })
