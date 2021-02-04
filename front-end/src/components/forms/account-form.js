@@ -48,7 +48,7 @@ export default function AccountForm(props) {
       <Grid item  >
         <Pets className={classes.avatar}/>
       </Grid>
-      <Grid item sm={12}>
+      <Grid container item sm={12}>
         <Typography component="p" >
           Please Enter Account Holders Information
         </Typography>

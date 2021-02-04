@@ -97,10 +97,6 @@ export default function DogForm(props) {
     }
   }
 
-  useEffect(() => {
-    setAccountDetails(JSON.parse(sessionStorage.getItem('userDetails')))
-  },[])
-
   const handleDateChange = (date) => {
     setDate( new Date(date).toLocaleString('en-US', {
       weekday: 'short', 
@@ -140,10 +136,11 @@ export default function DogForm(props) {
 
     const form = new FormData();
     form.append('usernameValue', props.usernameValue)
-    form.append('accountHoldersFirstName', accountDetails.firstName)
-    form.append('accountHoldersSurname', accountDetails.surname)
-    form.append('accountHoldersPassword', accountDetails.password)
-    form.append('accountHoldersDateOfBirth', accountDetails.dateOfBirth)
+    form.append('accountHoldersEmail', props.accountDetails.email)
+    form.append('accountHoldersFirstName', props.accountDetails.firstName)
+    form.append('accountHoldersSurname', props.accountDetails.surname)
+    form.append('accountHoldersPassword', props.accountDetails.password)
+    form.append('accountHoldersDateOfBirth', props.accountDetails.dateOfBirth)
     form.set('dogName', dogDetailsForm.dogName)
     form.set('dogBreed', dogDetailsForm.dogBreed)
     form.set('dogDateOfBirth', dogDetailsForm.dogDateOfBirth)
@@ -153,8 +150,8 @@ export default function DogForm(props) {
     form.append('photo', dogDetailsForm.file, dogDetailsForm.file.name)
     console.log('sendingdog')
 
-    fetch(`/api/signup/newdog`, {
-      method: 'POST',
+    fetch(`http://localhost:5000/api/signup/newdog`, {
+    method: 'POST',
       body: form,
     })
     .then(res => res.json())
@@ -224,8 +221,6 @@ const saveDogNoNewDog = () => {
   const formValues = Object.values(dogDetailsForm) 
   const formError = [formValues.includes(false), formValues.includes(null), personalities.includes(true)] 
   if(formError[0] || formError[1] || !formError[2]){
-
-
     console.error('not all fields are filled')
 } else{
       setReviewDog(true)

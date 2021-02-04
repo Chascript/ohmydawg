@@ -40,7 +40,7 @@ export default function Signup() {
 
   const fetchBreeds = async () => {
   try{
-    const response = await (await fetch(`/api/dogs/breeds`)).json()
+    const response = await (await fetch(`http://localhost:5000/api/dogs/breeds`)).json()
     setAllBreeds(response)
     }
     catch(error){
@@ -61,7 +61,7 @@ export default function Signup() {
     setEmailError(false)
     if (emailValue.match(pattern)) {
       try {    
-        const emailExistsResult = await (await fetch(`/api/dogs/email/exist`, {
+        const emailExistsResult = await (await fetch(`http://localhost:5000/api/dogs/email/exist`, {
           method: 'POST',
           body: JSON.stringify({ chosenEmail: emailValue}),
           headers: {
@@ -130,21 +130,10 @@ const submitAccountForm = () => {
   
   if(formError[0] || formError[1]||formError[2]||formError[3]){
     console.error('not all field filled in')
-  } else {    fetch(`/api/signup/newaccount`)
+  } else {    fetch(`http://localhost:5000/api/signup/newaccount`)
     .then(res => res.json())
     .then(res => {
       setAccountId(res)
-      const accountId = {
-        email: accountForm.email,
-        password: accountForm.password,
-        firstName: accountForm.firstName,
-        surname: accountForm.surname,
-        dateOfBirth: accountForm.dateOfBirth,
-      }
-  
-      sessionStorage.setItem('userDetails', JSON.stringify(accountId))
-
-      console.log('userDetails saved to sessionStorage')
       setRenderedComponents({
         acountForm: false,
         dogForm: true
@@ -189,6 +178,7 @@ const submitAccountForm = () => {
             usernameValue={accountId}
             title="Create Dawg!" 
             allBreeds={allBreeds}
+            accountDetails={accountForm}
           />
         }
       </Grid>
