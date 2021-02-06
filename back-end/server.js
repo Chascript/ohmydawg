@@ -11,6 +11,7 @@ app.listen(PORT, HOST, () => console.log(`CORS-enabled server started on port ${
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const sharp = require('sharp')
+const bcrypt = require('bcrypt')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -106,11 +107,11 @@ res.json(accountId)
 //save new dog
 app.post('/api/signup/newdog', upload.single('photo'), (req,res) => {
   const dogId = uuidv4()
-  console.log(req.body)
+  const hash = bcrypt.hashSync(req.body.accountHoldersPassword, 10);
   if(!accounts[req.body.usernameValue]){
   const userDetails = {
       email:req.body.accountHoldersEmail,
-      password: req.body.accountHoldersPassword,
+      password: hash,
       firstName: req.body.accountHoldersFirstName,
       surname: req.body.accountHoldersSurname,
       dateOfBirth: req.body.accountHoldersDateOfBirth,
