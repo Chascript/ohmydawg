@@ -3,6 +3,7 @@ import React from 'react'
 import ContactIcons from './contact-icons'
 import Copyright from './copyright'
 import paw from './paw-print-footer.png'
+import pawMirror from './paw-mirror.png'
 import cookie from './ohmydawgcookies.pdf';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +33,12 @@ const classes = useStyles()
           <Grid item >
             <Copyright />
           </Grid>
-       </Grid>
+          <Typography variant='caption' >
+            Site Under Development
+          </Typography>
+        </Grid>
       <Grid item xs={2} sm={4} style={{display:'flex', justifyContent:'flex-end'}}>
-      <img style={{ transform: "scaleX(-1)"}} className={classes.paw} src={paw} alt={'paw-print'} />
+      <img className={classes.paw} src={pawMirror} alt={'paw-print'} />
       </Grid>
     </Grid>
   )

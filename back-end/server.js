@@ -11,7 +11,7 @@ app.listen(PORT, HOST, () => console.log(`CORS-enabled server started on port ${
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const sharp = require('sharp')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
