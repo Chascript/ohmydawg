@@ -9,6 +9,7 @@ import cookie from './ohmydawgcookies.pdf';
 const useStyles = makeStyles((theme) => ({
   paw: {
     width: 50,
+    height: 'auto',
   },
   color:{
     backgroundColor: theme.palette.primary.main,  }
@@ -37,8 +38,8 @@ const classes = useStyles()
             Site Under Development
           </Typography>
         </Grid>
-      <Grid item xs={2} sm={4} style={{display:'flex', justifyContent:'flex-end'}}>
-      <img className={classes.paw} src={pawMirror} alt={'paw-print'} />
+      <Grid container item xs={2} sm={4} justify='flex-end' >
+        <img className={classes.paw} src={pawMirror} alt={'paw-print'} />
       </Grid>
     </Grid>
   )
