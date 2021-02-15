@@ -13,4 +13,7 @@ COPY . .
 EXPOSE 80
 
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npm", "run", "build" ]
+
+RUN npm install -g serve
+RUN serve -s build
