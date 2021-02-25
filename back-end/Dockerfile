@@ -7,5 +7,5 @@ COPY package*.json ./
 RUN npm install
 # Bundle app source
 COPY . .
-# run server  
-RUN node server.js
+# run server
+CMD ["node", "server.js"]
