@@ -1,19 +1,18 @@
 version: '3.6'
 services:
  server:
-  build: /home/ubuntu/ohmydawg/back-end
+  build: /home/ubuntu/ohmydawg/back-end/.
   ports:
    - 5000:5000
-  volumes:
-   - /home/ubuntu/ohmydawg/back-end/accounts.json:/home/ubuntu/data.json
-   - /home/ubuntu/ohmydawg/back-end/static/photos/:/home/ubuntu/photos/
   networks:
    - ohmydawg
  reactapp:
-  build: /home/ubuntu/ohmydawg/front-end
+  build: /home/ubuntu/ohmydawg/front-end/.
   ports:
    - 3000:3000
   networks:
    - ohmydawg
 networks:
-  ohmydawg:
+ ohmydawg:
+  # need to add volumes for bind mounts
+  # once nginx image is built need to include details in here too
