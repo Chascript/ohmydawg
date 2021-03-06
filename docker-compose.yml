@@ -6,6 +6,8 @@ services:
    - 5000:5000
   networks:
    - ohmydawg
+  volumes:
+   - ohmydawgData:/home/ubuntu/ohmydawg/back-end/
  reactapp:
   build: /home/ubuntu/ohmydawg/front-end/.
   ports:
@@ -14,5 +16,7 @@ services:
    - ohmydawg
 networks:
  ohmydawg:
-  # need to add volumes for bind mounts
+volumes:
+ ohmydawgData:
+  # volumes now makes data persistant.... maybe look at having a file just for saved data now
   # once nginx image is built need to include details in here too
