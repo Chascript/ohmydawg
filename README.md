@@ -27,3 +27,10 @@ www.ohmydawg.co.uk is the master branch of this repo. ohmydawg will be a site wh
 * Each dog has their profile page displaying details of themselves along with photos
 * Each dog can delete their own photos and edit their details
 * Possibly dogs message eachother to plan walks
+
+## Commands to run site 
+
+* grep -rl 'VAR1' ./data/nginx/app.conf | xargs sudo sed -i 's/VAR1/<Domain-Name>/g'
+* sudo DOMAIN="<Domain-Name>" EMAIL="<Email>" ./init-letsencrypt.sh
+* docker-compose up
+
