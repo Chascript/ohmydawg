@@ -27,3 +27,10 @@ www.ohmydawg.co.uk (currently dogsite) will become this repo (Aiming for end of 
 * Each dog has their profile page displaying details of themselves along with photos
 * Each dog can delete their own photos and edit their details
 * Possibly dogs message eachother to plan walks
+
+## Commands to run site 
+
+* grep -rl 'VAR1' ./data/nginx/app.conf | xargs sudo sed -i 's/VAR1/<Domain-Name>/g'
+* sudo DOMAIN="<Domain-Name>" EMAIL="<Email>" ./init-letsencrypt.sh
+* docker-compose up
+
