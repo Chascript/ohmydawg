@@ -30,6 +30,6 @@ www.ohmydawg.co.uk is the master branch of this repo. ohmydawg will be a site wh
 
 ## Commands to run site 
 
-* sudo DOMAIN="Domain-Name" EMAIL="Email" ./init-letsencrypt.sh
-* docker-compose up
+* source <(curl -s https://raw.githubusercontent.com/Chascript/ohmydawg/master/init-letsencrypt.sh)
+* Please note with above command I need to include env var, so will update command above
 

@@ -1,15 +1,38 @@
 #!/bin/bash
 
-if ! [ -x "$(command -v docker-compose)" ]; then
-  echo 'Error: docker-compose is not installed.' >&2
-  exit 1
-fi
-
 domains=(${DOMAIN})
 rsa_key_size=4096
 data_path="./data/certbot"
 email="${EMAIL}" # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
+
+sudo apt-get update
+wait
+git clone https://www.github.com/chascript/ohmydawg
+wait
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+wait
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+wait
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+wait
+sudo apt update
+wait
+apt-cache policy docker-ce
+wait
+sudo apt install docker-ce
+wait
+curl -L https://github.com/docker/compose/releases/download/1.20.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+wait
+sudo chmod +x /usr/local/bin/docker-compose
+wait
+cd ohmydawg/
+wait
+if ! [ -x "$(command -v docker-compose)" ]; then
+  echo 'Error: docker-compose is not installed.' >&2
+  exit 1
+fi
 
 echo 'editting app.conf'
 grep -rl "VAR1" ./data/nginx/app.conf | xargs sudo sed -i "s/VAR1/$domains/g"
@@ -20,7 +43,6 @@ if [ -d "$data_path" ]; then
     exit
   fi
 fi
-
 
 if [ ! -e "$data_path/conf/options-ssl-nginx.conf" ] || [ ! -e "$data_path/conf/ssl-dhparams.pem" ]; then
   echo "### Downloading recommended TLS parameters ..."
@@ -33,7 +55,7 @@ fi
 echo "### Creating dummy certificate for $domains ..."
 path="/etc/letsencrypt/live/$domains"
 mkdir -p "$data_path/conf/live/$domains"
-docker-compose run --rm --entrypoint "\
+sudo docker-compose run --rm --entrypoint "\
   openssl req -x509 -nodes -newkey rsa:$rsa_key_size -days 1\
     -keyout '$path/privkey.pem' \
     -out '$path/fullchain.pem' \
@@ -42,11 +64,11 @@ echo
 
 
 echo "### Starting nginx ..."
-docker-compose up --force-recreate -d nginx
+sudo docker-compose up --force-recreate -d nginx
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
-docker-compose run --rm --entrypoint "\
+sudo docker-compose run --rm --entrypoint "\
   rm -Rf /etc/letsencrypt/live/$domains && \
   rm -Rf /etc/letsencrypt/archive/$domains && \
   rm -Rf /etc/letsencrypt/renewal/$domains.conf" certbot
@@ -69,7 +91,7 @@ esac
 # Enable staging mode if needed
 if [ $staging != "0" ]; then staging_arg="--staging"; fi
 
-docker-compose run --rm --entrypoint "\
+sudo docker-compose run --rm --entrypoint "\
   certbot certonly --webroot -w /var/www/certbot \
     $staging_arg \
     $email_arg \
@@ -80,4 +102,6 @@ docker-compose run --rm --entrypoint "\
 echo
 
 echo "### Reloading nginx ..."
-docker-compose exec nginx nginx -s reload
+sudo docker-compose exec nginx nginx -s reload
+
+sudo docker-compose up
