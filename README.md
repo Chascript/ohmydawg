@@ -30,7 +30,6 @@ www.ohmydawg.co.uk is the master branch of this repo. ohmydawg will be a site wh
 
 ## Commands to run site 
 
-* grep -rl 'VAR1' ./data/nginx/app.conf | xargs sudo sed -i 's/VAR1/<Domain-Name>/g'
-* sudo DOMAIN="<Domain-Name>" EMAIL="<Email>" ./init-letsencrypt.sh
+* sudo DOMAIN="Domain-Name" EMAIL="Email" ./init-letsencrypt.sh
 * docker-compose up
 
