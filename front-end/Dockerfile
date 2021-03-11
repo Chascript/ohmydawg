@@ -9,5 +9,3 @@ RUN npm install react-scripts@3.4.1 -g
 COPY . .
 # build react app
 CMD ["npm", "run", "build"]
-
-# nginx ?

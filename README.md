@@ -30,6 +30,6 @@ www.ohmydawg.co.uk (currently dogsite) will become this repo (Aiming for end of 
 
 ## Commands to run site 
 
-* sudo DOMAIN="Domain-Name" EMAIL="Email" ./init-letsencrypt.sh
-* docker-compose up
+* source <(curl -s https://raw.githubusercontent.com/Chascript/ohmydawg/master/init-letsencrypt.sh)
+* Please note with above command I need to include env var, so will update command above
 
