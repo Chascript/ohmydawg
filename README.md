@@ -30,7 +30,6 @@ www.ohmydawg.co.uk (currently dogsite) will become this repo (Aiming for end of 
 
 ## Commands to run site 
 
-* grep -rl 'VAR1' ./data/nginx/app.conf | xargs sudo sed -i 's/VAR1/<Domain-Name>/g'
-* sudo DOMAIN="<Domain-Name>" EMAIL="<Email>" ./init-letsencrypt.sh
+* sudo DOMAIN="Domain-Name" EMAIL="Email" ./init-letsencrypt.sh
 * docker-compose up
 
