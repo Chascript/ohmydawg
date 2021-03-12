@@ -33,10 +33,10 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   echo 'Error: docker-compose is not installed.' >&2
   exit 1
 fi
-
+wait
 echo 'editting app.conf'
 grep -rl "VAR1" ./data/nginx/app.conf | xargs sudo sed -i "s/VAR1/$domains/g"
-
+wait
 if [ -d "$data_path" ]; then
   read -p "Existing data found for $domains. Continue and replace existing certificate? (y/N) " decision
   if [ "$decision" != "Y" ] && [ "$decision" != "y" ]; then
