@@ -104,4 +104,4 @@ echo
 echo "### Reloading nginx ..."
 sudo docker-compose exec nginx nginx -s reload
 wait
-sudo docker-compose up
+sudo docker-compose -f docker-compose.yml up

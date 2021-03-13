@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+ nginx:
+  image: nginx:1.15-alpine
+  restart: unless-stopped
+  depends_on:
+   - reactapp
+   - server
+  ports:
+   - 80:80
+   - 443:443
+  volumes:
+   - ./data/nginx-test:/etc/nginx/conf.d
+ server:
+  build: ./back-end/.
+  ports:
+   - 5000:5000
+  volumes:
+   - ohmydawgData:/home/ubuntu/ohmydawg/back-end/
+ reactapp:
+  build: ./front-end/.
+  ports:
+   - 3000:3000
+volumes:
+ ohmydawgData:
