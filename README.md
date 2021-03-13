@@ -32,17 +32,17 @@ www.ohmydawg.co.uk is the master branch of this repo. ohmydawg will be a site wh
 
 ### Production With SSL Certificates 
 
-Download the script with:
-* curl https://raw.githubusercontent.com/Chascript/ohmydawg/master/ship-with-certs.sh > ship-with-certs.sh
-Run the script with (with your own domain and email):
-* sudo DOMAIN="chosen-domain" EMAIL="chosen-email" ./ship-with-certs.sh
-The site will now be accessible via https://chosen-domain
+Download the script with:<br />
+`curl https://raw.githubusercontent.com/Chascript/ohmydawg/master/ship-with-certs.sh > ship-with-certs.sh`<br />
+Run the script with (with your own domain and email):<br />
+`sudo DOMAIN="chosen-domain" EMAIL="chosen-email" ./ship-with-certs.sh`<br />
+The site will now be accessible via https://chosen-domain<br />
 
 ### Production Without SSL (Testing)
-Download the script with:
-* curl https://raw.githubusercontent.com/Chascript/ohmydawg/master/ship-no-certs.sh > ship-no-certs.sh
-Run the script with:
-* sudo ./ship-no-certs.sh
+Download the script with:<br />
+`curl https://raw.githubusercontent.com/Chascript/ohmydawg/master/ship-no-certs.sh > ship-no-certs.sh`<br />
+Run the script with:<br />
+`sudo ./ship-no-certs.sh`<br />
 The site will now be accessible via http://instance-ip-address
 
 
