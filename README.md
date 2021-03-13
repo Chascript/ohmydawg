@@ -28,8 +28,21 @@ www.ohmydawg.co.uk (currently dogsite) will become this repo (Aiming for end of 
 * Each dog can delete their own photos and edit their details
 * Possibly dogs message eachother to plan walks
 
-## Commands to run site 
+## Commands to run site (within an aws Ubuntu 20.04 ec2-instance)
 
-* source <(curl -s https://raw.githubusercontent.com/Chascript/ohmydawg/master/init-letsencrypt.sh)
-* Please note with above command I need to include env var, so will update command above
+### Production With SSL Certificates 
+
+Download the script with:
+* curl https://raw.githubusercontent.com/Chascript/ohmydawg/master/ship-with-certs.sh > ship-with-certs.sh
+Run the script with (with your own domain and email):
+* sudo DOMAIN="chosen-domain" EMAIL="chosen-email" ./ship-with-certs.sh
+The site will now be accessible via https://chosen-domain
+
+### Production Without SSL (Testing)
+Download the script with:
+* curl https://raw.githubusercontent.com/Chascript/ohmydawg/master/ship-no-certs.sh > ship-no-certs.sh
+Run the script with:
+* sudo ./ship-no-certs.sh
+The site will now be accessible via http://instance-ip-address
+
 
