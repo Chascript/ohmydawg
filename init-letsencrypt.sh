@@ -8,8 +8,7 @@ staging=0 # Set to 1 if you're testing your setup to avoid hitting request limit
 
 sudo apt-get update
 wait
-git clone https://www.github.com/chascript/ohmydawg
-wait
+#docker
 sudo apt install apt-transport-https ca-certificates curl software-properties-common
 wait
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -22,18 +21,19 @@ apt-cache policy docker-ce
 wait
 sudo apt install docker-ce
 wait
+#docker-compose
 curl -L https://github.com/docker/compose/releases/download/1.20.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+wait
 chmod +x /usr/local/bin/docker-compose
 wait
 sudo chmod +x /usr/local/bin/docker-compose
 wait
+#clone
+git clone https://www.github.com/chascript/ohmydawg
+wait
 cd ohmydawg/
 wait
-if ! [ -x "$(command -v docker-compose)" ]; then
-  echo 'Error: docker-compose is not installed.' >&2
-  exit 1
-fi
-wait
+# edit app.conf with domain information
 echo 'editting app.conf'
 grep -rl "VAR1" ./data/nginx/app.conf | xargs sudo sed -i "s/VAR1/$domains/g"
 wait
@@ -103,5 +103,5 @@ echo
 
 echo "### Reloading nginx ..."
 sudo docker-compose exec nginx nginx -s reload
-
+wait
 sudo docker-compose up
