@@ -1,0 +1,10 @@
+{
+    "eslint.format.enable": true,
+    "eslint.nodeEnv": "",
+    "eslint.alwaysShowStatus": true,
+    "eslint.codeAction.showDocumentation": {
+    
+    
+        "enable": true
+    },
+}
