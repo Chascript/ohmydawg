@@ -3,7 +3,7 @@ import  Grid  from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import RandomImage from './imagefunction'
 import UserImage from './userimage'
-import Logo from './logo'
+import Logo from './logo';
 
 
 
