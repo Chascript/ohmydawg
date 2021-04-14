@@ -4,7 +4,7 @@
         "prettier"
     ],
     "plugins": [
-        "prettier",
+        "prettier"
     ],
     "rules": {
         "prettier/prettier": [
@@ -18,8 +18,14 @@
                     ".jsx"
                 ]
             }
-        ]
+        ],
+        "react/destructuring-assignment": [
+            0,
+            "never"
+        ],
+        "react/prop-types": 0
     },
+    
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true

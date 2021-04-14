@@ -1,8 +1,6 @@
-import React from 'react'
-import { Pets } from '@material-ui/icons'
+import React from 'react';
+import { Pets } from '@material-ui/icons';
 
 export default function VoteButton(props) {
-  return(
-    <Pets onClick={props.voteForDog} />
-  )
+  return <Pets onClick={props.voteForDog} />;
 }

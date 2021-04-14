@@ -1,7 +1,6 @@
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import React from 'react'
-
+import React from 'react';
 
 export default function Copyright() {
   return (
@@ -10,8 +9,7 @@ export default function Copyright() {
       <Link color="inherit" href="http://www.ohmydawg.co.uk/home.html">
         ohmydawg
       </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
+      {new Date().getFullYear()}.
     </Typography>
   );
 }

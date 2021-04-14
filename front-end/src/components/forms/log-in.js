@@ -1,38 +1,37 @@
-import { Button, CssBaseline, Grid, makeStyles, TextField } from '@material-ui/core'
-import React from 'react'
+import { Button, CssBaseline, Grid, makeStyles, TextField } from '@material-ui/core';
+import React from 'react';
 
-
-const useStyles = makeStyles((theme)=>({
-  container:{
-    display:'flex',
-    flexDirection: 'row',  
-  },
-  inputContainer:{
-    display:'flex',
-    justifyContent: 'spaceBetween'
-  },
-  submit:{
-      margin: theme.spacing(3, 0, 2),
-  },
-  inputs:{
+const useStyles = makeStyles((theme) => ({
+  container: {
     display: 'flex',
-    alignItems:'center',
+    flexDirection: 'row',
   },
-buttonContainer:{
-justifyContent:'center',
-alignItems: 'center'    
-}
-}))
+  inputContainer: {
+    display: 'flex',
+    justifyContent: 'spaceBetween',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+  inputs: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+}));
 
-export default function Login(){
-const classes = useStyles()
-  return(
-    <Grid container alignItems='center' className={classes.container} spacing={1} >
+export default function Login() {
+  const classes = useStyles();
+  return (
+    <Grid container alignItems="center" className={classes.container} spacing={1}>
       <CssBaseline />
       <Grid item sm={5} className={classes.inputs}>
-        <TextField 
-         color='secondary'
-          size='small'
+        <TextField
+          color="secondary"
+          size="small"
           variant="outlined"
           margin="normal"
           required
@@ -42,10 +41,10 @@ const classes = useStyles()
           placeholder="example@example.com"
         />
       </Grid>
-      <Grid item sm={5} className={classes.inputs} >
+      <Grid item sm={5} className={classes.inputs}>
         <TextField
-          color='secondary'
-          size='small'
+          color="secondary"
+          size="small"
           variant="outlined"
           margin="normal"
           required
@@ -55,9 +54,9 @@ const classes = useStyles()
           id="loginPassword"
           autoComplete="current-password"
           placeholder="******"
-        />         
+        />
       </Grid>
-      <Grid item sm={2}  className={classes.buttonContainer}>
+      <Grid item sm={2} className={classes.buttonContainer}>
         <Button
           className={classes.submit}
           type="submit"
@@ -66,8 +65,8 @@ const classes = useStyles()
           color="primary"
         >
           Login
-       </Button>
+        </Button>
       </Grid>
     </Grid>
-  )
+  );
 }
